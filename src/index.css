@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.np-top-menu-item{
+    @apply  cursor-pointer  hover:text-blue-700 relative after:absolute after:bottom-0 after:left-0
+    after:bg-blue-700 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out 
+    after:duration-300 uppercase;
+}
+.np-image-product-detail-small{
+    @apply w-[150px] h-[145px] cursor-pointer mt-[30px];
+}
+.np-color-product{
+    @apply w-[100px] h-[100px];
+}
+.np_size_product{
+    @apply  w-[50px] border-blue-500 border rounded-lg text-center text-[14px];
+}
+.np-describe-item-li{
+    @apply flex;
+    }
+.np_star_item{
+    @apply  bg-red-500 px-[10px] py-[5px] border rounded-lg border-red-500 ml-[30px];
+}
+.np_image_comment{
+    @apply w-[100px] h-[100px];
+}
