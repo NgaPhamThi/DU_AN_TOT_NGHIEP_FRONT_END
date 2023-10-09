@@ -4,41 +4,41 @@ const BlogPage = () => {
   return (
     <div className="mx-auto px-6">
       <section>
-        <h1 className="pl-8 py-4 text-[32px]">Góc Tư Vấn Mặc Đẹp</h1>
-        <div className="flex bg-[#F9F7F7] border rounded-2xl pr-40">
-          <div className=" ">
+        <h1 className="pl-8 py-4 text-4xl">Góc Tư Vấn Mặc Đẹp</h1>
+        <div className="flex flex-col-reverse lg:flex-row bg-[#F9F7F7] border rounded-2xl">
+          <div className="lg:w-2/3 p-4 ">
             <img
               src="blogbner.png"
               alt=""
-              className=" max-w-[800px] h-[465px] border rounded-2xl"
+              className=" w-full h-auto border rounded-2xl"
             />
           </div>
-          <div className="grid grid-rows-4 items-center justify-center px-2 ml-5  ">
-            <div className="grid grid-cols-2 gap-[200px] mt-[80px]">
+          <div className="grid grid-rows-4 items-center justify-center px-2 ml-5 lg:w-1/3 p-4 ">
+            <div className="grid grid-cols-2 gap-4 lg:gap-8 mt-4 lg:mt-0">
               <a href="" className="text-[#E49595]">
                 GÓC TƯ VẤN MẶC ĐẸP
               </a>
               <span>24/09/2023</span>
             </div>
-            <a href="" className="text-[26px] ">
+            <a href="" className="text-2xl mt-2 ">
               Mách Nàng Cách Phối Đồ Mùa Thu Từ Công Sở Đến Những Buổi Hẹn Hò
             </a>
-            <p className="">
+            <p className="mt-4">
               Chẳng cần những món đồ quá cầu kỳ, các nàng nhà TND vẫn có đươc
               phong cách mùa thu hấp dẫn và cuốn hút mọi ánh nhìn với cách
               phối...
             </p>
-            <a href="" className="text-[#E49595] mb-[80px]">
+            <a href="" className="text-[#E49595] mt-4">
               ĐỌC TIN NGAY
             </a>
           </div>
         </div>
-        <div className="pt-4 grid grid-cols-4 mx-auto ml-4">
-          <div className="max-w-[310px] my-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto ml-4">
+          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
                 src="blog1.png"
-                className="max-w-[340px] rounded-xl"
+                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
@@ -57,11 +57,11 @@ const BlogPage = () => {
               nữ...
             </p>
           </div>
-          <div className="max-w-[310px] my-4">
+          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
                 src="blog2.png"
-                className="max-w-[340px] rounded-xl"
+                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
@@ -80,11 +80,11 @@ const BlogPage = () => {
               tấm lòng...
             </p>
           </div>
-          <div className="max-w-[310px] my-4">
+          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
                 src="blog3.png"
-                className="max-w-[340px] rounded-xl"
+                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
@@ -103,11 +103,11 @@ const BlogPage = () => {
               tính. Bởi...
             </p>
           </div>
-          <div className="max-w-[310px] my-4">
+          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
                 src="blog4.png"
-                className="max-w-[340px] rounded-xl"
+                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
@@ -127,12 +127,12 @@ const BlogPage = () => {
             </p>
           </div>
         </div>
-        <div className="pt-4 grid grid-cols-4 mx-auto ml-4">
-          <div className="max-w-[310px] my-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto ml-4">
+          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
                 src="blog5.png"
-                className="max-w-[340px] rounded-xl"
+                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
@@ -151,11 +151,11 @@ const BlogPage = () => {
               tạo nên...
             </p>
           </div>
-          <div className="max-w-[310px] my-4">
+          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
                 src="blog6.png"
-                className="max-w-[340px] rounded-xl"
+                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
@@ -174,11 +174,11 @@ const BlogPage = () => {
               liệu vải...
             </p>
           </div>
-          <div className="max-w-[310px] my-4">
+          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
                 src="blog7.png"
-                className="max-w-[340px] rounded-xl"
+                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
@@ -196,11 +196,11 @@ const BlogPage = () => {
               câu hỏi mà rất nhiều nàng băn khoăn, bởi không bắt buộc nổi...
             </p>
           </div>
-          <div className="max-w-[310px] my-4">
+          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
                 src="blog8.png"
-                className="max-w-[340px] rounded-xl"
+                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
@@ -220,42 +220,42 @@ const BlogPage = () => {
             </p>
           </div>
         </div>
-        <h1 className="pl-8 py-4 text-[32px]">Tin tức nhà TND</h1>
-        <div className=" flex bg-[#F9F7F7] border rounded-2xl pr-40">
-          <div className=" ">
+        <h1 className="pl-8 py-4 text-4xl">Tin tức nhà TND</h1>
+        <div className="flex flex-col-reverse lg:flex-row bg-[#F9F7F7] border rounded-2xl">
+          <div className="lg:w-2/3 p-4 ">
             <img
               src="blogbner2.png"
               alt=""
-              className=" max-w-[800px] h-[465px] border rounded-2xl"
+              className="w-full h-auto border rounded-2xl"
             />
           </div>
-          <div className="grid grid-rows-4 items-center justify-center px-2 ml-5  ">
-            <div className="grid grid-cols-2 gap-[200px] mt-[80px]">
+          <div className="grid grid-rows-4 items-center justify-center px-2 ml-5 lg:w-1/3 p-4 ">
+            <div className="grid grid-cols-2 gap-4 lg:gap-8 mt-4 lg:mt-0">
               <a href="" className="text-[#E49595]">
                 TIN TỨC NHÀ TND
               </a>
               <span>15/09/2023</span>
             </div>
-            <a href="" className="text-[26px] ">
+            <a href="" className="text-2xl mt-2 ">
               [ TND x REshare ] Chiến dịch GREENER: Thu quần áo cũ - Lan tỏa
               sống xanh
             </a>
-            <p className="">
+            <p className="mt-4">
               Phải chăng Nàng vẫn thường suy nghĩ “Phải làm gì với quần áo
               cũ?”TND có câu trả lời cho Nàng đây: Quần áo cũ của Nàng sẽ bắt
               đầu một...
             </p>
-            <a href="" className="text-[#E49595] mb-[80px]">
+            <a href="" className="text-[#E49595] mt-4">
               ĐỌC TIN NGAY
             </a>
           </div>
         </div>
-        <div className="pt-4 grid grid-cols-4 mx-auto ml-4">
-          <div className="max-w-[310px] my-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto ml-4">
+          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
                 src="blog9.png"
-                className="max-w-[340px] rounded-xl"
+                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
@@ -274,11 +274,11 @@ const BlogPage = () => {
               quét mã QR trong ảnh...
             </p>
           </div>
-          <div className="max-w-[310px] my-4">
+          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
                 src="blog10.png"
-                className="max-w-[340px] rounded-xl"
+                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
@@ -297,11 +297,11 @@ const BlogPage = () => {
               nhận...
             </p>
           </div>
-          <div className="max-w-[310px] my-4">
+          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
                 src="blog11.png"
-                className="max-w-[340px] rounded-xl"
+                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
@@ -320,11 +320,11 @@ const BlogPage = () => {
               khi mua sắm..
             </p>
           </div>
-          <div className="max-w-[310px] my-4">
+          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
                 src="blog11.png"
-                className="max-w-[340px]  rounded-xl"
+                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
