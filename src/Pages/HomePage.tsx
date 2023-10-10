@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
+import Category from './Category'
+import Form from '../components/Layout/Form'
 
 const HomePage = () => {
     return (
-
+      <div>
+          <Category/>
         <div className='max-w-[1440px] mx-auto'>
             <h2 className="font-bold text-[27px] text-center pt-8 pb-8">Sản Phẩm Mới</h2>
             <div className='flex justify-between items-center'>
@@ -140,6 +143,8 @@ const HomePage = () => {
                 </div>
             </div>
         </div>
+        <Form/>
+      </div>
     )
 }
 

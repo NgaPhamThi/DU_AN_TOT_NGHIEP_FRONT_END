@@ -10,7 +10,6 @@ const UsersLayout = () => {
 
             <header>
                 <Header/>
-                <Category/>
             </header>
             <main>
                 <Outlet />
