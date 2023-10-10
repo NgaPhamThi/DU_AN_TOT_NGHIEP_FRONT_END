@@ -27,9 +27,6 @@ const Header = ()=>{
                     <a href=""><img src="Search_light.png" alt=""/></a>
                 </div>
             </div>
-            <div className="banner pt-8 ">
-                <img className="w-full" src="image 1.png" alt=""/>
-            </div>
         </section>
         </div>
     )
