@@ -1,4 +1,4 @@
-
+import {BsFillPersonFill,BsFillCartFill} from 'react-icons/bs';
 const PayPage =() =>{
     return (
         <div>
@@ -10,6 +10,47 @@ const PayPage =() =>{
               / <li> Giỏ hàng</li>
             </ul>
           </div>
+            <section className="flex gap-4 w-10/12 m-auto py-5 bg-cyan-300">
+              
+                <table className="table-auto w-full ">
+                  <thead className="pb-10 ">
+                    <tr className="text-center ">
+                      <th className="  pl-5">
+                          <td className="flex  gap-8">
+                          <div className="p-5"><BsFillPersonFill style={ {fontSize: '50px'}} /></div>
+                            <div className="pt-5 text-left ">
+                              <p className="font-semibold">KHÁCH HÀNG</p>
+                              <div className=" pt-3 text-sm">
+                                  <p>Phạm Ngọc Quang</p>
+                                <p>quangpn1254@gmail.com</p>
+                              </div>
+                              
+                            </div>
+                          </td>
+                      </th>
+
+                      
+                      <th className=" pl-5">
+                          <td className="flex gap-8">
+                          <div className="p-5"><BsFillCartFill  style={ {fontSize: '50px'}}/></div>
+                              <div className="pt-5 text-left " >
+                                <p className="font-semibold">Địa chỉ giao hàng</p>
+
+                                <div className=" pt-3 text-sm">
+                                  <p>Cầu Giấy-Hà Nội</p>
+                                  <p>quangpn1254@gmail.com</p>
+                                </div>
+                              </div>
+
+                            </td>
+                      </th>
+                    </tr>
+                  </thead>
+                </table>
+             
+            </section>
+
+
           <section className="flex gap-8 w-10/12 m-auto py-20">
             <section className="basis-4/6">
               <table className="table-auto w-full ">
@@ -17,7 +58,7 @@ const PayPage =() =>{
                   <tr className="text-left ">
                     <th className=" font-semibold pb-10">Sản phẩm</th>
                     <th className="font-semibold pb-10">Số lượng</th>
-                    <th className="font-semibold pb-10">Giá tiền</th>
+                    <th className="font-semibold pb-10">Tổng tiền</th>
                   </tr>
                 </thead>
                 <tbody className="w-full ">
@@ -29,55 +70,19 @@ const PayPage =() =>{
                       </div>
                     </td>
                     <td className="w-40 ">
-                      <button>{`<`}</button>
+                    
                       <span className="px-6">5</span>
-                      <button>{`>`}</button>
+                    
                     </td>
-                    <td className="w-40"> 620.000 VNĐ </td>
+                    <td className="w-40"> 500.000 VNĐ </td>
                     <td>
                       <button>
                         <i className="fa-sharp fa-solid fa-circle-xmark text-slate-300 bg-black rounded-full shadow-md shadow-black text-3xl"></i>
                       </button>
                     </td>
                   </tr>
-                  <tr className="border-t-2">
-                    <td className="flex py-10  gap-8">
-                      <img src="image 3.png" className="w-20"></img>
-                      <div className="pt-7">
-                        <p>Sản phẩm 2</p>
-                      </div>
-                    </td>
-                    <td className="w-40 ">
-                      <button>{`<`}</button>
-                      <span className="px-6">5</span>
-                      <button>{`>`}</button>
-                    </td>
-                    <td className=""> 620.000 VNĐ </td>
-                    <td>
-                      <button>
-                        <i className="fa-sharp fa-solid fa-circle-xmark text-slate-300 bg-black rounded-full shadow-md shadow-black text-3xl"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="border-t-2">
-                    <td className="flex py-10  gap-8">
-                      <img src="image 3.png" className="w-20"></img>
-                      <div className="pt-7">
-                        <p>Sản phẩm 3</p>
-                      </div>
-                    </td>
-                    <td className="w-40 ">
-                      <button>{`<`}</button>
-                      <span className="px-6">5</span>
-                      <button>{`>`}</button>
-                    </td>
-                    <td className=""> 620.000 VNĐ </td>
-                    <td>
-                      <button>
-                        <i className="fa-sharp fa-solid fa-circle-xmark text-slate-300 bg-black rounded-full shadow-md shadow-black text-3xl"></i>
-                      </button>
-                    </td>
-                  </tr>
+
+                  
                 </tbody>
               </table>
               <div className="border-t-2 flex justify-between">
@@ -85,7 +90,7 @@ const PayPage =() =>{
                   Tiếp tục mua sắm
                 </button>{" "}
                 <button className="bg-black text-white font-semibold p-3 px-7 mt-10 ">
-                  Cập nhật giỏ hàng{" "}
+                  Cập nhật thông tin giao hàng{" "}
                 </button>
               </div>
             </section>
@@ -108,7 +113,27 @@ const PayPage =() =>{
                   <div className=" pt-5 flex">
                     {" "}
                     <span className="grow">Tổng tiền</span>
-                    <span className="text-right ">$ 169.50</span>
+                    <span className="text-right ">500.000 vnd</span>
+                  </div>
+                  <div className=" pt-5 flex">
+                    {" "}
+                    <span className="grow">Phí ship</span>
+                    <span className="text-right ">0 vnd</span>
+                  </div>
+                  <div className=" pt-5 flex">
+                    {" "}
+                    <span className="grow">Thuế</span>
+                    <span className="text-right ">0 vnd</span>
+                  </div>
+                  <div className=" pt-5 flex">
+                    {" "}
+                    <span className="grow">Giảm giá</span>
+                    <span className="text-right ">100.000 vnd</span>
+                  </div>
+                  <div className=" pt-5 flex">
+                    {" "}
+                    <span className="grow">Thanh toán</span>
+                    <span className="text-right ">400.000 vnd</span>
                   </div>
                   <button className="bg-black text-white font-semibold p-3 mt-10 w-full">
                     Thanh toán
