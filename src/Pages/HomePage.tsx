@@ -1,207 +1,151 @@
-// import React from 'react'
+
+import React, { useState } from 'react'
+import Category from './Category'
+import Form from '../components/Layout/Form'
 
 const HomePage = () => {
     return (
-        <div className="mx-auto">
-        <section>
-            <div className="category text-center">
-                <h2 className="font-bold text-[27px] pt-8 pb-8">Danh Mục</h2>
-                <div className="flex max-w-[1120px] mx-auto gap-20 text-[16px]">
-                    <a className="hover:text-red-400" href="">
-                        <img className="pb-3" src="image-removebg-preview (1) 1.png" alt=""/>
-                        <span className="font-thin">Áo Sơ Mi</span>
-                    </a>
-                    <a className="hover:text-red-400" href="">
-                        <img className="pb-3" src="image-removebg-preview (2) 1.png" alt=""/>
-                        <span className="font-thin">Áo Thun</span>
-                    </a>
-                    <a className="hover:text-red-400" href="">
-                        <img className="pb-3" src="image-removebg-preview (3) 1.png" alt=""/>
-                        <span className="font-thin">Quần</span>
-                    </a>
-                    <a className="hover:text-red-400" href="">
-                        <img className="pb-3" src="image-removebg-preview (4) 1.png" alt=""/>
-                        <span className="font-thin">váy</span>
-                    </a>
-                    <a className="hover:text-red-400" href="">
-                        <img className="pb-3" src="image-removebg-preview (5) 1.png" alt=""/>
-                        <span className="font-thin">Đầm</span>
-                    </a>
+      <div>
+          <Category/>
+        <div className='max-w-[1440px] mx-auto'>
+            <h2 className="font-bold text-[27px] text-center pt-8 pb-8">Sản Phẩm Mới</h2>
+            <div className='flex justify-between items-center'>
+                <div>
+                <div className="mb-4">
+                <label className="text-lg font-semibold mb-2">Lọc theo giá:</label>
+                <div className="flex space-x-2">
+                    <input
+                        type="number"
+                        placeholder="Từ"
+                        className="border rounded px-2 py-1"
+                    />
+                    <span className="mx-2">-</span>
+                    <input
+                        type="number"
+                        placeholder="Đến"
+                        className="border rounded px-2 py-1"
+                    />
+                    <button
+                        className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                    >
+                        Lọc
+                    </button>
                 </div>
             </div>
-            <div className="product max-w-[1440px] mx-auto">
-                <h2 className="font-bold text-center text-[27px] pt-8 pb-8">Tổng Sản Phẩm</h2>
-                <div className="container mx-auto mt-5">
-                    <div className="grid grid-cols-4 gap-4">
-                        <div className="product-card p-4">
-                            <a className="name" href="">
-                                <img src="image 2.png" alt="Sản phẩm 1"
-                                    className="product-image w-full h-[421px] transition-transform transform duration-300 ease-in-out"/>
-                                <h3 className="text-lg font-semibold mt-2">Đầm midi 2 dây smocking lưng</h3>
-                            </a>
-                            <div className="grid grid-cols-2 -space-x-24 pt-3">
-                                <p className="text-gray-500">19,99₫</p>
-                                <p className="text-red-500">395,000₫</p>
-                            </div>
-                        </div>
-                        <div className="product-card p-4">
-                            <a className="name" href="name">
-                                <img src="image 3.png" alt="Sản phẩm 1"
-                                    className="product-image w-full h-[421px] transition-transform transform duration-300 ease-in-out"/>
-                                <h3 className="text-lg font-semibold mt-2">Đầm mini thêu cotton cổ tim tay..</h3>
-                            </a>
-                            <div className="grid grid-cols-2 -space-x-24 pt-3">
-                                <p className="text-gray-500">19,99₫</p>
-                                <p className="text-red-500">395,000₫</p>
-                            </div>
-
-                        </div>
-                        <div className="product-card p-4">
-                            <a className="name" href="">
-                                <img src="image 4.png" alt="Sản phẩm 1"
-                                    className="product-image w-full h-[421px] transition-transform transform duration-300 ease-in-out"/>
-                                <h3 className="text-lg font-semibold mt-2">Quần Jogger</h3>
-                            </a>
-                            <div className="grid grid-cols-2 -space-x-24 pt-3">
-                                <p className="text-gray-500">19,99₫</p>
-                                <p className="text-red-500">395,000₫</p>
-                            </div>
-
-                        </div>
-                        <div className="product-card p-4">
-                            <a className="name" href="">
-                                <img src="image 5.png" alt="Sản phẩm 1"
-                                    className="product-image w-full h-[421px] transition-transform transform duration-300 ease-in-out"/>
-                                <h3 className="text-lg font-semibold mt-2">Quần short thun cột dây</h3>
-                            </a>
-                            <div className="grid grid-cols-2 -space-x-24 pt-3">
-                                <p className="text-gray-500">19,99₫</p>
-                                <p className="text-red-500">395,000₫</p>
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
                 <div>
-                    <img className="w-full pt-8" src="image 6.png" alt=""/>
-                </div>
-                <div>
-                    <h2 className="font-bold text-center text-[27px] pt-8 pb-8">MARC SIGNATURE</h2>
-                    <div className="container mx-auto mt-5">
-                        <div className="grid grid-cols-4 gap-4">
-                            <div className="product-card p-4">
-                                <a className="name" href="">
-                                    <img src="image 2.png" alt="Sản phẩm 1"
-                                        className="product-image w-full h-[421px] transition-transform transform duration-300 ease-in-out"/>
-                                    <h3 className="text-lg font-semibold mt-2">Đầm midi 2 dây smocking lưng</h3>
-                                </a>
-                                <div className="grid grid-cols-2 -space-x-24 pt-3">
-                                    <p className="text-gray-500">19,99₫</p>
-                                    <p className="text-red-500">395,000₫</p>
-                                </div>
-                            </div>
-                            <div className="product-card p-4">
-                                <a className="name" href="name">
-                                    <img src="image 3.png" alt="Sản phẩm 1"
-                                        className="product-image w-full h-[421px] transition-transform transform duration-300 ease-in-out"/>
-                                    <h3 className="text-lg font-semibold mt-2">Đầm mini thêu cotton cổ tim tay..</h3>
-                                </a>
-                                <div className="grid grid-cols-2 -space-x-24 pt-3">
-                                    <p className="text-gray-500">19,99₫</p>
-                                    <p className="text-red-500">395,000₫</p>
-                                </div>
-
-                            </div>
-                            <div className="product-card p-4">
-                                <a className="name" href="">
-                                    <img src="image 4.png" alt="Sản phẩm 1"
-                                        className="product-image w-full h-[421px] transition-transform transform duration-300 ease-in-out"/>
-                                    <h3 className="text-lg font-semibold mt-2">Quần Jogger</h3>
-                                </a>
-                                <div className="grid grid-cols-2 -space-x-24 pt-3">
-                                    <p className="text-gray-500">19,99₫</p>
-                                    <p className="text-red-500">395,000₫</p>
-                                </div>
-
-                            </div>
-                            <div className="product-card p-4">
-                                <a className="name" href="">
-                                    <img src="image 5.png" alt="Sản phẩm 1"
-                                        className="product-image w-full h-[421px] transition-transform transform duration-300 ease-in-out"/>
-                                    <h3 className="text-lg font-semibold mt-2">Quần short thun cột dây</h3>
-                                </a>
-                                <div className="grid grid-cols-2 -space-x-24 pt-3">
-                                    <p className="text-gray-500">19,99₫</p>
-                                    <p className="text-red-500">395,000₫</p>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <img className="w-full pt-8" src="image 9.png" alt=""/>
-                </div>
-                <div>
-                    <h2 className="font-bold text-center text-[27px] pt-8 pb-8">BEST SELLER</h2>
-                    <div className="container mx-auto mt-5">
-                        <div className="grid grid-cols-4 gap-4">
-                            <div className="product-card p-4">
-                                <a className="name" href="">
-                                    <img src="image 2.png" alt="Sản phẩm 1"
-                                        className="product-image w-full h-[421px] transition-transform transform duration-300 ease-in-out"/>
-                                    <h3 className="text-lg font-semibold mt-2">Đầm midi 2 dây smocking lưng</h3>
-                                </a>
-                                <div className="grid grid-cols-2 -space-x-24 pt-3">
-                                    <p className="text-gray-500">19,99₫</p>
-                                    <p className="text-red-500">395,000₫</p>
-                                </div>
-                            </div>
-                            <div className="product-card p-4">
-                                <a className="name" href="name">
-                                    <img src="image 3.png" alt="Sản phẩm 1"
-                                        className="product-image w-full h-[421px] transition-transform transform duration-300 ease-in-out"/>
-                                    <h3 className="text-lg font-semibold mt-2">Đầm mini thêu cotton cổ tim tay..</h3>
-                                </a>
-                                <div className="grid grid-cols-2 -space-x-24 pt-3">
-                                    <p className="text-gray-500">19,99₫</p>
-                                    <p className="text-red-500">395,000₫</p>
-                                </div>
-
-                            </div>
-                            <div className="product-card p-4">
-                                <a className="name" href="">
-                                    <img src="image 4.png" alt="Sản phẩm 1"
-                                        className="product-image w-full h-[421px] transition-transform transform duration-300 ease-in-out"/>
-                                    <h3 className="text-lg font-semibold mt-2">Quần Jogger</h3>
-                                </a>
-                                <div className="grid grid-cols-2 -space-x-24 pt-3">
-                                    <p className="text-gray-500">19,99₫</p>
-                                    <p className="text-red-500">395,000₫</p>
-                                </div>
-
-                            </div>
-                            <div className="product-card p-4">
-                                <a className="name" href="">
-                                    <img src="image 5.png" alt="Sản phẩm 1"
-                                        className="product-image w-full h-[421px] transition-transform transform duration-300 ease-in-out"/>
-                                    <h3 className="text-lg font-semibold mt-2">Quần short thun cột dây</h3>
-                                </a>
-                                <div className="grid grid-cols-2 -space-x-24 pt-3">
-                                    <p className="text-gray-500">19,99₫</p>
-                                    <p className="text-red-500">395,000₫</p>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <img className="w-full pt-8" src="image 8.png" alt=""/>
+                    <a href="">Xem tất cả</a>
                 </div>
             </div>
-        </section>
-    </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className=" rounded shadow-sm p-4 relative group hover: transition-all duration-300">
+                    <img
+                        src="blog6.png"
+                        alt="Product 1"
+                        className="w-full h-[421px] object-cover mb-4 transition-transform transform hover:scale-105"
+                    />
+                    <div className='flex justify-between items-center pl-4 pr-4'>
+                        <div>
+                            <h2 className="cursor-pointer text-xl  font-semibold py-1 hover: transform hover:scale-110 transition-transform hover:text-red-500">
+                                Sản phẩm 1
+                            </h2>
+                            <span className="text-lg line-through">500,000đ</span>
+                            <span className="text-lg text-red-500 ml-2">300,000đ</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <span className="absolute left-0 top-0 mt-[16px] opacity-0 transform translate-x-[-100%] group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 ease-out bg-red-500 text-white px-2 py-1">
+                        -40%
+                    </span>
+                </div>
+
+                {/* Sản phẩm 2 */}
+                <div className=" rounded shadow-sm p-4 relative group hover: transition-all duration-300">
+                    <img
+                        src="blog6.png"
+                        alt="Product 2"
+                        className="w-full h-[421px] object-cover mb-4 transition-transform transform hover:scale-105"
+                    />
+                    <div className='flex justify-between items-center pl-4 pr-4'>
+                        <div>
+                            <h2 className="cursor-pointer text-xl  font-semibold py-1 hover: transform hover:scale-110 transition-transform hover:text-red-500">
+                                Sản phẩm 2
+                            </h2>
+                            <span className="text-lg line-through">500,000đ</span>
+                            <span className="text-lg text-red-500 ml-2">300,000đ</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <span className="absolute left-0 top-0 mt-[16px] opacity-0 transform translate-x-[-100%] group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 ease-out bg-red-500 text-white px-2 py-1">
+                        -40%
+                    </span>
+                </div>
+
+                {/* Sản phẩm 3 và 4 tương tự... */}
+                <div className=" rounded shadow-sm p-4 relative group hover: transition-all duration-300">
+                    <img
+                        src="blog6.png"
+                        alt="Product 2"
+                        className="w-full h-[421px] object-cover mb-4 transition-transform transform hover:scale-105"
+                    />
+                    <div className='flex justify-between items-center pl-4 pr-4'>
+                        <div>
+                            <h2 className="cursor-pointer text-xl  font-semibold py-1 hover: transform hover:scale-110 transition-transform hover:text-red-500">
+                                Sản phẩm 3
+                            </h2>
+                            <span className="text-lg line-through">500,000đ</span>
+                            <span className="text-lg text-red-500 ml-2">300,000đ</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <span className="absolute left-0 top-0 mt-[16px] opacity-0 transform translate-x-[-100%] group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 ease-out bg-red-500 text-white px-2 py-1">
+                        -39%
+                    </span>
+                </div>
+                {/* ... */}
+                <div className=" rounded shadow-sm p-4 relative group hover: transition-all duration-300">
+                    <img
+                        src="blog6.png"
+                        alt="Product 2"
+                        className="w-full h-[421px] object-cover mb-4 transition-transform transform hover:scale-105"
+                    />
+                    <div className='flex justify-between items-center pl-4 pr-4'>
+                        <div>
+                            <h2 className="cursor-pointer text-xl  font-semibold py-1 hover: transform hover:scale-110 transition-transform hover:text-red-500">
+                                Sản phẩm 4
+                            </h2>
+                            <span className="text-lg line-through">500,000đ</span>
+                            <span className="text-lg text-red-500 ml-2">300,000đ</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <span className="absolute left-0 top-0 mt-[16px] opacity-0 transform translate-x-[-100%] group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 ease-out bg-red-500 text-white px-2 py-1">
+                        -23%
+                    </span>
+                </div>
+            </div>
+        </div>
+        <Form/>
+      </div>
     )
 }
 

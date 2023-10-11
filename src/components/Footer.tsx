@@ -1,33 +1,26 @@
-const Footer = () =>{
+import Form from "./Layout/Form"
+
+const Footer = () => {
     return (
         <section>
-            <div className="bg-black mx-auto text-center mt-8 pb-8">
-                <p className="font-bold text-center text-[30px] pt-4 text-white ">ĐĂNG KÍ NHẬN KHUYẾN MÃI</p>
-                <p className="text-center text-[14px] pt-2 text-white font-mono">Hãy nhập email của bạn vào đây để nhận được xu hướng
-                    thời trang và khuyến mãi mới nhất từ TND nhé.</p>
-                <div className="pt-7 relative">
-                    <input className="w-[512px] outline-none h-[52px] pl-4 rounded-full" type="text"
-                        placeholder="Nhập email của bạn"/>
-                    <button className="absolute -ml-14 ">
-                        <a href=""> <img className="" src="Send_hor_fill.svg" alt=""/></a>
-                    </button>
+            
+
+            <div className="max-w-screen-xl mx-auto pb-7 px-4 md:px-8">
+                <div className="my-4">
+                    <a href=""><img src="image-removebg-preview 1.png" alt="" /></a>
                 </div>
-            </div>
-            <div className="max-w-[1440px] mx-auto pb-7">
-                <div>
-                    <a href=""><img src="image-removebg-preview 1.png" alt=""/></a>
-                </div>
-                <div className="flex justify-between">
-                    <div className="w-[500px]">
-                        <div className="flex items-center">
-                            <div className="pr-24">
-                                <a href=""><img src="image 10.png" alt=""/></a>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+                    <div className="">
+                        <div className="grid grid-cols-2 items-center gap-6">
+                            <div className="">
+                                <a href=""><img src="image 10.png" alt="" /></a>
                             </div>
-                            <ul className="flex justify-between gap-5">
-                                <li><a href=""><img src="facebook.svg" alt=""/></a></li>
-                                <li><a href=""><img src="instagram.svg" alt=""/></a></li>
-                                <li><a href=""><img src="tiktok.svg" alt=""/></a></li>
-                                <li><a href=""><img src="telegram.svg" alt=""/></a></li>
+                            <ul className="flex gap-2">
+                                <li><a href=""><img className="w-5" src="facebook.svg" alt="" /></a></li>
+                                <li><a href=""><img className="w-5" src="instagram.svg" alt="" /></a></li>
+                                <li><a href=""><img className="w-5" src="tiktok.svg" alt="" /></a></li>
+                                <li><a href=""><img className="w-5" src="telegram.svg" alt="" /></a></li>
                             </ul>
                         </div>
                         <div className="pt-4">
@@ -45,8 +38,8 @@ const Footer = () =>{
                             </ul>
                         </div>
                     </div>
-                    <div>
-                        <h3 className="text-[22px] font-medium">Về chúng tôi</h3>
+                    <div className="lg:ml-10">
+                        <h3 className=" text-[22px] font-medium">Về chúng tôi</h3>
                         <div className="text-[15px] pt-3">
                             <ul>
                                 <li className="hover:text-red-200"><a href="">Giới thiệu TND</a></li>
@@ -87,6 +80,7 @@ const Footer = () =>{
                         <div className="text-[15px] pt-7">
                             <a className="text-[#0097ba]" href=""><span>tndtndsalesonline@gmail.com</span></a>
                         </div>
+
                     </div>
                 </div>
             </div>

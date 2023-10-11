@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom"
 import React from 'react'
 import Header from "../Header"
 import Footer from "../Footer"
+import Category from "../../Pages/Category"
 
 const UsersLayout = () => {
     return (
