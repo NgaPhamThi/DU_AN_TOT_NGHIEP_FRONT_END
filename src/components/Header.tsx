@@ -4,10 +4,13 @@ const Header: React.FC = () => {
     const [searchValue, setSearchValue] = useState<string>('');
     const [showSearch, setShowSearch] = useState<boolean>(false);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
+    const [showMenu, setShowMenu] = useState(false);
+
 
     const menuRef = useRef(null);
 
     useEffect(() => {
+
         const handleClickOutside = (event: MouseEvent) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
                 setMenuOpen(false);
@@ -23,21 +26,21 @@ const Header: React.FC = () => {
     return (
         <header className="bg-white shadow-md relative">
             <div className="text-center bg-black text-white">
-            <p className="text-[12px] pt-1 pb-1">Miễn Phí Đổi Hàng 30 Ngày</p>
-        </div>
+                <p className="text-[12px] pt-1 pb-1">Miễn Phí Đổi Hàng 30 Ngày</p>
+            </div>
             <div className="max-w-screen-xl mx-auto p-4 flex justify-between items-center">
                 <div className="text-2xl font-semibold text-gray-800">
-                <a href=""> <img src="image-removebg-preview 1.png" alt="" /></a>
+                    <a href=""> <img src="image-removebg-preview 1.png" alt="" /></a>
                 </div>
 
-                <nav className="hidden md:flex space-x-4 mr-8 lg:flex lg:items-center lg:justify-end lg:gap-8 uppercase text-sm text-gray-500 font-medium"> 
-                <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Trang chủ</a>
-                <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Sản phẩm</a>
-                <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">LookBook</a>
-                <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Dịp/Sự Kiện</a>
-                <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Blog</a>
-                <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Cửa Hàng</a>
-            </nav>
+                <nav className="hidden md:flex space-x-4 mr-8 lg:flex lg:items-center lg:justify-end lg:gap-8 uppercase text-sm text-gray-500 font-medium">
+                    <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Trang chủ</a>
+                    <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Sản phẩm</a>
+                    <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">LookBook</a>
+                    <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Dịp/Sự Kiện</a>
+                    <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Blog</a>
+                    <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Cửa Hàng</a>
+                </nav>
 
                 <div className="flex items-center space-x-4 relative">
                     <i className="fas fa-search text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => setShowSearch(prev => !prev)}></i>
@@ -66,7 +69,27 @@ const Header: React.FC = () => {
                             1
                         </span>
                     </div>
-                    <i className="fas fa-user text-gray-600 hover:text-gray-800 cursor-pointer"></i>
+                    <i className="fas fa-user text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => setShowMenu(!showMenu)}></i>
+                    {showMenu && (
+                        <div className={"absolute -right-11 mt-28 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 "}ref={menuRef}>
+                            <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                <a
+                                    href="#"
+                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                    role="menuitem"
+                                >
+                                    Đăng kí
+                                </a>
+                                <a
+                                    href="#"
+                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                    role="menuitem"
+                                >
+                                    Đăng nhập
+                                </a>
+                            </div>
+                        </div>
+                    )}
                     <div className="md:hidden">
                         <i className="fas fa-bars text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => setMenuOpen(true)}></i>
                     </div>
