@@ -6,8 +6,8 @@ import DetailPage from "./Pages/DetailPage";
 import PayPage from "./Pages/PayPage";
 import CartPage from "./Pages/CartPage";
 import BlogPage from "./Pages/BlogPage";
-import Signin from "./Pages/Signin";
-import Signup from "./Pages/Signup";
+import Login from "./Pages/Login";
+
 function App() {
   return (
     <>
@@ -18,8 +18,8 @@ function App() {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/pay" element={<PayPage />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+
         </Route>
       </Routes>
     </>
