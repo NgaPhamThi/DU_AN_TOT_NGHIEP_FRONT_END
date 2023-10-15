@@ -1,40 +1,14 @@
 .login-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 2rem;
     justify-content: center;
-    height: 100vh;
-    margin: 10% 0 0 0;
-  }
-.grid__item {
-    display: grid;
+    margin: 10% 0 10% 0;
   }
   
-  .large--one-half {
-    grid-template-columns: 1fr;
-    grid-gap: 1rem;
-  }
-  
-  .medium--one-half {
-    grid-template-columns: 1fr;
-    grid-gap: 1rem;
-  }
-  
-  .small--one-whole {
-    grid-template-columns: 1fr;
-    grid-gap: 1rem;
-  }
-  
-  .pd-left110 {
-    padding-left: 110px;
-  }
-  
-  .text-left {
-    text-align: left;
-  }
-  
-  .br-right {
-    border-right: 1px solid #000;
+  .grid__item {
+    display: flex;
+    justify-content: center;
   }
   
   .width-80 {
@@ -49,12 +23,14 @@
     display: flex;
     flex-direction: column;
   }
+  
   .form-vertical a {
     color: #007AFF;
     text-decoration: none;
     text-align: right;
     margin: 0 0 25px 0;
   }
+  
   .input-full {
     width: 100%;
     padding: 0.5rem;
@@ -62,7 +38,9 @@
     border-radius: 4px;
     margin-bottom: 1rem;
   }
-  
+  .br-right {
+    border-right: 1px solid #000;
+  }
   .clearfix {
     clear: both;
   }
@@ -70,9 +48,11 @@
   .large_form {
     margin-bottom: 1rem;
   }
+  
   .large_form a {
     color: #007AFF;
   }
+  
   .form-group {
     margin-bottom: 1rem;
   }
