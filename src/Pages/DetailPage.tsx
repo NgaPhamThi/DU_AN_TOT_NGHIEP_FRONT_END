@@ -2,206 +2,102 @@
 
 const DetailPage = () => {
     return (
+
         <div className='mx-[50px] mt-[50px]'>
-            <div className="product_detail_row_1 lg:flex lg:gap-[50px]">
-                <div className="row_1_column_1 flex  gap-[40px]">
-                    <div className="image_detail_product_1  hidden lg:block">
-                        <ul>
-                            <a href=""><img className='w-[150px] h-[160px] mb-[20px]' src="https://lzd-img-global.slatic.net/g/p/c8717c31871ccc892aff7111a20b01c5.jpg_720x720q80.jpg" alt="" /></a>
-                            <a href=""><img className='w-[150px] h-[160px] mb-[20px]' src="https://lzd-img-global.slatic.net/g/p/c8717c31871ccc892aff7111a20b01c5.jpg_720x720q80.jpg" alt="" /></a>
-                            <a href=""><img className='w-[150px] h-[160px] mb-[20px]' src="https://lzd-img-global.slatic.net/g/p/c8717c31871ccc892aff7111a20b01c5.jpg_720x720q80.jpg" alt="" /></a>
-                            <a href=""><img className='w-[150px] h-[160px] mb-[20px]' src="https://lzd-img-global.slatic.net/g/p/c8717c31871ccc892aff7111a20b01c5.jpg_720x720q80.jpg" alt="" /></a>
+            <div className="product_detail_row_1 flex mb-[80px]">
+                <div className=" basis-4/6  flex gap-[15px]">
+                    <div className="image_detail_small">
+                        <img className="w-[230px] h-[350px] mb-[20px]" src="https://product.hstatic.net/200000182297/product/2_bc4e788ba5144a7db7df5545546f5b94_master.jpg" alt="" />
+                        <img className="w-[230px] h-[350px] mb-[20px]" src="https://product.hstatic.net/200000182297/product/2_bc4e788ba5144a7db7df5545546f5b94_master.jpg" alt="" />
+                        <img className="w-[230px] h-[350px] mb-[20px]" src="https://product.hstatic.net/200000182297/product/2_bc4e788ba5144a7db7df5545546f5b94_master.jpg" alt="" />
+                    </div>
+                    <div className="image_detail_big">
+                        <img className="w-[700px] h-[1090px]" src="https://product.hstatic.net/200000182297/product/2_bc4e788ba5144a7db7df5545546f5b94_master.jpg" alt="" />
+                    </div>
+
+                </div>
+                <div className=" basis-2/6 pl-[80px]">
+                    <h2 className="text-[20px] font-bold mb-[20px]">ÁO VEST THIẾT KẾ AK06392</h2>
+                    <div className="">
+                        <span>Thương hiệu:</span>
+                        <span>NEM</span>
+                    </div>
+                    <div className="">
+                        <span>Mã SP:</span>
+                        <span>063921612353080418</span>
+                    </div>
+                    <h3 className="my-[10px] text-[24px] font-bold">1,399,000₫</h3>
+                    <div className="size mb-[20px]">
+                        <span className="text-[17px] mb-[10px]">Kích thước</span>
+                        <ul className="flex gap-[10px] mt-[10px]">
+                            <li className="border px-[10px] py-[5px] hover:border-gray-950">size 4</li>
+                            <li className="border px-[10px] py-[5px] hover:border-gray-950">size 6</li>
+                            <li className="border px-[10px] py-[5px] hover:border-gray-950">size 8</li>
+                            <li className="border px-[10px] py-[5px] hover:border-gray-950">size 10</li>
+                            <li className="border px-[10px] py-[5px] hover:border-gray-950">size 12</li>
                         </ul>
                     </div>
-                    <div className="image_detail_product_1">
-                        <img className='w-[600px] h-[700px]' src="https://lzd-img-global.slatic.net/g/p/c8717c31871ccc892aff7111a20b01c5.jpg_720x720q80.jpg" alt="" />
+                    <div className="color flex gap-[20px] mb-[20px]">
+                        <div className="w-[50px] h-[50px] bg-blue-400 border rounded-full"></div>
+                        <div className="w-[50px] h-[50px] bg-gray-400  border rounded-full"></div>
+                        <div className="w-[50px] h-[50px] bg-black  border rounded-full"></div>
+
                     </div>
-                </div>
-                <div className="row_1_column_2">
-                    <h3 className='text-[30px]'>Áo Khoác jean Nam Hàn Quốc </h3>
-                    <div className="flex gap-[50px] mt-[10px]">
-                        <div className="id_product flex gap-[10px] text-[14px]">
-                            <span>SKU:</span>
-                            <span>FASH072223SHO </span>
+                    <div className="mb-[30px]">
+                        <h3><a href="">HƯỚNG DẪN CHỌN SIZE</a></h3>
+                    </div>
+                    <div className="quantity flex gap-[50px]">
+                        <span>Số lượng</span>
+                        <div className=" flex border border-2 border-gray-300 px-[20px] py-[5px] gap-[20px] items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                            </svg>
+                            <span>2</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+
                         </div>
-                        <div className="product_status">
-                            <span>Hiện tại còn một sản phẩm </span>
+                    </div>
+                    <div className="shopping_cart my-[20px]">
+                        <div className="mb-[20px]">
+                            <button className="border border-gray-800 px-[100px] py-[10px]">THÊM VÀO GIỎ</button>
                         </div>
-                    </div>
-                    <div className="row_price_row flex gap-[50px] mt-[10px]">
-                        <span className='price_new text-[20px] text-red-600'>346,500 đ  </span>
-                        <span className='price_old line-through text-[20px] text-gray-500'>495,000 đ  </span>
-                    </div>
-                    <div className="row_id_sale flex gap-[40px] mt-[10px] items-center">
                         <div className="">
-                            <span className='text-[14px]'>Mã Giảm Giá: </span>
-                        </div>
-                        <div className="flex gap-[50px]">
-                            <div className="px-[10px] py-[5px] bg-neutral-300 text-center">
-                                <span className='text-[14px]'>Giảm 3k</span>
-                            </div>
-                            <div className="px-[10px] py-[5px] bg-neutral-300">
-                                <span className='text-[14px]'>Giảm 5k</span>
-                            </div>
+                            <button className="border px-[118px] py-[10px] bg-black text-white">MUA NGAY</button>
                         </div>
                     </div>
-                    <div className="row_color">
-                        <div className="text_color">
-                            <span className='text-[14px]'>Chọn Màu </span>
+                    <div className="describe">
+                        <div className="">
+                            <span className="text-[16px] font-bold">Chất liệu:</span>
+                            <span>vải thô</span>
                         </div>
-                        <div className="product_size">
-                            <div className="color_product flex gap-[30px] mt-[20px]">
-                                <div className="w-[100px] h-[100px] bg-slate-700"> </div>
-                                <div className="w-[100px] h-[100px] bg-red-400"></div>
-                                <div className="w-[100px] h-[100px] bg-blue-500"></div>
-                            </div>
-                            <div className="size pt-[20px] flex justify-between">
-                                <div className="size_product flex gap-[30px]">
-                                    <div className="px-[30px] py-[3px] border rounded-md border-black">
-                                        <span>S</span>
-                                    </div>
-                                    <div className="px-[30px] py-[3px] border rounded-md border-black">
-                                        <span>M</span>
-                                    </div>
-                                    <div className="px-[30px] py-[3px] border rounded-md border-black">
-                                        <span>L</span>
-                                    </div>
+                        <div className="">
+                            <span className="text-[16px] font-bold">Kiểu dáng:</span>
+                            <span>áo vest thiết kế chiết eo, cổ bẻ 2 ve, tone màu xanh trơn</span>
+                        </div>
+                        <div className="">
+                            <span className="text-[16px] font-bold">Sản phẩm thuộc dòng sản phẩm :</span>
+                            <span>NEM NEW</span>
+                        </div>
+                        <div className="">
+                            <span className="text-[16px] font-bold">Thông tin người mẫu:</span>
+                            <span>mặc sản phẩm size 2</span>
+                        </div>
+                        <div className="">
+                            <span className="text-[16px] font-bold">Sản phẩm kết hợp:</span>
+                            <span>quần Q06402</span>
+                        </div>
+                    </div>
 
-                                </div>
-                                <div className="text flex gap-[10px] items-center">
-                                    <span className='text-[14px]'>Bảng size </span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className="row_quantity flex gap-[40px] mt-[20px]">
-                        <div className="text_quantity mt-[15px]">
-                            <span>Số Lượng :</span>
-                        </div>
-                        <div className="quantity mt-[10px]">
-                            <form action="" className='flex'>
-                                <div className="w-[40px] bg-neutral-400 text-center"> <span>+</span></div>
-                                <input className='w-[60px] bg-neutral-600' type="text" />
-                                <div className="w-[40px] h-[30px] bg-neutral-400 text-center pb-[15px]">  <span>_</span></div>
-
-                            </form>
-                        </div>
-                    </div>
-                    <div className="cart mt-[20px] flex gap-[30px]">
-                        <div className="flex gap-[30px] w-[240px] h-[40px] bg-neutral-300 items-center border rounded-md">
-                            <div className="icon_cart pl-[35px]">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                                </svg>
-                            </div>
-                            <div className="text_cart_1">
-                                <span className='text-[14px]'>THÊM VÀO GIỎ </span>
-                            </div>
-                        </div>
-                        <div className="pt-[5px] w-[240px] h-[40px] bg-black items-center text-center border rounded-md items-center">
-                            <span className='text-[14px] text-white'>MUA NGAY</span>
-                        </div>
-                    </div>
 
                 </div>
-
             </div>
-            <div className="product_detail_row_2 flex gap-[50px] my-[50px]">
-                <div className="describe_product basis-5/6">
-                    <div className="describe_product_row">
-                        <div className="title_describe bg-neutral-400 h-[40px]">
-                            <h3 className='text-[20px] px-[50px] font-bold pt-[5px]'>Chi Tiết Sản Phẩm </h3>
-                        </div>
-                        <div className="content_describe my-[30px] flex gap-[50px]">
-                            <div className="title_item">
-                                <ul>
-                                    <li>Kiểu dáng</li>
-                                    <li>Xuất xứ</li>
-                                    <li>Loại trang phục </li>
-                                    <li>Chất liệu </li>
-                                    <li>Kho hàng </li>
-                                    <li>Gửi từ </li>
-                                </ul>
-                            </div>
-                            <div className="content_item">
-                                <ul>
-                                    <li>Váy xèo </li>
-                                    <li>Trung Quốc </li>
-                                    <li>Váy </li>
-                                    <li>Thun </li>
-                                    <li>1745678 </li>
-                                    <li>Hà nội </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="describe_product_row">
-                        <div className="title_describe bg-neutral-400 h-[40px]">
-                            <h3 className='text-[20px] px-[50px] font-bold pt-[5px]'>Mô Tả Sản Phẩm  </h3>
-
-                        </div>
-                        <div className="content_describe">
-                            <div className="content_describe_row_1 w-[500px] my-[20px]">
-                                <p>Bộ Quần Áo Thun Phông Cổ Tròn Phối Màu Thể Thao
-
-                                    Thiết kế thời trang, đơn giản không kém phần hiện đại
-
-                                    Kiểu dáng gọn nhẹ, năng động
-
-                                    Chất vải thun mềm mại, dễ thấm hút mồ hôi
-                                </p>
-                            </div>
-                            <div className="content_describe_row_2">
-                                <div className="">
-                                    <h4>Hướng dẫn chọn size:</h4>
-                                    <ul>
-                                        <li>- M (32-45Kg,1m6)</li>
-                                        <li>- L (46-58Kg, 1m7)</li>
-                                        <li>- XL (59-68Kg, 1m75)</li>
-                                        <li>-XXL(69-85kg, 1m85)</li>
-                                    </ul>
-                                </div>
-
-                            </div>
-                            <div className="content_describe_row_3">
-                                <div className="">
-                                    <h4>Lưu ý: </h4>
-                                    <ul>
-                                        <li>- Nếu chưa chắc chắn về chọn size sản phẩm</li>
-                                        <li>- Nếu khách thích mặc ôm body hoặc mặc rộng thoải mái</li>
-                                        <li>- Nếu khách form người không cân đối (Béo, gầy, thấp...)</li>
-                                        <li> INBOX trực tiếp cho shop để được tư vấn size nhé</li>
-                                    </ul>
-                                </div>
-
-                            </div>
-                            <div className="content_describe_row_4">
-                                <div className="">
-                                    <h4>Chế độ bảo hành :</h4>
-                                    <ul>
-                                        <li>- Tất cả các sản phẩm đều được shop bảo hành</li>
-                                        <li>- Đối với sản phẩm lỗi/đơn hàng thiếu sản phẩm, quý khách vui lòng quay video trước khi bóc hàng, nhắn tin/gọi nga</li>
-                                    </ul>
-                                </div>
-
-                            </div>
-                            <div className="content_describe_row_5">
-                                <div className="">
-                                    <h4>Cam kết : </h4>
-                                    <ul>
-                                        <li>- Mang đến cho khách hàng những sản phẩm với chất lượng tốt nhất trong tầm giá</li>
-                                    </ul>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+            <hr />
+            <div className="product_detail_row_2 mt-[50px]">
+                <div className="describe_product pr-[20px] mt-[5px]">
                     <div className="describe_product_row mt-[30px]">
-                        <div className="title_describe bg-neutral-400 h-[40px]">
+                        <div className="title_describe bg-neutral-400 h-[60px] flex items-center">
                             <h3 className='text-[20px] px-[50px] font-bold pt-[5px]'>ĐÁNH GIÁ SẢN PHẨM  </h3>
                         </div>
                         <div className="content_describe flex mt-[30px] bg-neutral-400 h-[130px] pl-[50px]">
@@ -227,17 +123,17 @@ const DetailPage = () => {
                                 </div>
                             </div>
                             <div className=" basis-5/6 pt-[20px]">
-                                <div className="">
-                                    <button className='np_star_item'>Tất cả </button>
-                                    <button className='np_star_item'>5 sao(5,4 k )</button>
-                                    <button className='np_star_item'>4 sao(806)</button>
-                                    <button className='np_star_item'>3 sao(206)</button>
-                                    <button className='np_star_item'>2 sao(106)</button>
-                                    <button className='np_star_item'>1 sao(6)</button>
+                                <div className="flex gap-[20px]">
+                                    <button className=' border px-[30px] py-[5px] rounded-lg bg-white'>Tất cả </button>
+                                    <button className='border px-[30px] py-[5px] rounded-lg bg-white'>5 sao(5,4 k)</button>
+                                    <button className='border px-[30px] py-[5px] rounded-lg bg-white'>4 sao(806)</button>
+                                    <button className='border px-[30px] py-[5px] rounded-lg bg-white'>3 sao(206)</button>
+                                    <button className='border px-[30px] py-[5px] rounded-lg bg-white'>2 sao(106)</button>
+                                    <button className='border px-[30px] py-[5px] rounded-lg bg-white'>1 sao(6)</button>
                                 </div>
-                                <div className="mt-[20px]">
-                                    <button className='np_star_item'>có bình luận (2,4 k)</button>
-                                    <button className='np_star_item'>có hình ảnh/ video(1,1k) </button>
+                                <div className="mt-[20px] flex gap-[50px]">
+                                    <button className='border px-[30px] py-[5px] rounded-lg bg-white'>có bình luận (2,4 k)</button>
+                                    <button className='border px-[30px] py-[5px] rounded-lg bg-white'>có hình ảnh/ video(1,1k) </button>
                                 </div>
                             </div>
                         </div>
@@ -297,106 +193,116 @@ const DetailPage = () => {
                         </div>
                     </div>
                     <hr />
-                    <div className="row_product_new mt-[20px] ">
-                        <div className="title mb-[20px] text-[20px]">
-                            <h3>Sản Phẩm Mới</h3>
-                        </div>
-                        <div className="row_product_new_main grid grid-cols-2 gap-[20px] lg:grid lg:grid-cols-5 lg:gap-[30px]">
-                            <div className="">
-                                <div className="image">
-                                    <img className='w-[200px] h-[200px]' src="https://ph-live-01.slatic.net/p/4de0a5ec67409509af0802ece2b46f1b.jpg" alt="" />
-                                </div>
-                                <div className=" mt-[10px]">
-                                    <h3 className='text-[15px]'>áo Sơ Mi Nam Trẻ Hàn Quốc</h3>
-                                    <span className='text-[14px]  text-red-500'>220 000 đ</span>
-                                </div>
-                            </div>
-                            <div className="">
-                                <div className="image">
-                                    <img className='w-[200px] h-[200px]' src="https://ph-live-01.slatic.net/p/4de0a5ec67409509af0802ece2b46f1b.jpg" alt="" />
-                                </div>
-                                <div className=" mt-[10px]">
-                                    <h3 className='text-[15px]'>áo Sơ Mi Nam Trẻ Hàn Quốc</h3>
-                                    <span className='text-[14px]  text-red-500'>220 000 đ</span>
-                                </div>
-                            </div>
-                            <div className="">
-                                <div className="image">
-                                    <img className='w-[200px] h-[200px]' src="https://ph-live-01.slatic.net/p/4de0a5ec67409509af0802ece2b46f1b.jpg" alt="" />
-                                </div>
-                                <div className=" mt-[10px]">
-                                    <h3 className='text-[15px]'>áo Sơ Mi Nam Trẻ Hàn Quốc</h3>
-                                    <span className='text-[14px]  text-red-500'>220 000 đ</span>
-                                </div>
-                            </div>
-                            <div className="">
-                                <div className="image">
-                                    <img className='w-[200px] h-[200px]' src="https://ph-live-01.slatic.net/p/4de0a5ec67409509af0802ece2b46f1b.jpg" alt="" />
-                                </div>
-                                <div className=" mt-[10px]">
-                                    <h3 className='text-[15px]'>áo Sơ Mi Nam Trẻ Hàn Quốc</h3>
-                                    <span className='text-[14px]  text-red-500'>220 000 đ</span>
-                                </div>
-                            </div>
-                            <div className="">
-                                <div className="image">
-                                    <img className='w-[200px] h-[200px]' src="https://ph-live-01.slatic.net/p/4de0a5ec67409509af0802ece2b46f1b.jpg" alt="" />
-                                </div>
-                                <div className=" mt-[10px]">
-                                    <h3 className='text-[15px]'>áo Sơ Mi Nam Trẻ Hàn Quốc</h3>
-                                    <span className='text-[14px]  text-red-500'>220 000 đ</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
-                <div className="Products_abs basis-1/6 hidden lg:block">
-                    <div className="mb-[40px]">
-                        <div className="image">
-                            <img className='w-[200px] h-[200px]' src="https://ph-live-01.slatic.net/p/4de0a5ec67409509af0802ece2b46f1b.jpg" alt="" />
+
+            </div>
+            <div className=" text-center m-[50px]">
+                <h2 className="text-[24px] font-bold">SẢN PHẨM TƯƠNG TỰ</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className=" rounded shadow-sm p-4 relative group hover: transition-all duration-300">
+                    <img
+                        src="blog6.png"
+                        alt="Product 1"
+                        className="w-full h-[421px] object-cover mb-4 transition-transform transform hover:scale-105"
+                    />
+                    <div className='flex justify-between items-center pl-4 pr-4'>
+                        <div>
+                            <h2 className="cursor-pointer text-xl  font-semibold py-1 hover: transform hover:scale-110 transition-transform hover:text-red-500">
+                                Sản phẩm 1
+                            </h2>
+                            <span className="text-lg line-through">500,000đ</span>
+                            <span className="text-lg text-red-500 ml-2">300,000đ</span>
                         </div>
-                        <div className=" mt-[10px] pl-[10px]">
-                            <h3 className='text-[15px]'>áo Sơ Mi Nam Trẻ Hàn Quốc</h3>
-                            <span className='text-[14px]  text-red-500'>220 000 đ</span>
-                        </div>
-                    </div>
-                    <div className="mb-[40px]">
-                        <div className="image">
-                            <img className='w-[200px] h-[200px]' src="https://ph-live-01.slatic.net/p/4de0a5ec67409509af0802ece2b46f1b.jpg" alt="" />
-                        </div>
-                        <div className=" mt-[10px] pl-[10px]">
-                            <h3 className='text-[15px]'>áo Sơ Mi Nam Trẻ Hàn Quốc</h3>
-                            <span className='text-[14px]  text-red-500'>220 000 đ</span>
-                        </div>
-                    </div>
-                    <div className="mb-[40px]">
-                        <div className="image">
-                            <img className='w-[200px] h-[200px]' src="https://ph-live-01.slatic.net/p/4de0a5ec67409509af0802ece2b46f1b.jpg" alt="" />
-                        </div>
-                        <div className=" mt-[10px] pl-[10px]">
-                            <h3 className='text-[15px]'>áo Sơ Mi Nam Trẻ Hàn Quốc</h3>
-                            <span className='text-[14px]  text-red-500'>220 000 đ</span>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                            </svg>
                         </div>
                     </div>
-                    <div className="mb-[40px]">
-                        <div className="image">
-                            <img className='w-[200px] h-[200px]' src="https://ph-live-01.slatic.net/p/4de0a5ec67409509af0802ece2b46f1b.jpg" alt="" />
+
+                    <span className="absolute left-0 top-0 mt-[16px] opacity-0 transform translate-x-[-100%] group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 ease-out bg-red-500 text-white px-2 py-1">
+                        -40%
+                    </span>
+                </div>
+
+                {/* Sản phẩm 2 */}
+                <div className=" rounded shadow-sm p-4 relative group hover: transition-all duration-300">
+                    <img
+                        src="blog6.png"
+                        alt="Product 2"
+                        className="w-full h-[421px] object-cover mb-4 transition-transform transform hover:scale-105"
+                    />
+                    <div className='flex justify-between items-center pl-4 pr-4'>
+                        <div>
+                            <h2 className="cursor-pointer text-xl  font-semibold py-1 hover: transform hover:scale-110 transition-transform hover:text-red-500">
+                                Sản phẩm 2
+                            </h2>
+                            <span className="text-lg line-through">500,000đ</span>
+                            <span className="text-lg text-red-500 ml-2">300,000đ</span>
                         </div>
-                        <div className=" mt-[10px] pl-[10px]">
-                            <h3 className='text-[15px]'>áo Sơ Mi Nam Trẻ Hàn Quốc</h3>
-                            <span className='text-[14px]  text-red-500'>220 000 đ</span>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                            </svg>
                         </div>
                     </div>
-                    <div className="mb-[40px]">
-                        <div className="image">
-                            <img className='w-[200px] h-[200px]' src="https://ph-live-01.slatic.net/p/4de0a5ec67409509af0802ece2b46f1b.jpg" alt="" />
+
+                    <span className="absolute left-0 top-0 mt-[16px] opacity-0 transform translate-x-[-100%] group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 ease-out bg-red-500 text-white px-2 py-1">
+                        -40%
+                    </span>
+                </div>
+
+                {/* Sản phẩm 3 và 4 tương tự... */}
+                <div className=" rounded shadow-sm p-4 relative group hover: transition-all duration-300">
+                    <img
+                        src="blog6.png"
+                        alt="Product 2"
+                        className="w-full h-[421px] object-cover mb-4 transition-transform transform hover:scale-105"
+                    />
+                    <div className='flex justify-between items-center pl-4 pr-4'>
+                        <div>
+                            <h2 className="cursor-pointer text-xl  font-semibold py-1 hover: transform hover:scale-110 transition-transform hover:text-red-500">
+                                Sản phẩm 3
+                            </h2>
+                            <span className="text-lg line-through">500,000đ</span>
+                            <span className="text-lg text-red-500 ml-2">300,000đ</span>
                         </div>
-                        <div className=" mt-[10px] pl-[10px]">
-                            <h3 className='text-[15px]'>áo Sơ Mi Nam Trẻ Hàn Quốc</h3>
-                            <span className='text-[14px]  text-red-500'>220 000 đ</span>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                            </svg>
                         </div>
                     </div>
+                    <span className="absolute left-0 top-0 mt-[16px] opacity-0 transform translate-x-[-100%] group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 ease-out bg-red-500 text-white px-2 py-1">
+                        -39%
+                    </span>
+                </div>
+                {/* ... */}
+                <div className=" rounded shadow-sm p-4 relative group hover: transition-all duration-300">
+                    <img
+                        src="blog6.png"
+                        alt="Product 2"
+                        className="w-full h-[421px] object-cover mb-4 transition-transform transform hover:scale-105"
+                    />
+                    <div className='flex justify-between items-center pl-4 pr-4'>
+                        <div>
+                            <h2 className="cursor-pointer text-xl  font-semibold py-1 hover: transform hover:scale-110 transition-transform hover:text-red-500">
+                                Sản phẩm 4
+                            </h2>
+                            <span className="text-lg line-through">500,000đ</span>
+                            <span className="text-lg text-red-500 ml-2">300,000đ</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <span className="absolute left-0 top-0 mt-[16px] opacity-0 transform translate-x-[-100%] group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 ease-out bg-red-500 text-white px-2 py-1">
+                        -23%
+                    </span>
                 </div>
             </div>
         </div>
