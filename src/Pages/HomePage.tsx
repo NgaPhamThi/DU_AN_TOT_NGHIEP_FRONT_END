@@ -1,5 +1,4 @@
 
-import React, { useState } from 'react'
 import Category from './Category'
 import Form from '../components/Layout/Form'
 
@@ -144,8 +143,8 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
-                {/* ListProduct1 */}
-                <div className='max-w-[1440px] mx-auto mb-10'>
+            {/* ListProduct1 */}
+            <div className='max-w-[1440px] mx-auto mb-10'>
                 <h2 className="font-bold text-[27px] text-center pt-8 pb-8">Áo Blazer Cao Cấp</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className=" rounded shadow-sm p-4 relative group hover: transition-all duration-300">
@@ -257,7 +256,7 @@ const HomePage = () => {
             <div className='border-b-2'>
                 <img className='w-full' src="slide_1.png" alt="" />
                 <div className='max-w-[1440px] mx-auto '>
-                    
+
                     <div className='text-center'>
                         <h2 className='font-bold text-[27px] text-center pt-8 pb-2'>GOOD THING GOOD NEWS</h2>
                         <span className='text-[14px] font-medium '>ĐÓN ĐẦU XU HƯỚNG, ĐỊNH HÌNH PHONG CÁCH</span>
