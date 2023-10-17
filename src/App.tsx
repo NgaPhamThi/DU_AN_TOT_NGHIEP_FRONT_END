@@ -7,6 +7,8 @@ import PayPage from "./Pages/PayPage";
 import CartPage from "./Pages/CartPage";
 import BlogPage from "./Pages/BlogPage";
 import Login from "./Pages/Login";
+import Admin from "./components/Layout/Admin";
+import Dashboard from "./Pages/Admin/dashboard";
 
 function App() {
   return (
@@ -20,6 +22,9 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/login" element={<Login />} />
 
+        </Route>
+        <Route path="/admin" element={<Admin/>}>
+          <Route index element={<Dashboard/>}/>
         </Route>
       </Routes>
     </>
