@@ -7,7 +7,7 @@ const CartPage =() =>{
            
           </ul>
         </div>
-        <section className="flex gap-8 w-10/12 m-auto py-20">
+        <section className="flex gap-8 w-10/12 m-auto py-20 ">
           <section className="basis-4/6">
             <table className="table-auto w-full ">
               <thead className="pb-10 ">

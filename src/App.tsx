@@ -9,6 +9,8 @@ import BlogPage from "./Pages/BlogPage";
 import Login from "./Pages/Login";
 import Admin from "./components/Layout/Admin";
 import Dashboard from "./Pages/Admin/dashboard";
+import CommentManagement from "./Pages/Admin/CommentManagement";
+import Message from "./Pages/Admin/Message";
 
 function App() {
   return (
@@ -23,8 +25,10 @@ function App() {
           <Route path="/login" element={<Login />} />
 
         </Route>
-        <Route path="/admin" element={<Admin/>}>
-          <Route index element={<Dashboard/>}/>
+        <Route path="/admin" element={<Admin />}>
+          <Route index  element={<Dashboard />} />
+          <Route path="messages" element={<CommentManagement />} /> {/* Thêm đường dẫn mới tại đây */}
+          <Route path="messages/comment/:productId" element={<Message />} />
         </Route>
       </Routes>
     </>

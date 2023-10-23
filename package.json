@@ -15,6 +15,7 @@
     "@heroicons/vue": "^2.0.18",
     "@iconify/icons-heroicons-solid": "^1.2.6",
     "@react-icons/all-files": "^4.1.0",
+    "antd": "^5.10.2",
     "axios": "^1.5.1",
     "font-awesome": "^4.7.0",
     "heroicons-react": "^1.4.1",
