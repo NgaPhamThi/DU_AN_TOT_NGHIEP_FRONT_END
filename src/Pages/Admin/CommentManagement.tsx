@@ -19,11 +19,11 @@ const CommentManagement = () => {
         fetchProduct()
     }, [])
   return (
-    <body className="bg-gray-100 w-full">
-
-<div className="container mx-auto  p-4 bg-white rounded shadow-xl">
-    <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold">Quản lý bình luận theo sản phẩm</h1>
+    <body className="bg-gray-100 mx-auto w-full">
+        
+    <div className="container   p-4 bg-white rounded shadow-xl">
+    <div className="text-center pb-7 ">
+        <h1 className="text-2xl font-semibold">Quản Lý Bình Luận</h1>
        
     </div>
 
@@ -56,8 +56,8 @@ const CommentManagement = () => {
                 <th className="border p-2">ID</th>
                 <th className="border p-2">Tên sản phẩm</th>
                 <th className="border p-2">Ảnh</th>
-                <th className="border p-2">Nội dung</th>
-                <th className="border p-2">Ngày gửi</th>
+                <th className="border p-2">giá </th>
+                <th className="border p-2">Giá Sale</th>
                 <th className="border p-2">Trạng thái</th>
             </tr>
         </thead>
@@ -71,7 +71,7 @@ const CommentManagement = () => {
              <td className="border  text-center">{product.price}</td>
              <td className="border  text-center">{product.price_sale}</td>
              <td className="border text-center  ">
-                 <Link className='' to={`comment/${product._id}`}><button className="bg-red-500 text-white   py-1 rounded">Xem chi tiết bình luận</button></Link>
+                 <Link className='' to={`comment/${product._id}`}><button className="bg-red-500 text-white pl-3 pr-3   py-1 rounded">Xem chi tiết bình luận</button></Link>
              </td>
          </tr>
            ))}
