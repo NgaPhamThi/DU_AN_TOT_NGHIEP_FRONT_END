@@ -11,8 +11,11 @@ import Admin from "./components/Layout/Admin";
 import Dashboard from "./Pages/Admin/dashboard";
 import CommentManagement from "./Pages/Admin/CommentManagement";
 import Message from "./Pages/Admin/Message";
+import ListCategories from "./Pages/Admin/Categories/ListCategories";
+import AddCategories from "./Pages/Admin/Categories/AddCategories";
 
 function App() {
+ 
   return (
     <>
       <Routes>
@@ -29,6 +32,8 @@ function App() {
           <Route index  element={<Dashboard />} />
           <Route path="messages" element={<CommentManagement />} /> {/* Thêm đường dẫn mới tại đây */}
           <Route path="messages/comment/:productId" element={<Message />} />
+          <Route path="Categories" element={<ListCategories />}/>
+          <Route path="Categories/add" element={<AddCategories/>}/>
         </Route>
       </Routes>
     </>

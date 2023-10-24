@@ -21,7 +21,7 @@ const Message = () => {
     useEffect(() => {
         fetchComment()
     }, [])
-    const handleDeleteComment = async (commentId: string | null) => {
+    const handleDeleteComment = async (commentId: any) => {
         try {
             if (commentId !== null) {
                 await deleteComment(commentId)
