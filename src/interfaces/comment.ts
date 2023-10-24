@@ -1,5 +1,5 @@
 export interface Comments{
-    _id: string;
+    _id?: string | number;
     content:string;
     userId:string;
     productId:{
