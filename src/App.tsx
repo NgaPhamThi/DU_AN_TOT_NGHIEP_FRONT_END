@@ -13,6 +13,7 @@ import CommentManagement from "./Pages/Admin/CommentManagement";
 import Message from "./Pages/Admin/Message";
 import ListCategories from "./Pages/Admin/Categories/ListCategories";
 import AddCategories from "./Pages/Admin/Categories/AddCategories";
+import UpdateCategories from "./Pages/Admin/Categories/UpdateCategories";
 
 function App() {
  
@@ -34,6 +35,7 @@ function App() {
           <Route path="messages/comment/:productId" element={<Message />} />
           <Route path="Categories" element={<ListCategories />}/>
           <Route path="Categories/add" element={<AddCategories/>}/>
+          <Route path="Categories/update/:id" element={<UpdateCategories/>}/>
         </Route>
       </Routes>
     </>

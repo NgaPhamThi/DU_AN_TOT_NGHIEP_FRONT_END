@@ -48,7 +48,7 @@ const ListCategories = () => {
             </button></Link>
           </div>
         </div>
-        <table className="mt-4 w-full border-collapse">
+        <table className="mt-4 text-center w-full border-collapse">
           <thead>
             <tr className="bg-gray-300">
               <th className="border p-2">ID</th>
@@ -67,7 +67,8 @@ const ListCategories = () => {
                 <td className="border   text-center"><img className='h-52 w-56 p-2 mx-auto ' src={category.img} alt="" /></td>
                 <td className="border text-center  ">
                   <div className="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
-                    <button
+                   <Link to={`update/${category._id}`}>
+                   <button
                       className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative"
                     >
                       <svg
@@ -87,6 +88,7 @@ const ListCategories = () => {
 
                       Edit
                     </button>
+                   </Link>
                     <Popconfirm
                       title="Bạn có chắc chắn muốn xóa bình luận này?"
                       onConfirm={() => handleDeleteComment(category._id)}

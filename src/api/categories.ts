@@ -4,8 +4,8 @@ export const getCategory =()=>{
     const uri = "/categories";
     return instance.get(uri)
 }
-export const getByidCategory =(id:string)=>{
-    const uri = "/categories/"+ id;
+export const getByidCategory =(id:string| number)=>{
+    const uri = "/categories/"+id;
     return instance.get(uri)
 }
 export const addCategory =(category:ICategories)=>{
@@ -14,9 +14,9 @@ export const addCategory =(category:ICategories)=>{
 }
 export const updateCategory =(category:ICategories, id:string)=>{
     const uri = "/categories/"+ id;
-    return instance.put(uri,category)
+    return instance.patch(uri,category)
 }
-export const deletecategory =(categoryId:string)=>{
+export const deletecategory =(categoryId:string | number)=>{
     const uri = "/categories/" +categoryId
     return instance.delete(uri)
 }
