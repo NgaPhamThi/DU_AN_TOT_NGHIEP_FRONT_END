@@ -14,6 +14,8 @@ import Message from "./Pages/Admin/Message";
 import ListCategories from "./Pages/Admin/Categories/ListCategories";
 import AddCategories from "./Pages/Admin/Categories/AddCategories";
 import UpdateCategories from "./Pages/Admin/Categories/UpdateCategories";
+import Signin from "./Pages/Signin";
+import Signup from "./Pages/Signup";
 
 function App() {
  
@@ -27,6 +29,8 @@ function App() {
           <Route path="/pay" element={<PayPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
 
         </Route>
         <Route path="/admin" element={<Admin />}>
