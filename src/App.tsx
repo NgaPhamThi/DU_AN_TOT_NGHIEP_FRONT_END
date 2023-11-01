@@ -18,13 +18,13 @@ import Signin from "./Pages/Signin";
 import Signup from "./Pages/Signup";
 
 function App() {
- 
+
   return (
     <>
       <Routes>
         <Route path="/" element={<UsersLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="/detail" element={<DetailPage />} />
+          <Route path="/product/:id" element={<DetailPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/pay" element={<PayPage />} />
           <Route path="/cart" element={<CartPage />} />
@@ -34,12 +34,12 @@ function App() {
 
         </Route>
         <Route path="/admin" element={<Admin />}>
-          <Route index  element={<Dashboard />} />
+          <Route index element={<Dashboard />} />
           <Route path="messages" element={<CommentManagement />} /> {/* Thêm đường dẫn mới tại đây */}
           <Route path="messages/comment/:productId" element={<Message />} />
-          <Route path="Categories" element={<ListCategories />}/>
-          <Route path="Categories/add" element={<AddCategories/>}/>
-          <Route path="Categories/update/:id" element={<UpdateCategories/>}/>
+          <Route path="Categories" element={<ListCategories />} />
+          <Route path="Categories/add" element={<AddCategories />} />
+          <Route path="Categories/update/:id" element={<UpdateCategories />} />
         </Route>
       </Routes>
     </>
