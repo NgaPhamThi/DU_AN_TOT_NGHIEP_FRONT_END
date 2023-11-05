@@ -60,3 +60,21 @@
   .form-label {
     font-weight: bold;
   }
+
+    .field {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+  
+    .field label {
+      font-weight: bold;
+      margin-right: 10px;
+      width: 150px;
+      /* Điều chỉnh độ rộng của tiêu đề */
+    }
+  
+    .field p {
+      flex-grow: 1;
+    }

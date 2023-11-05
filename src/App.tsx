@@ -14,9 +14,11 @@ import Message from "./Pages/Admin/Message";
 import ListCategories from "./Pages/Admin/Categories/ListCategories";
 import AddCategories from "./Pages/Admin/Categories/AddCategories";
 import UpdateCategories from "./Pages/Admin/Categories/UpdateCategories";
+import ListVouchers from "./Pages/Admin/Vouchers/ListVoucher";
+import AddVouchers from "./Pages/Admin/Vouchers/AddVouchers";
+import UpdateVoucher from "./Pages/Admin/Vouchers/UpdateVouchers";
 
 function App() {
- 
   return (
     <>
       <Routes>
@@ -27,15 +29,18 @@ function App() {
           <Route path="/pay" element={<PayPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/login" element={<Login />} />
-
         </Route>
         <Route path="/admin" element={<Admin />}>
-          <Route index  element={<Dashboard />} />
-          <Route path="messages" element={<CommentManagement />} /> {/* Thêm đường dẫn mới tại đây */}
+          <Route index element={<Dashboard />} />
+          <Route path="messages" element={<CommentManagement />} />{" "}
+          {/* Thêm đường dẫn mới tại đây */}
           <Route path="messages/comment/:productId" element={<Message />} />
-          <Route path="Categories" element={<ListCategories />}/>
-          <Route path="Categories/add" element={<AddCategories/>}/>
-          <Route path="Categories/update/:id" element={<UpdateCategories/>}/>
+          <Route path="vouchers" element={<ListVouchers />} />
+          <Route path="vouchers/add" element={<AddVouchers />} />
+          <Route path="vouchers/update/:id" element={<UpdateVoucher />} />
+          <Route path="Categories" element={<ListCategories />} />
+          <Route path="Categories/add" element={<AddCategories />} />
+          <Route path="Categories/update/:id" element={<UpdateCategories />} />
         </Route>
       </Routes>
     </>
