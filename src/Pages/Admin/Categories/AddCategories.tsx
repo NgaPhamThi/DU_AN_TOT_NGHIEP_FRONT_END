@@ -18,8 +18,6 @@ const AddCategories = () => {
     if (!categoryName || !imageUrl) {
         return;
     }
-
-
     const category = {
       name: categoryName,
       img: imageUrl
@@ -101,8 +99,6 @@ const AddCategories = () => {
               </svg>
               Quay Lại
             </button></a>
-
-
         </div>
       </form>
     </div>

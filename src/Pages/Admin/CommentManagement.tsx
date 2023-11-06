@@ -1,9 +1,8 @@
 
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getProduct } from '../../api/product';
+import { getAllProduct } from '../../api/product';
 import { IProduct } from '../../interfaces/product';
-
 
 
 const CommentManagement = () => {
@@ -11,7 +10,7 @@ const CommentManagement = () => {
     console.log(products);
     useEffect(() => {
         async function fetchProduct() {
-            const {data} = await getProduct();
+            const {data} = await getAllProduct();
             setProducts(data);
             console.log(data);
             

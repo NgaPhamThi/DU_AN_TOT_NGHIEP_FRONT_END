@@ -16,9 +16,12 @@ import AddCategories from "./Pages/Admin/Categories/AddCategories";
 import UpdateCategories from "./Pages/Admin/Categories/UpdateCategories";
 import Signin from "./Pages/Signin";
 import Signup from "./Pages/Signup";
+import ProductManager from "./Pages/Admin/Product/ProductManager";
+import AddProduct from "./Pages/Admin/Product/AddProduct";
+
 
 function App() {
- 
+
   return (
     <>
       <Routes>
@@ -40,6 +43,9 @@ function App() {
           <Route path="Categories" element={<ListCategories />}/>
           <Route path="Categories/add" element={<AddCategories/>}/>
           <Route path="Categories/update/:id" element={<UpdateCategories/>}/>
+          <Route path="products" element={<ProductManager />}/>
+          <Route path="products/add" element={<AddProduct/>}/>
+          
         </Route>
       </Routes>
     </>
