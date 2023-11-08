@@ -30,7 +30,7 @@ const Header: React.FC = () => {
             </div>
             <div className="max-w-screen-xl mx-auto p-4 flex justify-between items-center">
                 <div className="text-2xl font-semibold text-gray-800">
-                    <a href=""> <img src="image-removebg-preview 1.png" alt="" /></a>
+                    <a href="/"> <img src="image-removebg-preview 1.png" alt="" /></a>
                 </div>
 
                 <nav className="hidden md:flex space-x-4 mr-8 lg:flex lg:items-center lg:justify-end lg:gap-8 uppercase text-sm text-gray-500 font-medium">
