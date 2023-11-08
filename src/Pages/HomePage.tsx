@@ -4,9 +4,9 @@ import Form from '../components/Layout/Form'
 import { useEffect, useState } from 'react'
 import { getProduct } from '../api/product'
 import { IProduct } from '../interfaces/product'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import ListCategories from '../components/ListCategories'
-import Service from '../components/service'
+import Service from '../components/Service'
 import News from '../components/News'
 
 
@@ -31,8 +31,8 @@ const HomePage = () => {
                 <h2 className="font-bold text-[27px] text-center pt-8 pb-8">Sản Phẩm Mới</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {products.map((data) => (
-                        <div className=" rounded shadow-sm p-4 relative group hover: transition-all duration-300">
-                            <Link to={`/product/${data._id}`} key={data._id}>
+                        <div  key={data._id} className=" rounded shadow-sm p-4 relative group hover: transition-all duration-300">
+                            <Link to={`/product/${data._id}`}>
                                 <div>
                                     <div>
                                         <img src={data.img} alt="Product 1"

@@ -6,15 +6,24 @@ import { IProduct } from "../interfaces/product"
 import Product from "../components/product"
 import { getComment } from "../api/comment"
 import { Comments } from "../interfaces/comment"
-
+import { jwtDecode } from 'jwt-decode';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios"
+interface TokenPayload {
+    id: string;
+    // Bạn cần thêm các trường khác từ payload token nếu cần
+  }
 const DetailPage = () => {
     const [product, setProduct] = useState<IProduct>({} as IProduct)
     const [products, setProducts] = useState<IProduct[]>([])
     const [comments, setComments] = useState<Comments[]>([]);
-    const { id } = useParams()
+    const [comment, setComment] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const { productId } = useParams()
     const fetComment = async () => {
-        if (id) {
-            const { data } = await getComment(id)
+        if (productId) {
+            const { data } = await getComment(productId)
             console.log(data);
 
             setComments(data.comments)
@@ -25,8 +34,8 @@ const DetailPage = () => {
     }, [])
     // console.log(id);
     const fetProduct = async () => {
-        if (id) {
-            const { data } = await getById(id)
+        if (productId) {
+            const { data } = await getById(productId)
             // console.log(data);
             setProduct(data)
         }
@@ -46,6 +55,65 @@ const DetailPage = () => {
     }, [])
 
 
+    const getUserIdFromToken = (): string | null => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.log('Token not found in localStorage.');
+          return null;
+        }
+      
+        try {
+          const decoded = jwtDecode<TokenPayload>(token);
+          console.log(decoded); // Kiểm tra xem decoded token có đúng không
+          return decoded.id;
+        } catch (error) {
+          console.error('Error decoding token:', error);
+          return null;
+        }
+      };
+    
+      const handleSubmitComment = async () => {
+        if (!comment.trim()) return;
+      
+        const id = getUserIdFromToken();
+      
+    
+        console.log(id);
+        
+        if (!id) {
+            
+          toast.error('Bạn cần đăng nhập để thực hiện chức năng này.', { autoClose: 2000 })
+          return;
+        }
+    
+        try {
+          setIsSubmitting(true);
+         
+          
+          const response = await axios.post('http://localhost:8080/api/comment', {
+            content: comment,
+            productId,
+            userId:id,
+          }, {
+            headers: {
+              // Gửi token trong header nếu API của bạn yêu cầu
+              Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+          });
+       
+          // Xử lý response ở đây
+          console.log(response.data);
+          toast.success('Thêm bình luận thành công', { autoClose: 2000 })
+          setComment('');
+          fetComment();
+        } catch (error) {
+          console.error('Error submitting comment:', error);
+          toast.error('Lỗi khi thêm bình luận', { autoClose: 2000 })
+        } finally {
+          setIsSubmitting(false);
+          
+        }
+      };
 
 
    
@@ -54,6 +122,7 @@ const DetailPage = () => {
     return (
 
         <div className='mx-[100px] mt-[50px]'>
+            <ToastContainer />
             <div className="product_detail_row_1 flex mb-[80px]">
                 <div className=" basis-3/6">
                     <div className="image_detail_big">
@@ -210,9 +279,7 @@ const DetailPage = () => {
 
                                         <div>
                                         <h3 className="font-bold">
-                                        {typeof comment.userId === 'object' && 'username' in comment.userId
-                                    ? (comment.userId as { username: string }).username
-                                    : 'Unknown'}
+                                       
                                        
                                         </h3> 
                                       <span>{comment.createdAt ? new Date(comment.createdAt).toLocaleDateString() : "Không rõ"}</span>
@@ -238,11 +305,17 @@ const DetailPage = () => {
                             <div className="w-full px-3 my-2">
                                 <textarea
                                     className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
-                                    name="body" placeholder='Type Your Comment' required></textarea>
+                                    name="body" placeholder='Type Your Comment' required
+                                    value={comment}
+                                    onChange={(e) => setComment(e.target.value)}
+                                    disabled={isSubmitting}
+                                    ></textarea>
                             </div>
 
                             <div className="w-full flex justify-end px-3">
-                                <input type='submit' className="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500" value='Post Comment' />
+                                <button type='submit' onClick={handleSubmitComment} disabled={isSubmitting || comment.trim() === ''} className="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500"  > 
+                                Post Comment
+                                </button>
                             </div>
                         </form>
 
