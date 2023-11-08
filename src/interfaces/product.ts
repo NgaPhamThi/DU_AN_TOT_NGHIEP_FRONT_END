@@ -5,4 +5,5 @@ export interface IProduct {
     price_sale: number
     img: string
     description: string
+    
 }

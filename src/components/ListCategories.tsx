@@ -1,38 +1,31 @@
-
-import Category from './Category'
-import Form from '../components/Layout/Form'
-import { useEffect, useState } from 'react'
-import { getProduct } from '../api/product'
-import { IProduct } from '../interfaces/product'
-import { Link, useParams } from 'react-router-dom'
-import ListCategories from '../components/ListCategories'
-import Service from '../components/service'
-import News from '../components/News'
+import React, { useEffect, useState } from 'react'
+import { IProduct } from '../interfaces/product';
+import { Link } from 'react-router-dom';
 
 
-const HomePage = () => {
-    const [products, setProducts] = useState<IProduct[]>([])
-    const fetProducts = async () => {
-        const { data } = await getProduct()
-        console.log(data);
-        setProducts(data)
 
-    }
+const ListCategories = () => {
+    const [products, setProducts] = useState<IProduct[]>([]);
+
     useEffect(() => {
-        fetProducts()
-    }, [])
-    // console.log(products);
+      // Thực hiện cuộc gọi API để lấy danh sách sản phẩm từ trang chủ
+      fetch(`http://localhost:8080/api/categories/653811a569786b730f5c8efc`) // Thay thế bằng API endpoint thực tế
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.products && data.products.length > 0) {
+            setProducts(data.products);
+          }
+        })
+        .catch((error) => {
+          console.error('Lỗi khi lấy dữ liệu sản phẩm: ', error);
+        });
+    }, []);
+  return (
     
-    return (
-        <div>
-           
-            <Category />
-            <div className='max-w-[1440px] mx-auto'>
-                <h2 className="font-bold text-[27px] text-center pt-8 pb-8">Sản Phẩm Mới</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {products.map((data) => (
-                        <div className=" rounded shadow-sm p-4 relative group hover: transition-all duration-300">
-                            <Link to={`/product/${data._id}`} key={data._id}>
+                        <div key={data._id} className=" rounded shadow-sm p-4 relative group hover: transition-all duration-300">
+                            <Link to={`/product/${data._id}`}>
                                 <div>
                                     <div>
                                         <img src={data.img} alt="Product 1"
@@ -70,28 +63,8 @@ const HomePage = () => {
                     ))}
 
                 </div>
-            </div>
-            {/* ListProduct1 */}
-            <div className='max-w-[1440px] mx-auto mb-10'>
-                <h2 className="font-bold text-[27px] text-center pt-8 pb-8">Áo Blazer Cao Cấp</h2>
-              <ListCategories/> 
-            </div>
-            <div className='border-b-2'>
-                <img className='w-full' src="slide_1.png" alt="" />
-                <div className='max-w-[1440px] mx-auto '>
-
-                    <div className='text-center'>
-                        <h2 className='font-bold text-[27px] text-center pt-8 pb-2'>GOOD THING GOOD NEWS</h2>
-                        <span className='text-[14px] font-medium '>ĐÓN ĐẦU XU HƯỚNG, ĐỊNH HÌNH PHONG CÁCH</span>
-                    </div>
-                    <News/>
-                </div>
                 
-            </div>
-            <Service/>
-            <Form />
-        </div>
-    )
+  )
 }
 
-export default HomePage
+export default ListCategories
