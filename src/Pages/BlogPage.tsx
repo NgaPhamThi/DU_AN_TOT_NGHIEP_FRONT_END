@@ -8,7 +8,7 @@ const BlogPage = () => {
         <div className="flex flex-col-reverse lg:flex-row bg-[#F9F7F7] border rounded-2xl">
           <div className="lg:w-2/3 p-4 ">
             <img
-              src="blogbner.png"
+              src="new2.png"
               alt=""
               className=" w-full h-auto border rounded-2xl"
             />
@@ -37,7 +37,7 @@ const BlogPage = () => {
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="blog1.png"
+                src="image 5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -60,7 +60,7 @@ const BlogPage = () => {
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="blog2.png"
+                src="image 5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -83,7 +83,7 @@ const BlogPage = () => {
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="blog3.png"
+                src="image 5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -106,7 +106,7 @@ const BlogPage = () => {
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="blog4.png"
+                src="image 5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -131,7 +131,7 @@ const BlogPage = () => {
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="blog5.png"
+                src="image 5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -154,7 +154,7 @@ const BlogPage = () => {
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="blog6.png"
+                src="image 5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -177,7 +177,7 @@ const BlogPage = () => {
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="blog7.png"
+                src="image 5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -199,7 +199,7 @@ const BlogPage = () => {
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="blog8.png"
+                src="image 5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -224,7 +224,7 @@ const BlogPage = () => {
         <div className="flex flex-col-reverse lg:flex-row bg-[#F9F7F7] border rounded-2xl">
           <div className="lg:w-2/3 p-4 ">
             <img
-              src="blogbner2.png"
+              src="new2.png"
               alt=""
               className="w-full h-auto border rounded-2xl"
             />
@@ -254,7 +254,7 @@ const BlogPage = () => {
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="blog9.png"
+                src="image 5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -277,7 +277,7 @@ const BlogPage = () => {
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="blog10.png"
+                src="image 5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -300,7 +300,7 @@ const BlogPage = () => {
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="blog11.png"
+                src="image 5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -323,7 +323,7 @@ const BlogPage = () => {
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="blog11.png"
+                src="image 5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
