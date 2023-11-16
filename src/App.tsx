@@ -19,6 +19,7 @@ import Signup from "./Pages/Signup";
 import ListVouchers from "./Pages/Admin/Vouchers/ListVouchers";
 import AddVouchers from "./Pages/Admin/Vouchers/AddVouchers";
 import UpdateVouchers from "./Pages/Admin/Vouchers/UpdateVouchers";
+import ProductPage from "./Pages/ProductPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={<UsersLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="/product" element={<ProductPage />} />
           <Route path="/product/:productId" element={<DetailPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/pay" element={<PayPage />} />
