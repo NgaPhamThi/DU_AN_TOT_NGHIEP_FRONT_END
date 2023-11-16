@@ -18,10 +18,20 @@ import Signin from "./Pages/Signin";
 import Signup from "./Pages/Signup";
 import ProductManager from "./Pages/Admin/Product/ProductManager";
 import AddProduct from "./Pages/Admin/Product/AddProduct";
+import { addproduct } from "./api/product";
+import UpdateProduct from "./Pages/Admin/Product/UpdateProduct";
 
 
 function App() {
+  const onHandleAdd = async (product: any) => {
+    try {
+      const response = await addproduct(product)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
 
+    }
+  }
   return (
     <>
       <Routes>
@@ -44,7 +54,8 @@ function App() {
           <Route path="Categories/add" element={<AddCategories/>}/>
           <Route path="Categories/update/:id" element={<UpdateCategories/>}/>
           <Route path="products" element={<ProductManager />}/>
-          <Route path="products/add" element={<AddProduct/>}/>
+          <Route path="products/addProduct" element={<AddProduct onAdd={onHandleAdd} />}/>
+          <Route path="products/update/:id" element={<UpdateProduct />}/>
           
         </Route>
       </Routes>

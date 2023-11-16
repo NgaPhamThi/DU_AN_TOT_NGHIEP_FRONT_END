@@ -4,19 +4,19 @@ import instance from "./instance"
 export const getAllProduct = () => {
     return instance.get('/products')
 }
-export const getById = (id: string) => {
+export const getById = (id: string | number) => {
     const uri = "/products/" + id
     return instance.get(uri)
 }
-export const addProduct =(product:IProduct)=>{
+export const addproduct =(product:IProduct)=>{
     const uri = "/products";
     return instance.post(uri, product)
 }
-export const updateProduct =(product:IProduct, id:string)=>{
+export const updateproduct =(product:IProduct, id:string |number)=>{
     const uri = "/products/"+ id;
     return instance.patch(uri,product)
 }
-export const deleteProduct =(product:string | number)=>{
+export const deleteproduct =(product:string | number)=>{
     const uri = "/products/" +product
     return instance.delete(uri)
-} 
+}

@@ -1,7 +1,7 @@
 import { Popconfirm, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { IProduct } from "../../../interfaces/product";
-import { deleteProduct, getAllProduct } from "../../../api/product";
+import { deleteproduct, getAllProduct } from "../../../api/product";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -41,7 +41,7 @@ const ProductManager = (props: Props) => {
       key: "status",
       render:(status: any, record: IProduct)=>(
         <div className="inline-flex rounded-lg border  border-gray-100 bg-gray-100 p-1">
-                   <Link to={`update/`}>
+                   <Link to={`update/${record._id}`}>
                    <button
                       className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative"
                     >
@@ -107,7 +107,7 @@ const ProductManager = (props: Props) => {
   const handleDeleteProduct = async (id: any) => {
     try {
       if (id) {
-        await deleteProduct(id)
+        await deleteproduct(id)
         setproducts((prevCategories) =>
           prevCategories.filter((product) => product._id !== id)
         )
@@ -123,10 +123,10 @@ const ProductManager = (props: Props) => {
          <ToastContainer />
       <div className="text-center pb-7 flex justify-between items-center ">
           <div>
-            <h1 className="text-2xl font-semibold">PRODUCT MANAGER</h1>
+            <h1 className="text-2xl font-semibold">QUẢN LÝ SẢN PHẨM</h1>
           </div>
           <div className=''>
-            <Link to={"AddProduct"}><button type="button" className="btn bg-blue-500 flex items-center gap-2 btn-primary">ADD PRODUCT <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+          <Link to={"addProduct"}><button type="button" className="btn bg-blue-500 flex items-center gap-2 btn-primary">Thêm Sản Phẩm <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             </button></Link>
