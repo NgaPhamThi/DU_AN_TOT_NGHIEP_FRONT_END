@@ -4,7 +4,7 @@ const SideCatProduct = () => {
   return (
     <div>
       {" "}
-      <div className="">
+      <div className="hidden md:block">
         <div className="flex h-screen flex-col justify-between border-e bg-white">
           <div className="px-4 py-6">
             <span className="grid h-10  place-content-center rounded-lg bg-gray-100 text-xl text-gray-600">
