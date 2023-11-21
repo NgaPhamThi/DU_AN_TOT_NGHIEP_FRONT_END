@@ -21,12 +21,13 @@ const BlogPage = () => {
               <span>24/09/2023</span>
             </div>
             <a href="" className="text-2xl mt-2 ">
-              Mách Nàng Cách Phối Đồ Mùa Thu Từ Công Sở Đến Những Buổi Hẹn Hò
+              Ra mắt nhà người yêu nên mặc gì để gây ẤN TƯỢNG TỐT?
             </a>
             <p className="mt-4">
-              Chẳng cần những món đồ quá cầu kỳ, các nàng nhà TND vẫn có đươc
-              phong cách mùa thu hấp dẫn và cuốn hút mọi ánh nhìn với cách
-              phối...
+              Lần đầu ra mắt nhà người yêu chắc hẳn rất run phải không? Chắc
+              chắn bạn sẽ phải chuẩn bị rất nhiều thứ để gây ấn tượng với người
+              thân của chàng. Cùng YODY tìm hiểu ngay ra mắt nhà người yêu nên
+              mặc gì để lại dấu ấn tốt nhé.
             </p>
             <a href="" className="text-[#E49595] mt-4">
               ĐỌC TIN NGAY
@@ -37,7 +38,7 @@ const BlogPage = () => {
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="image 5.png"
+                src="blog5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -49,18 +50,18 @@ const BlogPage = () => {
               <span className="mr-4">24/09/2023</span>
             </div>
             <a href="" className=" text-[16px]">
-              Gợi Ý Những Món Quà 20.10 Tặng Vợ Đầy Ý Nghĩa Và Bất Ngờ
+              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
             </a>
             <p className="text-[14px] my-4">
-              Ngày Phụ Nữ Việt Nam 20-10 đang đến gần, nếu các chàng chưa biết
-              mua gì để tặng vợ thể hiện tình cảm yêu thương đối với người phụ
-              nữ...
+              Thật không ngoa khi nói áo polo có túi luôn là những item không
+              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
+              trưởng thành.
             </p>
           </div>
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="image 5.png"
+                src="blog5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -72,18 +73,18 @@ const BlogPage = () => {
               <span className="mr-4">24/09/2023</span>
             </div>
             <a href="" className=" text-[16px]">
-              [Giải Đáp] 20.10 Tặng Quà Gì Cho Bạn Gái?
+              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
             </a>
             <p className="text-[14px] my-4">
-              Bạn đang băn khoăn không biết 20.10 tặng quà gì cho bạn gái của
-              mình? Món quà là những item theo xu hướng thời trang sẽ thể hiện
-              tấm lòng...
+              Thật không ngoa khi nói áo polo có túi luôn là những item không
+              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
+              trưởng thành.
             </p>
           </div>
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="image 5.png"
+                src="blog5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -95,18 +96,18 @@ const BlogPage = () => {
               <span className="mr-4">24/09/2023</span>
             </div>
             <a href="" className=" text-[16px]">
-              Nhẹ Nhàng Và Cá Tính Với BST Từ Chất Liệu Vải Chiffon Cao Cấp
+              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
             </a>
             <p className="text-[14px] my-4">
-              Chiffon vốn là chất liệu được các quý cô nhà TND yêu thích và ưa
-              chuộng bởi chất vải nhẹ nhàng, năng động nhưng không kém phần cá
-              tính. Bởi...
+              Thật không ngoa khi nói áo polo có túi luôn là những item không
+              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
+              trưởng thành.
             </p>
           </div>
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="image 5.png"
+                src="blog5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -118,12 +119,12 @@ const BlogPage = () => {
               <span className="mr-4">24/09/2023</span>
             </div>
             <a href="" className=" text-[16px]">
-              Chụp Ảnh Kỷ Yếu Nên Mặc Gì? Gợi Ý Outfit Chụp Ảnh Kỷ Yếu Cực Đẹp
+              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
             </a>
             <p className="text-[14px] my-4">
-              Trong đời học sinh, để lưu lại những kỷ niệm trước khi rời khỏi
-              ghế nhà trường đó là buổi chụp ảnh kỷ yếu. Vì thế bạn cần phải
-              chuẩn...
+              Thật không ngoa khi nói áo polo có túi luôn là những item không
+              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
+              trưởng thành.
             </p>
           </div>
         </div>
@@ -131,7 +132,7 @@ const BlogPage = () => {
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="image 5.png"
+                src="blog5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -143,18 +144,18 @@ const BlogPage = () => {
               <span className="mr-4">24/09/2023</span>
             </div>
             <a href="" className=" text-[16px]">
-              Xu Hướng Thời Trang Phong Cách Menswear Với Cách Phối Cực Ấn...
+              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
             </a>
             <p className="text-[14px] my-4">
-              Năng động, trẻ trung và quyền lực đó là những gì mà phong cách
-              Menswear mang lại cho người mặc, với những mẫu thiết kế của TND đã
-              tạo nên...
+              Thật không ngoa khi nói áo polo có túi luôn là những item không
+              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
+              trưởng thành.
             </p>
           </div>
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="image 5.png"
+                src="blog5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -166,18 +167,18 @@ const BlogPage = () => {
               <span className="mr-4">24/09/2023</span>
             </div>
             <a href="" className=" text-[16px]">
-              Hướng Dẫn Cách Ủi Vải Linen Nhanh Và Đúng Cách
+              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
             </a>
             <p className="text-[14px] my-4">
-              Linen là chất liệu vải đang được rất nhiều nàng yêu thích bởi ưu
-              điểm nhẹ, mềm mại và thoáng khí khi mặc. Tuy nhiên, bất kỳ chất
-              liệu vải...
+              Thật không ngoa khi nói áo polo có túi luôn là những item không
+              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
+              trưởng thành.
             </p>
           </div>
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="image 5.png"
+                src="blog5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -189,17 +190,18 @@ const BlogPage = () => {
               <span className="mr-4">24/09/2023</span>
             </div>
             <a href="" className=" text-[16px]">
-              Nâng Tầm Thời Trang Sân Bay Đầy Phong Cách Cho Nàng Cá Tính
+              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
             </a>
             <p className="text-[14px] my-4">
-              Đi ra sân bay mặc gì để không chỉ phong cách mà còn cá tính? Đó là
-              câu hỏi mà rất nhiều nàng băn khoăn, bởi không bắt buộc nổi...
+              Thật không ngoa khi nói áo polo có túi luôn là những item không
+              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
+              trưởng thành.
             </p>
           </div>
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="image 5.png"
+                src="blog5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
@@ -211,12 +213,12 @@ const BlogPage = () => {
               <span className="mr-4">24/09/2023</span>
             </div>
             <a href="" className=" text-[16px]">
-              Đi Mộc Châu Nên Mặc Gì Đẹp Nhất? Học Cách Mix Đồ Cực Xinh
+              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
             </a>
             <p className="text-[14px] my-4">
-              Mộc Châu là một trong những địa điểm du lịch nổi tiếng của khu vực
-              phía bắc Việt Nam, tại đây hội chị em sẽ có những bức hình
-              check...
+              Thật không ngoa khi nói áo polo có túi luôn là những item không
+              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
+              trưởng thành.
             </p>
           </div>
         </div>
@@ -254,93 +256,93 @@ const BlogPage = () => {
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="image 5.png"
+                src="blog5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
             <div className="flex text-[14px] justify-between my-4">
               <a href="" className="text-[#E49595] ">
-                TIN TỨC NHÀ TDN
+                GÓC TƯ VẤN MẶC ĐẸP
               </a>
               <span className="mr-4">24/09/2023</span>
             </div>
             <a href="" className=" text-[16px]">
-              TND-LOYALTY - Mini App trên ZALO
+              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
             </a>
             <p className="text-[14px] my-4">
-              Tặng ngay 50K cho khách hàng lần đầu đăng nhập TND Loyalty - Mini
-              App trên Zalo🔸 Đăng nhập ngay tại đây https://bit.ly/3plS0zb hoặc
-              quét mã QR trong ảnh...
+              Thật không ngoa khi nói áo polo có túi luôn là những item không
+              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
+              trưởng thành.
             </p>
           </div>
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="image 5.png"
+                src="blog5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
             <div className="flex text-[14px] justify-between my-4">
               <a href="" className="text-[#E49595] ">
-                TIN TỨC NHÀ TDN
+                GÓC TƯ VẤN MẶC ĐẸP
               </a>
               <span className="mr-4">24/09/2023</span>
             </div>
             <a href="" className=" text-[16px]">
-              [TND x iBASIC] MUA ĐỒ XINH - NHẬN VOUCHER XỊN
+              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
             </a>
             <p className="text-[14px] my-4">
-              Đến với TND Nàng không chỉ tậu cho mình những bộ cánh xinh, mà từ
-              ngày 25/07, với hóa đơn mua hàng từ 500K tại cửa hàng, Nàng sẽ
-              nhận...
+              Thật không ngoa khi nói áo polo có túi luôn là những item không
+              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
+              trưởng thành.
             </p>
           </div>
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="image 5.png"
+                src="blog5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
             <div className="flex text-[14px] justify-between my-4">
               <a href="" className="text-[#E49595] ">
-                TIN TỨC NHÀ TDN
+                GÓC TƯ VẤN MẶC ĐẸP
               </a>
               <span className="mr-4">24/09/2023</span>
             </div>
             <a href="" className=" text-[16px]">
-              [TND x Sablanca] MUA ĐỒ NHÀ TND - TẶNG VOUCHER
+              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
             </a>
             <p className="text-[14px] my-4">
-              Muốn có outfit ấn tượng thì cứ diện áo đẹp, đầm xinh nhà TDN cùng
-              phụ kiện đến từ nhà Sablanca. Đặc biệt hơn, từ ngày 20/07/2023,
-              khi mua sắm..
+              Thật không ngoa khi nói áo polo có túi luôn là những item không
+              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
+              trưởng thành.
             </p>
           </div>
           <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <a href="">
               <img
-                src="image 5.png"
+                src="blog5.png"
                 className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                 alt=""
               />
             </a>
             <div className="flex text-[14px] justify-between my-4">
               <a href="" className="text-[#E49595] ">
-                TIN TỨC NHÀ TDN
+                GÓC TƯ VẤN MẶC ĐẸP
               </a>
               <span className="mr-4">24/09/2023</span>
             </div>
             <a href="" className=" text-[16px]">
-              Chương trình Khách Hàng Thân Thiết 2023
+              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
             </a>
             <p className="text-[14px] my-4">
-              Để cảm ơn sự ủng hộ và yêu thích của bạn đối với TDN Fashion và
-              chào đón năm 2023 đầy hứng khởi, TDN cập nhật lại chương trình
-              khách hàng thân thiết...
+              Thật không ngoa khi nói áo polo có túi luôn là những item không
+              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
+              trưởng thành.
             </p>
           </div>
         </div>
