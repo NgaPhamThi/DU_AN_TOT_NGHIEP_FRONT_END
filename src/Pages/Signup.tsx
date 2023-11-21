@@ -19,12 +19,18 @@ const Signup = () => {
       ...prevData,
       [name]: type === 'checkbox' ? checked : value,
     }));
+
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: undefined,
+    }));
   };
 
   const validateForm = () => {
     const newErrors = {};
 
-    // Kiểm tra các trường bắt buộc
+
     if (!formData.first_name.trim()) {
       newErrors.first_name = 'Họ không được để trống';
     }
@@ -35,12 +41,14 @@ const Signup = () => {
 
     if (!formData.email.trim()) {
       newErrors.email = 'Email không được để trống';
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      newErrors.email = 'Email không hợp lệ';
     }
 
     if (!formData.phone.trim()) {
       newErrors.phone = 'Số điện thoại không được để trống';
-    } else if (!/^\d+$/.test(formData.phone)) {
-      newErrors.phone = 'Số điện thoại chỉ được chứa chữ số';
+    } else if (!/^\d{10}$/.test(formData.phone)) {
+      newErrors.phone = 'Số điện thoại phải có 10 chữ số';
     }
 
     if (!formData.password.trim()) {
@@ -60,7 +68,7 @@ const Signup = () => {
     e.preventDefault();
 
     if (validateForm()) {
-      // Gửi dữ liệu đăng ký lên server hoặc xử lý theo yêu cầu của bạn
+     
       console.log('Đăng ký thành công:', formData);
     } else {
       console.log('Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.');
@@ -81,67 +89,77 @@ const Signup = () => {
                 <input name="form_type" type="hidden" value="create_customer" />
                 <input name="utf8" type="hidden" value="✓" />
 
-                <label htmlFor="FirstName">Họ</label>
-                <input
-                  type="text"
-                  name="first_name"
-                  id="FirstName"
-                  className={`input-full ${errors.first_name ? 'error' : ''}`}
-                  placeholder="Họ"
-                  onChange={handleChange}
-                  value={formData.first_name}
-                />
-                {errors.first_name && <span className="error-message">{errors.first_name}</span>}
+                <div className="form-group">
+                  <label htmlFor="FirstName">Họ</label>
+                  <input
+                    type="text"
+                    name="first_name"
+                    id="FirstName"
+                    className={`input-full ${errors.first_name ? 'error' : ''}`}
+                    placeholder="Họ"
+                    onChange={handleChange}
+                    value={formData.first_name}
+                  />
+                  {errors.first_name && <span className="error-message">{errors.first_name}</span>}
+                </div>
 
-                <label htmlFor="LastName">Tên</label>
-                <input
-                  type="text"
-                  name="last_name"
-                  id="LastName"
-                  className={`input-full ${errors.last_name ? 'error' : ''}`}
-                  placeholder="Tên"
-                  onChange={handleChange}
-                  value={formData.last_name}
-                />
-                {errors.last_name && <span className="error-message">{errors.last_name}</span>}
+                <div className="form-group">
+                  <label htmlFor="LastName">Tên</label>
+                  <input
+                    type="text"
+                    name="last_name"
+                    id="LastName"
+                    className={`input-full ${errors.last_name ? 'error' : ''}`}
+                    placeholder="Tên"
+                    onChange={handleChange}
+                    value={formData.last_name}
+                  />
+                  {errors.last_name && <span className="error-message">{errors.last_name}</span>}
+                </div>
 
-                <label htmlFor="Email">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  id="Email"
-                  className={`input-full ${errors.email ? 'error' : ''}`}
-                  placeholder="Email"
-                  onChange={handleChange}
-                  value={formData.email}
-                />
-                {errors.email && <span className="error-message">{errors.email}</span>}
+                <div className="form-group">
+                  <label htmlFor="Email">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="Email"
+                    className={`input-full ${errors.email ? 'error' : ''}`}
+                    placeholder="Email"
+                    onChange={handleChange}
+                    value={formData.email}
+                  />
+                  {errors.email && <span className="error-message">{errors.email}</span>}
+                </div>
 
-                <label htmlFor="Phone">Số điện thoại</label>
-                <input
-                  type="text"
-                  name="phone"
-                  id="Phone"
-                  className={`input-full ${errors.phone ? 'error' : ''}`}
-                  placeholder="Số điện thoại"
-                  onChange={handleChange}
-                  value={formData.phone}
-                />
-                {errors.phone && <span className="error-message">{errors.phone}</span>}
+                <div className="form-group">
+                  <label htmlFor="Phone">Số điện thoại</label>
+                  <input
+                    type="text"
+                    name="phone"
+                    id="Phone"
+                    className={`input-full ${errors.phone ? 'error' : ''}`}
+                    placeholder="Số điện thoại"
+                    onChange={handleChange}
+                    value={formData.phone}
+                  />
+                  {errors.phone && <span className="error-message">{errors.phone}</span>}
+                </div>
 
-                <label htmlFor="CreatePassword">Mật khẩu</label>
-                <input
-                  type="password"
-                  name="password"
-                  id="CreatePassword"
-                  className={`input-full ${errors.password ? 'error' : ''}`}
-                  placeholder="Mật khẩu"
-                  onChange={handleChange}
-                  value={formData.password}
-                />
-                {errors.password && <span className="error-message">{errors.password}</span>}
+                <div className="form-group">
+                  <label htmlFor="CreatePassword">Mật khẩu</label>
+                  <input
+                    type="password"
+                    name="password"
+                    id="CreatePassword"
+                    className={`input-full ${errors.password ? 'error' : ''}`}
+                    placeholder="Mật khẩu"
+                    onChange={handleChange}
+                    value={formData.password}
+                  />
+                  {errors.password && <span className="error-message">{errors.password}</span>}
+                </div>
 
-                <div id="verified_email" className="clearfix large_form">
+                <div className="form-group" id="verified_email">
                   <input
                     type="checkbox"
                     name="subscribe"
@@ -152,7 +170,7 @@ const Signup = () => {
                   Đăng ký nhận bản tin
                 </div>
 
-                <div id="verified_policy" className="clearfix large_form">
+                <div className="form-group" id="verified_policy">
                   <input
                     type="checkbox"
                     name="agreeTerms"
@@ -161,6 +179,7 @@ const Signup = () => {
                     onChange={handleChange}
                   />
                   Tôi đồng ý với các <a href="#">điều khoản</a> của TND
+                  {errors.agreeTerms && <span className="error-message">{errors.agreeTerms}</span>}
                 </div>
 
                 <p>
