@@ -9,7 +9,7 @@ const ListCategories = () => {
 
     useEffect(() => {
       // Thực hiện cuộc gọi API để lấy danh sách sản phẩm từ trang chủ
-      fetch(`http://localhost:8080/api/categories/653811a569786b730f5c8efc`) // Thay thế bằng API endpoint thực tế
+      fetch(`http://localhost:8080/api/categories/655ce0ff36e2059ae8c497cc`) // Thay thế bằng API endpoint thực tế
         .then((response) => response.json())
         .then((data) => {
           if (data.products && data.products.length > 0) {

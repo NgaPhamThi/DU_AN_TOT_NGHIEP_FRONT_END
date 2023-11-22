@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { ICategories } from '../../../interfaces/categories';
 import { deletecategory, getCategory } from '../../../api/categories';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Popconfirm } from 'antd';
+import { Popconfirm, Table } from 'antd';
 import { Link } from 'react-router-dom';
 
 
@@ -33,44 +33,42 @@ const ListCategories = () => {
       toast.error('Xóa danh mục thất bại');
     }
   }
-  return (
-    <body className="bg-gray-100 mx-auto w-full">
-      <ToastContainer />
-      <div className="container   p-4 bg-white rounded shadow-xl">
-        <div className="text-center pb-7 flex justify-between items-center ">
-          <div>
-            <h1 className="text-2xl font-semibold">Quản Lý Danh Mục</h1>
-          </div>
-          <div className=''>
-            <Link to={"add"}>
-            <button className="bg-blue-500 flex items-center gap-2  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Thêm Danh Mục  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </button>
-            </Link>
-          </div>
+ 
+  
+  const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'index',
+      width: "5%",
+      key: 'index',
+    },
+    {
+      title: 'Images',
+      dataIndex: 'img',
+      width: "30%",
+      key: 'img',
+      render: (imgArray: { url: string }[]) => (
+        <div style={{ display: 'flex' }}>
+          {imgArray.map((img, index) => (
+            <img key={index} src={img.url} alt={`product-${index}`} style={{ width: '50px', marginRight: '5px' }} />
+          ))}
         </div>
-        <table className="mt-4 text-center w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-300">
-              <th className="border p-2">ID</th>
-              <th className="border p-2">Tên danh mục</th>
-              <th className="border p-2">Ảnh</th>
-              <th className="border p-2">Trạng thái</th>
-            </tr>
-          </thead>
-          <tbody>
-
-
-            {categories.map((category, index) => (
-              <tr className='' key={category._id}>
-                <td className="border p-2 text-center">{index + 1}</td>
-                <td className="border text-center">{category.name}</td>
-                <td className="border   text-center"><img className='h-52 w-56 p-2 mx-auto ' src={category.img} alt="" /></td>
-                <td className="border text-center  ">
-                  <div className="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
-                   <Link to={`update/${category._id}`}>
+      ),
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      width: "30%",
+      key: 'name',
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      width: "40%",
+      key: "status",
+      render:(status: any, record: ICategories)=>(
+        <div className="inline-flex rounded-lg border  border-gray-100 bg-gray-100 p-1">
+                   <Link to={`update/${record._id}`}>
                    <button
                       className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative"
                     >
@@ -94,7 +92,7 @@ const ListCategories = () => {
                    </Link>
                     <Popconfirm
                       title="Bạn có chắc chắn muốn xóa bình luận này?"
-                      onConfirm={() => handleDeleteComment(category._id)}
+                      onConfirm={() => handleDeleteComment(record._id)}
                       okText={<button className="text-red-500 hover:text-black">Xóa</button>}
                       cancelText="Hủy"
                       placement="topRight"
@@ -120,23 +118,30 @@ const ListCategories = () => {
                       </button>
                     </Popconfirm>
                   </div>
-                </td>
-              </tr>
-            ))}
-
-
-          </tbody>
-        </table>
-
-        <div className="mt-4 flex justify-center">
-
-          <button className="bg-blue-500 text-white px-4 py-2 rounded">1</button>
-          <button className="bg-white text-blue-500 px-4 py-2 rounded ml-2">2</button>
-
+      )
+    },
+  ];
+  return (
+   
+    
+   <div>
+     <ToastContainer />
+     <div className="text-center pb-7 flex justify-between items-center ">
+          <div>
+             <h1 className="text-2xl font-semibold">Quản Lý Danh Mục</h1>
+          </div>
+         <div className=''>
+            <Link to={"add"}>
+           <button className="bg-blue-500 flex items-center gap-2  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Thêm Danh Mục  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+           <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </button>
+           </Link>
+          </div>
         </div>
-      </div>
-
-    </body>
+     <Table dataSource={categories.map((category,index)=>({...category,index:index+1}))} columns={columns} />
+   </div>
   )
 }
 
