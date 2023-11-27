@@ -1,49 +1,35 @@
 
-const CartPage =() =>{
-  return (
+import { Link } from "react-router-dom"
+import CartItem from "../components/CartItem"
+import { useShoppingContext } from "../context/ShoppingCartContext"
+
+const CartPage = () => {
+  const { cartItem, totalPrice, cartQty } = useShoppingContext()
+  if (cartItem.length === 0) {
+    return (
+      <h2 className=" text-center py-[150px] font-bold text-[30px]">Không có sản phẩm nào</h2>
+    )
+  } else {
+    return (
       <div>
         <div>
           <ul className="flex">
-           
+
           </ul>
         </div>
         <section className="flex gap-8 w-10/12 m-auto py-20 ">
           <section className="basis-4/6">
-            <table className="table-auto w-full ">
-              <thead className="pb-10 ">
-                <tr className="text-left ">
-                  <th className=" font-semibold pb-10">Sản phẩm</th>
-                  <th className="font-semibold pb-10">Số lượng</th>
-                  <th className="font-semibold pb-10">Giá tiền</th>
-                </tr>
-              </thead>
-              <tbody className="w-full ">
-                <tr className="border-t-2">
-                  <td className="flex py-10  gap-8">
-                    <img src="image 4.png" className="w-20"></img>
-                    <div className="pt-7">
-                      <p>Sản phẩm 1</p>
-                    </div>
-                  </td>
-                  <td className="w-40 ">
-                    <button>{`-`}</button>
-                    <span className="px-6">5</span>
-                    <button>{`+`}</button>
-                  </td>
-                  <td className="w-40"> 620.000 VNĐ </td>
-                  <td>
-                    <button>
-                      <i className="fa-sharp fa-solid fa-circle-xmark text-slate-300 bg-black rounded-full shadow-md shadow-black text-3xl"></i>
-                    </button>
-                  </td>
-                </tr>
-               
-              </tbody>
-            </table>
+
+            {cartItem.map(item => {
+              return <CartItem key={item._id} {...item} />
+            })}
             <div className="border-t-2 flex justify-between">
-              <button className="border-2  font-semibold p-3 px-5 mt-10">
-                Tiếp tục mua sắm
-              </button>{" "}
+              <Link to={'/product/:id'}>
+                <button className="border-2  font-semibold p-3 px-5 mt-10">
+                  Tiếp tục mua sắm
+                </button>{" "}
+              </Link>
+
               <button className="bg-black text-white font-semibold p-3 px-7 mt-10 ">
                 Cập nhật giỏ hàng{" "}
               </button>
@@ -64,21 +50,33 @@ const CartPage =() =>{
             <section className="bg-zinc-100 mt-12">
               <div className="p-10">
                 {" "}
-                <p>Tổng giỏ hàng</p>
+
+                <div className=" pt-5 flex">
+                  {" "}
+                  <span className="grow">Tổng giỏ hàng</span>
+                  <span className="text-right ">{cartQty}</span>
+                </div>
                 <div className=" pt-5 flex">
                   {" "}
                   <span className="grow">Tổng tiền</span>
-                  <span className="text-right ">$ 169.50</span>
+                  <span className="text-right ">${totalPrice}</span>
                 </div>
-                <button className="bg-black text-white font-semibold p-3 mt-10 w-full">
-                  Thanh toán
-                </button>
+                <Link to={'/pay'}>
+                  <button className="bg-black text-white font-semibold p-3 mt-10 w-full">
+                    Thanh toán
+                  </button>
+                </Link>
+
               </div>
             </section>
           </section>
         </section>
       </div>
-  )
+    )
+
+  }
+
+
 }
 
 export default CartPage

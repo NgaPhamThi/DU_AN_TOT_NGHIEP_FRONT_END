@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-
+import { Link } from 'react-router-dom'
+import { useShoppingContext } from '../context/ShoppingCartContext';
 const Header: React.FC = () => {
     const [searchValue, setSearchValue] = useState<string>('');
     const [showSearch, setShowSearch] = useState<boolean>(false);
@@ -23,6 +24,8 @@ const Header: React.FC = () => {
         };
     }, [menuRef]);
 
+    const { cartQty } = useShoppingContext()
+
     return (
         <header className="bg-white shadow-md relative">
             <div className="text-center bg-black text-white">
@@ -34,7 +37,7 @@ const Header: React.FC = () => {
                 </div>
 
                 <nav className="hidden md:flex space-x-4 mr-8 lg:flex lg:items-center lg:justify-end lg:gap-8 uppercase text-sm text-gray-500 font-medium">
-                    <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Trang chủ</a>
+                    <a href="/" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Trang chủ</a>
                     <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Sản phẩm</a>
                     <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">LookBook</a>
                     <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Dịp/Sự Kiện</a>
@@ -59,19 +62,21 @@ const Header: React.FC = () => {
                             />
                         </div>
                     )}
+                    <Link to={'/cart'}>
+                        <div className="relative group">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                            </svg>
 
-                    <div className="relative group">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                        </svg>
+                            <span className="absolute -top-1  -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center group-hover:bg-red-600">
+                                {cartQty}
+                            </span>
+                        </div>
+                    </Link>
 
-                        <span className="absolute -top-1  -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center group-hover:bg-red-600">
-                            1
-                        </span>
-                    </div>
                     <i className="fas fa-user text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => setShowMenu(!showMenu)}></i>
                     {showMenu && (
-                        <div className={"absolute -right-11 mt-28 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 "}ref={menuRef}>
+                        <div className={"absolute -right-11 mt-28 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 "} ref={menuRef}>
                             <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                 <a
                                     href="#"

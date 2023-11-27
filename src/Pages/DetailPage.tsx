@@ -1,13 +1,21 @@
 // import React from 'react'
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { getById, getProduct } from "../api/product"
 import { useEffect, useState } from "react"
 import { IProduct } from "../interfaces/product"
 import Product from "../components/product"
-
+import { IColor } from "../interfaces/color"
+import { getColor } from "../api/color"
+import { ISize } from "../interfaces/size"
+import { getSize } from "../api/size"
+import { useShoppingContext } from "../context/ShoppingCartContext"
 const DetailPage = () => {
     const [product, setProduct] = useState<IProduct>({} as IProduct)
     const [products, setProducts] = useState<IProduct[]>([])
+    const [colors, setColors] = useState<IColor[]>([])
+    const [sizes, setSizes] = useState<ISize[]>([])
+    const [color, setColor] = useState<string | null>(null)
+    const [size, setSize] = useState<string | null>(null)
     const { id } = useParams()
     // console.log(id);
     const fetProduct = async () => {
@@ -20,7 +28,7 @@ const DetailPage = () => {
     useEffect(() => {
         fetProduct()
     }, [])
-    // console.log(product);
+    console.log(product);
 
     const fetProducts = async () => {
         const { data } = await getProduct()
@@ -31,59 +39,87 @@ const DetailPage = () => {
         fetProducts()
     }, [])
 
+    const fetColor = async () => {
+        const { data } = await getColor()
+        // console.log(data);
+        setColors(data)
+
+    }
+
+    useEffect(() => {
+        fetColor()
+    }, [])
+
+    const fetSize = async () => {
+        const { data } = await getSize()
+        // console.log(data);
+        setSizes(data)
+
+    }
+    useEffect(() => {
+        fetSize()
+    }, [])
+
+    const { addCartItem } = useShoppingContext()
     return (
 
         <div className='mx-[100px] mt-[50px]'>
             <div className="product_detail_row_1 flex mb-[80px]">
                 <div className=" basis-3/6">
                     <div className="image_detail_big">
-                        <img className="w-[700px] h-[550px]" src={product.img} alt="" />
+                        <img className="w-[600px] h-[450px]" src={product.img} alt="" />
                     </div>
-                    <div className="image_detail_small mt-[10px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <img className="w-[150px] h-[150px] mb-[20px]" src={product.img} alt="" />
-                        <img className="w-[150px] h-[150px] mb-[20px]" src={product.img} alt="" />
-                        <img className="w-[150px] h-[150px] mb-[20px]" src={product.img} alt="" />
-                        <img className="w-[150px] h-[150px] mb-[20px]" src={product.img} alt="" />
+                    <div className="image_detail_small mt-[10px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-[10px]">
+                        <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" />
+                        <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" />
+                        <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" />
+                        <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" />
+                        <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" />
+
                     </div>
 
                 </div>
                 <div className=" basis-3/6 pl-[100px]">
-                    <h2 className="text-[20px] font-bold mb-[20px]">ÁO VEST THIẾT KẾ AK06392</h2>
+                    <h2 className="text-[20px] font-bold mb-[20px]">{product.name}</h2>
                     <div className="">
                         <span>Thương hiệu:</span>
                         <span>NEM</span>
                     </div>
                     <div className="">
                         <span>Mã SP:</span>
-                        <span>063921612353080418</span>
+                        <span>{product._id}</span>
                     </div>
-                    <h3 className="my-[10px] text-[24px] font-bold">1,399,000₫</h3>
+                    <h3 className="my-[10px] text-[24px] font-bold">{product.price}</h3>
                     <div className="size mb-[20px]">
                         <span className="text-[17px] mb-[10px]">Kích thước</span>
-                        <ul className="flex gap-[10px] mt-[10px]">
-                            <li className="border px-[10px] py-[5px] hover:border-gray-950">size 4</li>
-                            <li className="border px-[10px] py-[5px] hover:border-gray-950">size 6</li>
-                            <li className="border px-[10px] py-[5px] hover:border-gray-950">size 8</li>
-                            <li className="border px-[10px] py-[5px] hover:border-gray-950">size 10</li>
-                            <li className="border px-[10px] py-[5px] hover:border-gray-950">size 12</li>
+                        <ul className="flex gap-[20px] mt-[10px]">
+                            {sizes.map((size, index) => {
+                                return (
+                                    <li onClick={() => setSize(size._id as string)} key={index} className={`${size === size._id ? "hover:border-blue-950" : ""}   w-[60px] text-center border px-[10px] py-[5px] hover:border-gray-950`}>{size.name}</li>
+                                )
+                            })}
+
                         </ul>
                     </div>
                     <div className="color flex gap-[20px] mb-[20px]">
-                        <div className="w-[50px] h-[50px] bg-blue-400 border rounded-full"></div>
-                        <div className="w-[50px] h-[50px] bg-gray-400  border rounded-full"></div>
-                        <div className="w-[50px] h-[50px] bg-black  border rounded-full"></div>
-
+                        {colors.map((product, index) => {
+                            return (
+                                <div className=" " >
+                                    <span key={index} className="px-[30px] py-[7px] border hover:border-gray-950" style={{ background: product.name }}></span>
+                                </div>
+                            )
+                        })}
                     </div>
                     <div className="mb-[30px]">
                         <h3><a href="">HƯỚNG DẪN CHỌN SIZE</a></h3>
                     </div>
                     <div className="quantity flex gap-[50px]">
                         <span>Số lượng</span>
-                        <div className=" flex border border-2 border-gray-300 px-[20px] py-[5px] gap-[20px] items-center">
+                        <div className=" flex items-center border border-2 border-gray-300 px-[20px] py-[5px] gap-[20px] products-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                             </svg>
-                            <span>2</span>
+                            <span>0</span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                             </svg>
@@ -92,10 +128,12 @@ const DetailPage = () => {
                     </div>
                     <div className="shopping_cart my-[20px]">
                         <div className="mb-[20px]">
-                            <button className="border border-gray-800 px-[100px] py-[10px]">THÊM VÀO GIỎ</button>
+                            <button onClick={() => addCartItem(product)} className="border border-gray-800 px-[100px] py-[10px]">THÊM VÀO GIỎ</button>
                         </div>
                         <div className="">
-                            <button className="border px-[118px] py-[10px] bg-black text-white">MUA NGAY</button>
+                            <Link to="/cart">
+                                <button onClick={() => addCartItem(product)} className="border px-[118px] py-[10px] bg-black text-white">MUA NGAY</button>
+                            </Link>
                         </div>
                     </div>
                     <div className="describe">
@@ -128,7 +166,7 @@ const DetailPage = () => {
             <div className="product_detail_row_2 mt-[50px]">
                 <div className="describe_product pr-[20px] mt-[5px]">
                     <div className="describe_product_row mt-[30px]">
-                        <div className="title_describe bg-neutral-400 h-[60px] flex items-center">
+                        <div className="title_describe bg-neutral-400 h-[60px] flex products-center">
                             <h3 className='text-[20px] px-[50px] font-bold pt-[5px]'>ĐÁNH GIÁ SẢN PHẨM  </h3>
                         </div>
                         <div className="content_describe flex mt-[30px] bg-neutral-400 h-[130px] pl-[50px]">
@@ -231,10 +269,12 @@ const DetailPage = () => {
                 <h2 className="text-[24px] font-bold">SẢN PHẨM TƯƠNG TỰ</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {products.map((item) => <Product key={item._id} data={item} />)}
+                {products.map((product) => <Product key={product._id} data={product} />)}
             </div>
         </div>
     )
+
+
 }
 
 export default DetailPage
