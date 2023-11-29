@@ -1,5 +1,5 @@
 // import React from 'react'
-import { Link, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { getById, getProduct } from "../api/product"
 import { useEffect, useState } from "react"
 import { IProduct } from "../interfaces/product"
@@ -8,14 +8,17 @@ import { IColor } from "../interfaces/color"
 import { getColor } from "../api/color"
 import { ISize } from "../interfaces/size"
 import { getSize } from "../api/size"
-import { useShoppingContext } from "../context/ShoppingCartContext"
+import { CartItem, useShoppingContext } from "../context/ShoppingCartContext"
+
 const DetailPage = () => {
+    const navigate = useNavigate()
     const [product, setProduct] = useState<IProduct>({} as IProduct)
     const [products, setProducts] = useState<IProduct[]>([])
     const [colors, setColors] = useState<IColor[]>([])
     const [sizes, setSizes] = useState<ISize[]>([])
     const [color, setColor] = useState<string | null>(null)
     const [size, setSize] = useState<string | null>(null)
+    const [quantity, setQuantity] = useState<number>(1)
     const { id } = useParams()
     // console.log(id);
     const fetProduct = async () => {
@@ -28,7 +31,6 @@ const DetailPage = () => {
     useEffect(() => {
         fetProduct()
     }, [])
-    console.log(product);
 
     const fetProducts = async () => {
         const { data } = await getProduct()
@@ -50,6 +52,10 @@ const DetailPage = () => {
         fetColor()
     }, [])
 
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, [id])
+
     const fetSize = async () => {
         const { data } = await getSize()
         // console.log(data);
@@ -61,6 +67,39 @@ const DetailPage = () => {
     }, [])
 
     const { addCartItem } = useShoppingContext()
+
+    const addQuantity = (type: string) => {
+        console.log('ok');
+
+        if (type == 'plus') {
+            setQuantity(quantity + 1)
+        } else {
+            if (quantity === 0) return
+            setQuantity(quantity - 1)
+        }
+    }
+
+    const addCart = (product: IProduct, type: string) => {
+        if (!size || !color || quantity == 0) {
+            return alert('Bạn Cần nhập thông tin size,color,quantity')
+        }
+
+        const cartItem: CartItem = {
+            _id: product._id,
+            name: product.name,
+            img: product.img,
+            price: product.price,
+            color,
+            size,
+            quantity
+        }
+
+        addCartItem(cartItem)
+        if (type == 'TO_CART') {
+            navigate('/cart')
+        }
+    }
+
     return (
 
         <div className='mx-[100px] mt-[50px]'>
@@ -93,19 +132,19 @@ const DetailPage = () => {
                     <div className="size mb-[20px]">
                         <span className="text-[17px] mb-[10px]">Kích thước</span>
                         <ul className="flex gap-[20px] mt-[10px]">
-                            {sizes.map((size, index) => {
+                            {sizes.map((sizeItem, index) => {
                                 return (
-                                    <li onClick={() => setSize(size._id as string)} key={index} className={`${size === size._id ? "hover:border-blue-950" : ""}   w-[60px] text-center border px-[10px] py-[5px] hover:border-gray-950`}>{size.name}</li>
+                                    <li onClick={() => setSize(sizeItem._id as string)} key={index} className={`${size === sizeItem._id ? 'border-orange-500' : ''}   w-[60px] text-center border px-[10px] py-[5px] `}>{sizeItem.name}</li>
                                 )
                             })}
 
                         </ul>
                     </div>
                     <div className="color flex gap-[20px] mb-[20px]">
-                        {colors.map((product, index) => {
+                        {colors.map((colorItem, index) => {
                             return (
                                 <div className=" " >
-                                    <span key={index} className="px-[30px] py-[7px] border hover:border-gray-950" style={{ background: product.name }}></span>
+                                    <span key={index} onClick={() => setColor(colorItem._id as string)} className={`${color == colorItem._id ? 'border-orange-500' : ''} px-[30px] py-[7px] border`} style={{ background: colorItem.name }}></span>
                                 </div>
                             )
                         })}
@@ -116,24 +155,22 @@ const DetailPage = () => {
                     <div className="quantity flex gap-[50px]">
                         <span>Số lượng</span>
                         <div className=" flex items-center border border-2 border-gray-300 px-[20px] py-[5px] gap-[20px] products-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                            </svg>
-                            <span>0</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                            </svg>
+                            <button onClick={addQuantity.bind(this, 'minus')}>
+                                -
+                            </button>
+                            <span>{quantity}</span>
+                            <button onClick={addQuantity.bind(this, 'plus')}>
+                                +
+                            </button>
 
                         </div>
                     </div>
                     <div className="shopping_cart my-[20px]">
                         <div className="mb-[20px]">
-                            <button onClick={() => addCartItem(product)} className="border border-gray-800 px-[100px] py-[10px]">THÊM VÀO GIỎ</button>
+                            <button onClick={() => addCart(product, 'ADD_CART')} className="border border-gray-800 px-[100px] py-[10px]">THÊM VÀO GIỎ</button>
                         </div>
                         <div className="">
-                            <Link to="/cart">
-                                <button onClick={() => addCartItem(product)} className="border px-[118px] py-[10px] bg-black text-white">MUA NGAY</button>
-                            </Link>
+                            <button onClick={() => addCart(product, 'TO_CART')} className="border px-[118px] py-[10px] bg-black text-white">MUA NGAY</button>
                         </div>
                     </div>
                     <div className="describe">

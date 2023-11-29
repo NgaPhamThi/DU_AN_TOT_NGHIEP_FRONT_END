@@ -4,7 +4,8 @@ import CartItem from "../components/CartItem"
 import { useShoppingContext } from "../context/ShoppingCartContext"
 
 const CartPage = () => {
-  const { cartItem, totalPrice, cartQty } = useShoppingContext()
+  const { totalPrice, cartQty, cartItem } = useShoppingContext()
+
   if (cartItem.length === 0) {
     return (
       <h2 className=" text-center py-[150px] font-bold text-[30px]">Không có sản phẩm nào</h2>
@@ -21,8 +22,11 @@ const CartPage = () => {
           <section className="basis-4/6">
 
             {cartItem.map(item => {
+              console.log("item", item);
               return <CartItem key={item._id} {...item} />
             })}
+
+
             <div className="border-t-2 flex justify-between">
               <Link to={'/product/:id'}>
                 <button className="border-2  font-semibold p-3 px-5 mt-10">

@@ -9,8 +9,7 @@ type cartPayProps = {
     img: string
 
 }
-
-const CartPay = ({ name, price, quantity, img }: cartPayProps) => {
+const CartPay = ({ name, quantity, img }: cartPayProps) => {
 
     const { totalPrice } = useShoppingContext()
     return (

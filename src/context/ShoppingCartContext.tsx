@@ -3,28 +3,23 @@ import { ReactNode, createContext, useContext, useEffect, useState } from "react
 type ShoppingContextProviderProps = {
     children: ReactNode
 }
-type CartItem = {
+export type CartItem = {
     _id: number | string
     name: string
     price: number
     quantity: number,
-    image: string
-    size: string
-    color: string
+    img: string
+    size: string | null
+    color: string | null
 }
-type ProductItem = {
-    _id: number | string
-    name: string
-    price: number
-    image: string
-}
+
 interface ShoppingContextType {
     cartQty: number
     totalPrice: number
     cartItem: CartItem[]
     increaseQty: (id: string) => void
     decreaseQty: (id: string) => void
-    addCartItem: (item: ProductItem) => void
+    addCartItem: (item: CartItem) => void
     removeCartItem: (id: string) => void
     clearCart: () => void
 }
@@ -47,8 +42,7 @@ export const ShoppingContextProvider = ({ children }: ShoppingContextProviderPro
     useEffect(() => {
         localStorage.setItem('shopping_cart', JSON.stringify(cartItem))
     }, [cartItem])
-
-    const cartQty = cartItem.reduce((qty, item) => qty + item.quantity, 0)
+    const cartQty = cartItem.length
     const totalPrice = cartItem.reduce((total, item) => total + item.quantity * item.price, 0)
     const increaseQty = (id: string) => {
         console.log("increaseQty => ", id);
@@ -83,14 +77,14 @@ export const ShoppingContextProvider = ({ children }: ShoppingContextProviderPro
             setCartItem(newItems)
         }
     }
-    const addCartItem = (product: ProductItem) => {
+    const addCartItem = (product: CartItem) => {
         console.log("product", product)
         if (product) {
             const currentCartItem = cartItem.find((item) => item._id == product._id)
             if (currentCartItem) {
                 const newItems = cartItem.map((item) => {
                     if (item._id === product._id) {
-                        return { ...item, quantity: item.quantity + 1 }
+                        return { ...item, quantity: item.quantity + product.quantity }
 
                     } else {
                         return item
@@ -99,7 +93,7 @@ export const ShoppingContextProvider = ({ children }: ShoppingContextProviderPro
                 setCartItem(newItems)
 
             } else {
-                const newItem = { ...product, quantity: 1 }
+                const newItem = { ...product }
                 setCartItem([...cartItem, newItem])
             }
 
