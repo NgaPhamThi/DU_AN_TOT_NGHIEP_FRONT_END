@@ -1,65 +1,131 @@
-// import {BsFillPersonFill,BsFillCartFill} from 'react-icons/bs';
+import { useEffect, useState } from "react";
+import { CartItem } from "../context/ShoppingCartContext";
+import { ISize } from "../interfaces/size";
+import { IColor } from "../interfaces/color";
+import axios from "axios";
+import { IOrders } from "../interfaces/Orders";
+import { jwtDecode } from 'jwt-decode';
+interface TokenPayload {
+  id: string;
+  // Bạn cần thêm các trường khác từ payload token nếu cần
+}
 const PayPage =() =>{
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [sizes, setSizes] = useState<ISize[]>([]); // Add your size data
+  const [colors, setColors] = useState<IColor[]>([]);
+  const [formData, setFormData] = useState({
+    fullname: "",
+    phonenumber: "",
+    address: "",
+  });
+  useEffect(() => {
+    // Fetch cart information from local storage
+    const storedCart: string | null = localStorage.getItem('shopping_cart');
+    if (storedCart !== null) {
+      const parsedCart: CartItem[] = JSON.parse(storedCart);
+      setCartItems(parsedCart);
+    }
+    axios.get<ISize[]>('http://localhost:8080/api/size')
+    .then(response => setSizes(response.data))
+    .catch(error => console.error('Error fetching size data:', error));
+
+  // Fetch color data from your API
+  axios.get<IColor[]>('http://localhost:8080/api/color')
+    .then(response => setColors(response.data))
+    .catch(error => console.error('Error fetching color data:', error));
+    console.log(storedCart);
+    
+  }, []);
+  const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
+  const shippingFee = 0; 
+  const discount = 100;
+  const getSizeNameById = (sizeId: any): any => {
+    const size = sizes.find((s) => s._id === sizeId);
+    return size ? size.name : 'Unknown Size';
+  };
+  const getColorNameById = (colorId: any): any => {
+    const color = colors.find((c) => c._id === colorId);
+    return color ? color.name : 'Unknown Color';
+  };
+
+  const getUserIdFromToken = (): string | null => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('Token not found in localStorage.');
+      return null;
+    }
+  
+    try {
+      const decoded = jwtDecode<TokenPayload>(token);
+      console.log(decoded); // Kiểm tra xem decoded token có đúng không
+      return decoded.id;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  };
+  const id = getUserIdFromToken()
+  console.log(id);
+  
+
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      // Send order data to your server
+      const response = await axios.post("http://localhost:8080/api/order", {
+        userId: getUserIdFromToken(),
+        fullname: formData.fullname,
+        phonenumber: formData.phonenumber,
+        address: formData.address,
+        orderTotal: totalPrice + shippingFee - discount,
+        orderDetails: cartItems.map((item) => ({
+          productId: item._id,
+          quantity: item.quantity,
+          price: item.price,
+          sizeId: item.sizeId,
+          colorId: item.colorId,
+        })),
+      });
+
+      console.log("Order created:", response.data);
+      // Handle success, e.g., redirect or show a success message
+    } catch (error) {
+      console.error("Error creating order:", error);
+      // Handle error, e.g., show an error message to the user
+    }
+  };
+
     return (
         <div>
-          {/* <div>
-            <ul className="flex">
-              <li>
-                <li>Trang chủ</li>
-              </li>
-              / <li> Giỏ hàng</li>
-            </ul>
-          </div> */}
+          
           <section className="flex gap-8 w-10/12 m-auto py-10">
             <section className="basis-3/6">
-            <form acceptCharset="UTF-8" action="/account" id="create_customer" method="post">
-              <input name="form_type" type="hidden" value="create_customer" />
-              <input name="utf8" type="hidden" value="✓" />
+            <form onSubmit={handleFormSubmit}>
+              <label htmlFor="fullname">Họ và tên</label>
+              <input type="text" name="fullname" id="fullname" className="input-full" placeholder="Họ"  
+                 value={formData.fullname}
+                 onChange={(e) => setFormData({ ...formData, fullname: e.target.value })}/>
 
-              <label htmlFor="Name">Họ và tên</label>
-              <input type="text" name="name" id="Name" className="input-full" placeholder="Họ"  />
-
-              <label htmlFor="Email">Email</label>
-              <input type="email" name="email" id="Email" className="input-full" placeholder="Email"  />
-
-              <label htmlFor="Phone">Số điện thoại</label>
-              <input type="text" name="phone" id="Phone" className="input-full" placeholder="Số điện thoại" />
+              <label htmlFor="phonenumber">Số điện thoại</label>
+              <input type="text" name="phonenumber" id="phonenumber" className="input-full" placeholder="Số điện thoại" 
+               value={formData.phonenumber}
+               onChange={(e) => setFormData({ ...formData, phonenumber: e.target.value })} />
 
               <label htmlFor="Address">Địa chỉ</label>
-              <input type="text" name="address" id="Address" className="input-full" placeholder="Địa chỉ" />
-              <div className="flex gap-[10px] mt-[10px] pb-10" >
-              <div className=" px-5px border-2 ">
-                <select id="Conscious" name="Conscious" >
-                <option value="">Chọn thành phố</option>
-                <option value="Hanoi">Hà Nội</option>
-                <option value="NinhBinh">Ninh Bình</option>
-                <option value="Haiphong">Hải Phòng</option>
-                <option value="TPHCM">Thành phố Hồ Chí Minh</option>
-              </select>
-
-              </div>
-              <div className="px-5px border-2 ">
-                <select id="district" name="district" >
-                <option value="">Chọn Quận/Huyện</option>
-              </select>
-
-              </div>
-              <div className="px-5 border-2 ">
-                <select id="ward" name="ward" >
-                <option value="">Chọn Xã/Phường</option>
-              </select>
-
-              </div>
-              </div>
+              <input type="text" name="address" id="Address" className="input-full" placeholder="Địa chỉ"
+               value={formData.address}
+               onChange={(e) => setFormData({ ...formData, address: e.target.value })} />
               
               
              
               <div className="border-t-2 flex justify-between">
                 <button className="border-2  font-semibold p-3 px-5 mt-10">
                   Giỏ hàng
-                </button>{" "}
-                <button className="bg-black text-white font-semibold p-3 px-7 mt-10 ">
-                  Phương thức thanh toán{" "}
+                </button>
+                <button className="bg-black text-white font-semibold p-3 px-7 mt-10 " >
+                  Phương thức thanh toán
                 </button>
               </div>
     
@@ -69,15 +135,23 @@ const PayPage =() =>{
             <section className="basis-3/6 w-full">
             <table className="table-auto w-full ">
                 <tbody className="w-full ">
-                  <tr className="border-t-2">
+                  {cartItems.map((item)=>(
+                    <tr key={item._id} className="border-t-2">
                     <td className="flex py-10  gap-8">
-                      <img src="image 3.png" className="w-20"></img>
+                      <img src={item.img} className="w-20"></img>
+                      
                       <div className="pt-7">
-                        <p>Sản phẩm 1</p>
+                        <p>{item.name}</p>
+                        <div>
+                          <p>{`Size: ${item.sizeId !== null ? getSizeNameById(String(item.sizeId)) : 'N/A'}`}</p>
+                          <p>{`Color: ${item.colorId !== null ? getColorNameById(String(item.colorId)) : 'N/A'}`}</p>
+                        </div>
                       </div>
                     </td>
-                    <td className="w-40"> 500.000 VNĐ </td>
-                  </tr>            
+                    <td className="w-40"> {item.price} </td>
+                  </tr>     
+                  ))}
+                         
                 </tbody>
               </table>
               <section className="bg-zinc-100 mt-12">
@@ -87,23 +161,23 @@ const PayPage =() =>{
                   <div className=" pt-5 flex">
                     {" "}
                     <span className="grow">Tổng tiền</span>
-                    <span className="text-right ">500.000 vnd</span>
+                    <span className="text-right ">{`${totalPrice.toLocaleString()}`} vnd</span>
                   </div>
                   <div className=" pt-5 flex">
                     {" "}
                     <span className="grow">Phí ship</span>
-                    <span className="text-right ">0 vnd</span>
+                    <span className="text-right ">{`${shippingFee.toLocaleString()}`} vnd</span>
                   </div>
                   
                   <div className=" pt-5 flex">
                     {" "}
                     <span className="grow">Giảm giá</span>
-                    <span className="text-right ">100.000 vnd</span>
+                    <span className="text-right ">{`${discount.toLocaleString()}`} vnd</span>
                   </div>
                   <div className=" pt-5 flex">
                     {" "}
                     <span className="grow">Thanh toán</span>
-                    <span className="text-right ">400.000 vnd</span>
+                    <span className="text-right ">{`${(totalPrice + shippingFee - discount).toLocaleString()}`} vnd</span>
                   </div>
                 </div>
               </section>
