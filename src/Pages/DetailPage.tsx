@@ -85,12 +85,12 @@ const DetailPage = () => {
         }
 
         const cartItem: CartItem = {
-            _id: product._id,
+            _id: typeof product._id === 'string' || typeof product._id === 'number' ? product._id : '',
             name: product.name,
             img: product.img,
             price: product.price,
-            color,
-            size,
+            colorId:color,
+            sizeId: size,
             quantity
         }
 

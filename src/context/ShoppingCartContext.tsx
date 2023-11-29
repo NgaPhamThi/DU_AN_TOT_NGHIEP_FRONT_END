@@ -9,8 +9,8 @@ export type CartItem = {
     price: number
     quantity: number,
     img: string
-    size: string | null
-    color: string | null
+    sizeId: string | null
+    colorId: string | null
 }
 
 interface ShoppingContextType {
