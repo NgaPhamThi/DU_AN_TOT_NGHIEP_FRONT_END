@@ -20,8 +20,21 @@ import ListVouchers from "./Pages/Admin/Vouchers/ListVouchers";
 import AddVouchers from "./Pages/Admin/Vouchers/AddVouchers";
 import UpdateVouchers from "./Pages/Admin/Vouchers/UpdateVouchers";
 import ProductPage from "./Pages/ProductPage";
+import { addproduct } from "./api/product";
+import ProductManager from "./Pages/Admin/Product/ProductManager";
+import AddProduct from "./Pages/Admin/Product/AddProduct";
+import UpdateProduct from "./Pages/Admin/Product/UpdateProduct";
 
 function App() {
+  const onHandleAdd = async (product: any) => {
+    try {
+      const response = await addproduct(product)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+
+    }
+  }
   return (
     <>
       <Routes>
@@ -47,6 +60,9 @@ function App() {
           <Route path="Categories" element={<ListCategories />} />
           <Route path="Categories/add" element={<AddCategories />} />
           <Route path="Categories/update/:id" element={<UpdateCategories />} />
+          <Route path="products" element={<ProductManager />}/>
+          <Route path="products/addProduct" element={<AddProduct onAdd={onHandleAdd} />}/>
+          <Route path="products/update/:id" element={<UpdateProduct />}/>
         </Route>
       </Routes>
     </>
