@@ -29,6 +29,7 @@ const AddProduct = ({onAdd}: any) => {
       toast.success('Thêm sản phẩm thành công', { autoClose: 2000 })
   }
   return (
+    // -----
     <div className="flex flex-col items-center mt-10">
        <ToastContainer />
       <h1 className="text-2xl font-bold mb-5">Thêm Sản Phẩm</h1>
