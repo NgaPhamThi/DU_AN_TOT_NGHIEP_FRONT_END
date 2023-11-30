@@ -10,33 +10,29 @@ const Signup = () => {
   const handleSignup = (e) => {
     e.preventDefault();
 
-    // Kiểm tra điều kiện
+
     if (!lastName || !email || !phone || !password) {
       setError('Vui lòng nhập đầy đủ thông tin');
       return;
     }
 
-    // Kiểm tra định dạng số điện thoại
     const phoneRegex = /^0\d{9}$/;
     if (!phone.match(phoneRegex)) {
       setError('Số điện thoại không hợp lệ.');
       return;
     }
 
-    // Kiểm tra định dạng email
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     if (!email.match(emailRegex)) {
       setError('Định dạng email không hợp lệ');
       return;
     }
 
-    // Lưu dữ liệu đăng ký vào local storage
     localStorage.setItem('lastName', lastName);
     localStorage.setItem('email', email);
     localStorage.setItem('phone', phone);
     localStorage.setItem('password', password);
 
-    // Reset các trường đăng ký và thông báo lỗi
     setLastName('');
     setEmail('');
     setPhone('');

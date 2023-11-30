@@ -8,17 +8,17 @@ const Signin = () => {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Kiểm tra điều kiện
+
     if (!email || !password) {
       alert('Vui lòng điền đầy đủ email và mật khẩu');
       return;
     }
 
-    // Lấy thông tin từ Local Storage
+   
     const storedEmail = localStorage.getItem('email');
     const storedPassword = localStorage.getItem('password');
 
-    // Kiểm tra thông tin đăng nhập
+   
     if (email === storedEmail && password === storedPassword) {
       setIsLoggedIn(true);
       alert('Đăng nhập thành công!');
@@ -29,7 +29,7 @@ const Signin = () => {
   };
 
   if (isLoggedIn) {
-    // Hiển thị nội dung sau khi đăng nhập thành công
+   
     return <div>Đăng nhập thành công!</div>;
   }
 
