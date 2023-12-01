@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Comments } from '../../interfaces/comment';
-import { deleteComment, getComment } from '../../api/comment';
+import { Comments } from '../../../interfaces/comment';
+import { deleteComment, getComment } from '../../../api/comment';
 import { useParams } from 'react-router-dom';
 import { Popconfirm, message } from 'antd';
 import { ToastContainer, toast } from 'react-toastify';
