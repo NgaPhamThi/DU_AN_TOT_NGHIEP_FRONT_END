@@ -52,7 +52,7 @@ const OrderHistory = (props: Props) => {
                                     <h3 className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">{detail.productInfo.name}</h3>
                                     <div className="flex justify-start items-start flex-col space-y-2">
                                         <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Size: </span> {detail.sizeId}</p>
-                                        <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Color: </span> </p>
+                                        <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Color: </span> {detail.colorId}</p>
                                     </div>
                                 </div>
                                 <div className="flex justify-between space-x-8 items-start w-full">
