@@ -21,6 +21,10 @@ import AddVouchers from "./Pages/Admin/Vouchers/AddVouchers";
 import UpdateVouchers from "./Pages/Admin/Vouchers/UpdateVouchers";
 import ProductPage from "./Pages/ProductPage";
 import ListUsers from "./Pages/Admin/Users/ListUsers";
+import ProductManager from "./Pages/Admin/Product/ProductManager";
+import AddProduct from "./Pages/Admin/Product/AddProduct";
+import UpdateProduct from "./Pages/Admin/Product/UpdateProduct";
+import OrderHistory from "./Pages/OrderHistory";
 
 function App() {
   return (
@@ -29,8 +33,9 @@ function App() {
         <Route path="/" element={<UsersLayout />}>
           <Route index element={<HomePage />} />
           <Route path="/product" element={<ProductPage />} />
-          <Route path="/product/:id" element={<DetailPage />} />
+          <Route path="/product/:productId" element={<DetailPage />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/purchase" element={<OrderHistory />} />
           <Route path="/pay" element={<PayPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/login" element={<Login />} />
@@ -49,7 +54,9 @@ function App() {
           <Route path="Categories/add" element={<AddCategories />} />
           <Route path="Categories/update/:id" element={<UpdateCategories />} />
           <Route path="users" element={<ListUsers />} />
-
+          <Route path="products" element={<ProductManager />} />
+          <Route path="products/addProduct" element={<AddProduct />} />
+          <Route path="products/update/:id" element={<UpdateProduct />} />
         </Route>
       </Routes>
     </>
