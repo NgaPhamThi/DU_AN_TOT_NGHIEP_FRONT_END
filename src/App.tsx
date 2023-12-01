@@ -22,10 +22,6 @@ import UpdateVouchers from "./Pages/Admin/Vouchers/UpdateVouchers";
 import ProductPage from "./Pages/ProductPage";
 import ListUsers from "./Pages/Admin/Users/ListUsers";
 
-
-
-
-
 function App() {
   
   return (
