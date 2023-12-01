@@ -20,10 +20,23 @@ import ListVouchers from "./Pages/Admin/Vouchers/ListVouchers";
 import AddVouchers from "./Pages/Admin/Vouchers/AddVouchers";
 import UpdateVouchers from "./Pages/Admin/Vouchers/UpdateVouchers";
 import ProductPage from "./Pages/ProductPage";
+import { addproduct } from "./api/product";
+import ProductManager from "./Pages/Admin/Product/ProductManager";
+import AddProduct from "./Pages/Admin/Product/AddProduct";
+import UpdateProduct from "./Pages/Admin/Product/UpdateProduct";
+import OrderHistory from "./Pages/OrderHistory";
 import ListUsers from "./Pages/Admin/Users/ListUsers";
 
 function App() {
-  
+  const onHandleAdd = async (product: any) => {
+    try {
+      const response = await addproduct(product)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+
+    }
+  }
   return (
     <>
       <Routes>
@@ -33,7 +46,7 @@ function App() {
           <Route path="/product/:productId" element={<DetailPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/pay" element={<PayPage />} />
-          
+          <Route path="/purchase" element={<OrderHistory />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signin" element={<Signin />} />
