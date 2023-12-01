@@ -1,9 +1,12 @@
+import { IProduct } from "./product";
+
 export interface IOrderDetail {
-    _id?: string;
-    orderId?: string;
-    productId: string | number;
-    quantity: number;
-    price: number;
-    sizeId: string | null;
-    colorId: string;
-  }
+  _id?: string;
+  orderId?: string;
+  productId: string | number;
+  quantity: number;
+  productInfo: IProduct
+  price: number;
+  sizeId: string | null;
+  colorId: string;
+}
