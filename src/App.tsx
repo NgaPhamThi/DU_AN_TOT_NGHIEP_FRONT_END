@@ -25,6 +25,7 @@ import ProductManager from "./Pages/Admin/Product/ProductManager";
 import AddProduct from "./Pages/Admin/Product/AddProduct";
 import UpdateProduct from "./Pages/Admin/Product/UpdateProduct";
 import OrderHistory from "./Pages/OrderHistory";
+import OrderDetails from "./Pages/OrderDetails";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/product/:productId" element={<DetailPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/purchase" element={<OrderHistory />} />
+          <Route path="/purchase/order/:orderId" element={<OrderDetails />} />
           <Route path="/pay" element={<PayPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/login" element={<Login />} />

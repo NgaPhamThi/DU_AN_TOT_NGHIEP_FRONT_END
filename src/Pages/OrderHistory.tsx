@@ -3,6 +3,7 @@ import { IOrderDetail } from '../interfaces/orderDetail'
 import { getAllOrderDetail } from '../api/orders'
 import { IOrders } from '../interfaces/Orders'
 import { getByColorId } from '../api/color'
+import { Link } from 'react-router-dom'
 type Props = {}
 
 const OrderHistory = (props: Props) => {
@@ -32,7 +33,7 @@ const OrderHistory = (props: Props) => {
                 <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">21st Mart 2021 at 10:34 PM</p>
             </div>
             {OderDetail.length === 0 ?(
-                <p></p>
+                <p>Ban chưa có hóa đơn nào</p>
             ):(
               OderDetail.map((order)=>(
                 <div className="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
@@ -86,9 +87,13 @@ const OrderHistory = (props: Props) => {
                                         </svg>
                                        Thành Tiền:  {order.orderTotal}</p>
                                 </div>
+                                <Link to={`order/${order._id}`}>
                                 <div className="w-full flex justify-center items-center">
+                                    
                                     <button className="hover:bg-black dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white">View Carrier Details</button>
+                                    
                                 </div>
+                                </Link>
                             </div>
                         </div>
 
