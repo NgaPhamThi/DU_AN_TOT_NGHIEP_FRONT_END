@@ -6,6 +6,8 @@ import { IOrders } from '../interfaces/Orders'
 import { IProduct } from '../interfaces/product'
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { getSize } from '../api/size'
+import { getColor } from '../api/color'
 type Props = {}
 
 const OrderDetails = (props: Props) => {
@@ -14,6 +16,8 @@ const OrderDetails = (props: Props) => {
     const [orderInfo, setOrderInfo] = useState<IOrders | null>(null);
     const [subtotal, setSubtotal] = useState<number>(0);
     const [isCancelModalVisible, setCancelModalVisible] = useState(false);
+    const [sizes, setSizes] = useState<any[]>([]); // Replace 'any[]' with the actual type of your size objects
+    const [colors, setColors] = useState<any[]>([]);
 
     const fetchOrderDetail = async () => {
         try {
@@ -32,14 +36,10 @@ const OrderDetails = (props: Props) => {
             console.error('Error fetching order details:', error);
         }
     }
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, [orderId])
     const CancelModal = () => (
-        // <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center">
-        //     <div className="bg-white p-8 rounded shadow-md">
-        //         <p className="mb-4">Are you sure you want to cancel the order?</p>
-        //         <button onClick={handleCancelYes} className="mr-2 px-4 py-2 bg-blue-500 text-white rounded">Yes</button>
-        //         <button onClick={toggleCancelModal} className="px-4 py-2 bg-gray-300 text-gray-700 rounded">No</button>
-        //     </div>
-        // </div>
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-8 shadow-2xl">
         <h2 className="text-lg font-bold mb-2">Bạn chắc chắn muốn hủy đơn hàng?</h2>
 
@@ -98,8 +98,28 @@ const OrderDetails = (props: Props) => {
 
     useEffect(() => {
         fetchOrderDetail()
+        fetchSizesAndColors()
     }, [])
+    const fetchSizesAndColors = async () => {
+        // Fetch sizes and setSizes
+        // Replace 'fetchSizesFunction' with your actual function to fetch sizes
+        const sizesData = await getSize();
+        setSizes(sizesData.data);
 
+        // Fetch colors and setColors
+        // Replace 'fetchColorsFunction' with your actual function to fetch colors
+        const colorsData = await getColor();
+        setColors(colorsData.data);
+    };
+    const getSizeName = (sizeId: string) => {
+        const size = sizes.find((s) => s._id === sizeId);
+        return size ? size.name : sizeId;
+    };
+
+    const getColorName = (colorId: string) => {
+        const color = colors.find((c) => c._id === colorId);
+        return color ? color.name : colorId;
+    };
     return (
 
         <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
@@ -111,7 +131,7 @@ const OrderDetails = (props: Props) => {
             <div className="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
                 <div className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
                     <div className="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full">
-                        <p className="text-lg md:text-xl dark:text-white font-semibold leading-6 xl:leading-5 text-gray-800">Customer’s Cart</p>
+                        <p className="text-sm md:text-xl dark:text-white  leading-6 xl:leading-5 text-gray-800">MÃ ĐƠN HÀNG.{orderInfo?._id}</p>
 
 
                         {orderDetails.map((orderDetail) => (
@@ -124,8 +144,8 @@ const OrderDetails = (props: Props) => {
                                     <div className="w-full flex flex-col justify-start items-start space-y-8">
                                         <h3 className="text-sm dark:text-white xl:text-2xl  leading-6 text-gray-800">{orderDetail.productInfo.name}</h3>
                                         <div className="flex justify-start items-start flex-col space-y-2">
-                                            <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Size: </span> {orderDetail.sizeId}</p>
-                                            <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Color: </span> {orderDetail.colorId}</p>
+                                            <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Size: </span> {orderDetail.sizeId !== null ? getSizeName(orderDetail.sizeId) : 'N/A'}</p>
+                                            <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Color: </span> {getColorName(orderDetail.colorId)}</p>
                                         </div>
                                     </div>
                                     <div className="flex justify-between space-x-8 items-start w-full">

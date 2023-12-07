@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { IOrderDetail } from '../interfaces/orderDetail'
 import { getAllOrderDetail } from '../api/orders'
 import { IOrders } from '../interfaces/Orders'
-import { getByColorId } from '../api/color'
+import { getByColorId, getColor } from '../api/color'
 import { Link } from 'react-router-dom'
+import { getSize } from '../api/size'
 type Props = {}
 
 const OrderHistory = (props: Props) => {
     const [OderDetail,setOderDetail] = useState<IOrders[]>([])
+    const [sizes, setSizes] = useState<any[]>([]); // Replace 'any[]' with the actual type of your size objects
+    const [colors, setColors] = useState<any[]>([]);
     
     useEffect(() => {
         const fetchAllOrders = async () => {
@@ -23,8 +26,28 @@ const OrderHistory = (props: Props) => {
         };
     
         fetchAllOrders();
+        fetchSizesAndColors()
       }, []);
-     
+      const fetchSizesAndColors = async () => {
+        // Fetch sizes and setSizes
+        // Replace 'fetchSizesFunction' with your actual function to fetch sizes
+        const sizesData = await getSize();
+        setSizes(sizesData.data);
+
+        // Fetch colors and setColors
+        // Replace 'fetchColorsFunction' with your actual function to fetch colors
+        const colorsData = await getColor();
+        setColors(colorsData.data);
+    };
+    const getSizeName = (sizeId: string) => {
+        const size = sizes.find((s) => s._id === sizeId);
+        return size ? size.name : sizeId;
+    };
+
+    const getColorName = (colorId: string) => {
+        const color = colors.find((c) => c._id === colorId);
+        return color ? color.name : colorId;
+    };
     return (
 
         <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
@@ -52,8 +75,8 @@ const OrderHistory = (props: Props) => {
                                 <div className="w-full flex flex-col justify-start items-start space-y-8">
                                     <h3 className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">{detail.productInfo.name}</h3>
                                     <div className="flex justify-start items-start flex-col space-y-2">
-                                        <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Size: </span> {detail.sizeId}</p>
-                                        <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Color: </span> {detail.colorId}</p>
+                                        <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Size: </span> {detail.sizeId !== null ? getSizeName(detail.sizeId) : 'N/A'}</p>
+                                        <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Color: </span> {getColorName(detail.colorId)}</p>
                                     </div>
                                 </div>
                                 <div className="flex justify-between space-x-8 items-start w-full">
@@ -90,7 +113,7 @@ const OrderHistory = (props: Props) => {
                                 <Link to={`order/${order._id}`}>
                                 <div className="w-full flex justify-center items-center">
                                     
-                                    <button className="hover:bg-black dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white">View Carrier Details</button>
+                                    <button className="hover:bg-black dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white">Xem chi tiết đơn hàng</button>
                                     
                                 </div>
                                 </Link>
