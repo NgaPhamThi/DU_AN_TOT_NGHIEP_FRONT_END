@@ -26,6 +26,8 @@ import AddProduct from "./Pages/Admin/Product/AddProduct";
 import UpdateProduct from "./Pages/Admin/Product/UpdateProduct";
 import OrderHistory from "./Pages/OrderHistory";
 import OrderDetails from "./Pages/OrderDetails";
+import ListOrders from "./Pages/Admin/Order/ListOrders";
+import InvoiceDetails from "./Pages/Admin/Order/InvoiceDetails";
 
 function App() {
   return (
@@ -59,10 +61,12 @@ function App() {
           <Route path="products" element={<ProductManager />} />
           <Route path="products/addProduct" element={<AddProduct />} />
           <Route path="products/update/:id" element={<UpdateProduct />} />
+          <Route path="orders" element={<ListOrders />} />
+          <Route path="orders/orderdetail/:orderId" element={<InvoiceDetails />} />
         </Route>
       </Routes>
     </>
   );
 }
 
-export default App;
+export default App

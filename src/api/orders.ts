@@ -1,6 +1,9 @@
 import { IOrders } from "../interfaces/Orders";
 import instance from "./instance";
-
+export const getAllOrder = ()=>{
+    const uri = '/order';
+    return instance.get(uri);
+}
 export const getAllOrderDetail = ()=>{
     const uri = '/purchase';
     return instance.get(uri);

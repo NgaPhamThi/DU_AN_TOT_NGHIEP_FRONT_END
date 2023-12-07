@@ -9,10 +9,14 @@ interface TokenPayload {
   id: string;
   // Bạn cần thêm các trường khác từ payload token nếu cần
 }
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 const PayPage = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [sizes, setSizes] = useState<ISize[]>([]); // Add your size data
   const [colors, setColors] = useState<IColor[]>([]);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullname: "",
     phonenumber: "",
@@ -90,11 +94,16 @@ const PayPage = () => {
           colorId: item.colorId,
         })),
       });
+      setTimeout(() => {
+        navigate('/admin/products');
+      }, 3000);
+      toast.success('Đặt hàng thành công', { autoClose: 2000 })
 
       console.log("Order created:", response.data);
       // Handle success, e.g., redirect or show a success message
     } catch (error) {
       console.error("Error creating order:", error);
+      toast.error('Hãy điền đầy đủ thông tin', { autoClose: 2000 })
       // Handle error, e.g., show an error message to the user
     }
   };
@@ -103,6 +112,7 @@ const PayPage = () => {
     <div>
 
       <section className="flex gap-8 w-10/12 m-auto py-10">
+      <ToastContainer />
         <section className="basis-3/6">
           <form onSubmit={handleFormSubmit}>
             <label htmlFor="fullname">Họ và tên</label>
