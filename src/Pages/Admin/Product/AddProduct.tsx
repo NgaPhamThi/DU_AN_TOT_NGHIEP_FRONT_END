@@ -26,7 +26,7 @@ const AddProduct = ({onAdd}: any) => {
       setTimeout(() => {
         navigate('/admin/products');
       }, 3000);
-      toast.success('Thêm sản phẩm thành công', { autoClose: 2000 })
+      toast.success('Add product Susscessfully !', { autoClose: 2000 })
   }
   return (
     // -----
@@ -48,7 +48,7 @@ const AddProduct = ({onAdd}: any) => {
             type="text"
             {...register("name", { required: true })}
           />
-          {errors.name && <span>this field is required</span>}
+          {errors.name && <span style={{color:'red'}}>Bắt buộc nhập tên !</span>}
         </div>
         <div className="mb-4">
           <label
@@ -64,7 +64,7 @@ const AddProduct = ({onAdd}: any) => {
             type="text"
             {...register("img", { required: true })}
           />
-          {errors.img && <span>this field is required</span>}
+              {errors.img && <span style={{color:'red'}}>Bắt buộc thêm ảnh !</span>}
         </div>
         <div className="mb-4">
           <label
@@ -78,9 +78,9 @@ const AddProduct = ({onAdd}: any) => {
             placeholder="Nhập Giá"
             id="categoryImage"
             type="number"
-            {...register("price")}
+            {...register("price", {required:true})}
           />
-          {errors.price && <span>this field is required</span>}
+              {errors.price && <span style={{color:'red'}}>Bắt buộc nhập giá !</span>}
         </div>
         <div className="mb-4">
           <label
@@ -94,9 +94,9 @@ const AddProduct = ({onAdd}: any) => {
             placeholder="Nhập Giá Sale"
             id="categoryImage"
             type="number"
-            {...register("price_sale")}
+            {...register("price_sale",{required:true})}
           />
-          {errors.price_sale && <span>this field is required</span>}
+             {errors.price_sale && <span style={{color:'red'}}>Bắt buộc nhập giá sale !</span>}
         </div>
         <div className="mb-4">
           <label
@@ -109,27 +109,28 @@ const AddProduct = ({onAdd}: any) => {
           <select
             
             id="HeadlineAct"
-            {...register("categoryId")}
+            {...register("categoryId",{required:true})}
             className="mt-1.5 shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline   sm:text-sm"
           >
-            <option value="">Nhập Loại</option>
+            <option value="">Chọn Loại</option>
             {categories.map((category)=>(
               <option key={category._id} value={category._id}>{category.name}</option>
             ))}
           </select>
-          {errors.categoryId && <span>this field is required</span>}
+          {errors.categoryId && <span style={{color:'red'}}>Bắt buộc chọn loại !</span>}
         </div>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="categoryImage"
+            {...register("description",{required:true})}
           >
             Description
           </label>
           <textarea  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="" {...register("description")}>
 
           </textarea>
-          {errors.description && <span>this field is required</span>}
+          {errors.description && <span style={{color:'red'}}>Bắt buộc nhập mô tả !</span>}
         </div>
 
         <div className="flex justify-between items-center">
