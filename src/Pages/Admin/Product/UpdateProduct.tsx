@@ -55,7 +55,7 @@ const UpdateProduct = () => {
       setTimeout(() => {
         navigate('/admin/products');
       }, 3000);
-      toast.success('cap nhat san pham thành công', { autoClose: 2000 })
+      toast.success('Update product Susscessfully !', { autoClose: 2000 })
         }
       
     }catch(error){
@@ -83,6 +83,7 @@ const UpdateProduct = () => {
             name='name'
             value={product.name}
             onChange={hanldeChage}
+            
           />
 
         </div>
