@@ -26,6 +26,8 @@ import AddProduct from "./Pages/Admin/Product/AddProduct";
 import UpdateProduct from "./Pages/Admin/Product/UpdateProduct";
 import OrderHistory from "./Pages/OrderHistory";
 import OrderDetails from "./Pages/OrderDetails";
+import Contact from "./Pages/Contact";
+import ListContact from "./Pages/Admin/Contact/ListContact";
 
 function App() {
   return (
@@ -43,6 +45,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/contact" element={<Contact />} />
         </Route>
         <Route path="/admin" element={<Admin />}>
           <Route index element={<Dashboard />} />
@@ -59,6 +62,7 @@ function App() {
           <Route path="products" element={<ProductManager />} />
           <Route path="products/addProduct" element={<AddProduct />} />
           <Route path="products/update/:id" element={<UpdateProduct />} />
+          <Route path="contact" element={<ListContact />} />
         </Route>
       </Routes>
     </>

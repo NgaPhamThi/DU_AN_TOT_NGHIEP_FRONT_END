@@ -28,8 +28,8 @@ const Product = ({ data }: Props) => {
                             {data.name}
                         </h2>
                     </Link>
-                    <span className="text-lg line-through">{data.price}</span>
-                    <span className="text-lg text-red-500 ml-2">{data.price_sale}</span>
+                    <span className="text-lg line-through">{data.price_sale}</span>
+                    <span className="text-lg text-red-500 ml-2">{data.price}</span>
                 </div>
                 {/* <Link to={'/cart'}> */}
                 <div>
