@@ -79,14 +79,14 @@ const Header: React.FC = () => {
                         <div className={"absolute -right-11 mt-28 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 "} ref={menuRef}>
                             <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                 <a
-                                    href="#"
+                                    href="/signup"
                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     role="menuitem"
                                 >
                                     Đăng kí
                                 </a>
                                 <a
-                                    href="#"
+                                    href="/signin"
                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     role="menuitem"
                                 >
