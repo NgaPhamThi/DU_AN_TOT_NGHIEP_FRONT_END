@@ -33,10 +33,11 @@ console.log(user);
       setError('Vui lòng nhập đầy đủ thông tin');
       return;
     }
-    if(confirmPassword!=password){
-      setError('Nhập mật khẩu không chính xác');
+    if(password.length<6){
+      toast.success('Mật khẩu ít nhất 6 ký tự', { autoClose: 2000 })
       return;
     }
+    
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     if (!email.match(emailRegex)) {
       setError('Định dạng email không hợp lệ');
