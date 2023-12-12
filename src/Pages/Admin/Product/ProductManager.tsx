@@ -94,16 +94,20 @@ const ProductManager = (props: Props) => {
       )
     },
   ];
+
   const [products, setproducts] = useState<IProduct[]>([])
   console.log(products);
   useEffect(() => {
     async function fetchProduct() {
+      
       const { data } = await getProduct();
       setproducts(data);
       console.log(data);
     }
     fetchProduct()
   }, [])
+
+
   const handleDeleteProduct = async (id: any) => {
     try {
       if (id) {

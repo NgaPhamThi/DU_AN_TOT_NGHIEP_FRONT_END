@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { signin } from '../api/auth';
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogin = (e) => {
+  const navigate = useNavigate();
+  const handleLogin = async (e: any) => {
     e.preventDefault();
 
 
@@ -13,29 +16,38 @@ const Signin = () => {
       alert('Vui lòng điền đầy đủ email và mật khẩu');
       return;
     }
-
-   
-    const storedEmail = localStorage.getItem('email');
-    const storedPassword = localStorage.getItem('password');
-
-   
-    if (email === storedEmail && password === storedPassword) {
-      setIsLoggedIn(true);
-      alert('Đăng nhập thành công!');
-    } else {
-      setIsLoggedIn(false);
-      alert('Email hoặc mật khẩu không đúng!');
+    const data={
+      email: email,
+      password: password
     }
+   
+    console.log(data);
+    const res = await signin(data)
+    .then(() => {
+      // Đăng ký thành công
+      toast.success('Đăng nhập thành công', { autoClose: 2000 })
+    })
+    console.log(res);
+    // .then(() => {
+    //   setTimeout(() => {
+    //     navigate('/');
+    //   }, 3000);
+    // })
+    // .catch((error) => {
+    //   toast.success('Đăng nhập không thành công vui lòng kiểm tra email hoặc mật khẩu', { autoClose: 2000 })
+    //   console.error('Error registering user', error);
+    // });
+    
+   
+   
   };
 
-  if (isLoggedIn) {
-   
-    return <div>Đăng nhập thành công!</div>;
-  }
+
 
   return (
     <section>
       <div className="grid__item large--one-half medium--one-half small--one-whole pd-left110 text-left br-right">
+      <ToastContainer />
         <div className="width-80">
           <h1 className="text-2xl font-bold leading-9 text-black">Đăng nhập</h1>
           <div className="desc_login">Nếu bạn đã có tài khoản, hãy đăng nhập để tích lũy điểm thành viên và nhận được những ưu đãi tốt hơn!</div>
@@ -63,6 +75,7 @@ const Signin = () => {
             <p>
               <input
                 type="submit"
+                onClick={()=>"onhandSignin"}
                 className="bg-black text-white w-full py-2 px-4 rounded-none"
                 value="Đăng nhập"
               />

@@ -1,57 +1,85 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getUser, signup } from '../api/auth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { IUser } from '../interfaces/cart';
+
+
 
 const Signup = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSignup = (e) => {
+ const [user, setUser] = useState([])
+ useEffect(() => {
+  async function fetchuser() {
+    const { data } = await getUser();
+    setUser(data);
+    // console.log(data);
+  }
+  fetchuser()
+ }, [])
+console.log(user);
+
+  const navigate = useNavigate();
+  const handleSignup = async (e: any) => {
     e.preventDefault();
-
-
-    if (!lastName || !email || !phone || !password) {
+    
+    if (!lastName || !email || !confirmPassword || !password) {
       setError('Vui lòng nhập đầy đủ thông tin');
       return;
     }
-
-    const phoneRegex = /^0\d{9}$/;
-    if (!phone.match(phoneRegex)) {
-      setError('Số điện thoại không hợp lệ.');
+    if(confirmPassword!=password){
+      setError('Nhập mật khẩu không chính xác');
       return;
     }
-
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     if (!email.match(emailRegex)) {
       setError('Định dạng email không hợp lệ');
       return;
     }
+   
 
-    localStorage.setItem('lastName', lastName);
-    localStorage.setItem('email', email);
-    localStorage.setItem('phone', phone);
-    localStorage.setItem('password', password);
+   const data={
+    username: lastName,
+    email: email,
+    password: password,
+    confirmPassword: confirmPassword
+   }
 
-    setLastName('');
-    setEmail('');
-    setPhone('');
-    setPassword('');
-    setError('');
-
-    alert('Đăng ký thành công!');
+  //  console.log(data);
+    const adduser= await signup(data)
+    .then(() => {
+      // Đăng ký thành công
+      toast.success('Đăng ký thành công', { autoClose: 2000 })
+    })
+    .then(() => {
+      setTimeout(() => {
+        navigate('/signin');
+      }, 3000);
+    })
+    .catch((error) => {
+      toast.success('Đăng ký không thành công vui lòng kiểm tra lại thông tin đăng ký', { autoClose: 2000 })
+      console.error('Error registering user', error);
+    });   
+    
   };
 
   return (
     <section>
       <div className="grid__item large--one-half medium--one-half small--one-whole pd-left110 text-left ">
+      <ToastContainer />
         <div className="width-80">
           <h1 className="text-2xl font-bold leading-9 text-black">Đăng ký</h1>
           <div className="desc_login">
             Hãy đăng ký ngay để tích lũy điểm thành viên và nhận được những ưu đãi tốt hơn!
           </div>
           <div className="form-vertical">
-            <form acceptCharset="UTF-8" action="/account" id="create_customer" method="post">
+            <form acceptCharset="UTF-8" id="create_customer" onSubmit={handleSignup}>
               <input name="form_type" type="hidden" value="create_customer" />
               <input name="utf8" type="hidden" value="✓" />
               <label htmlFor="username">Tên</label>
@@ -76,15 +104,7 @@ const Signup = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
 
-              <label htmlFor="Phone">Số điện thoại</label>
-              <input
-                type="text"
-                name="phone"
-                id="phone"
-                className="input-full"placeholder="Số điện thoại"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
+          
 
               <label htmlFor="CreatePassword">Mật khẩu</label>
               <input
@@ -97,9 +117,20 @@ const Signup = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
 
-              <div id="verified_email" className="clearfix large_form">
+            <label htmlFor="CreatePassword">Nhập lại mật khẩu</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                id="confirmPassword"
+                className="input-full"
+                placeholder="Mật khẩu"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+
+              {/* <div id="verified_email" className="clearfix large_form">
                 <input type="checkbox" /> Đăng ký nhận bản tin
-              </div>
+              </div> */}
 
               <div id="verified_policy" className="clearfix large_form">
                 <input type="checkbox" /> Tôi đồng ý với các <a href="">điều khoản</a> của TND
@@ -112,7 +143,7 @@ const Signup = () => {
               type="submit"
               className="bg-black text-white w-full py-2 px-4 rounded-none"
               value="Đăng ký"
-              onClick={handleSignup}
+            
               />
               </p>
             </form>
