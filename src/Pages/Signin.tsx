@@ -27,16 +27,16 @@ const Signin = () => {
       // Đăng ký thành công
       toast.success('Đăng nhập thành công', { autoClose: 2000 })
     })
-    console.log(res);
-    // .then(() => {
-    //   setTimeout(() => {
-    //     navigate('/');
-    //   }, 3000);
-    // })
-    // .catch((error) => {
-    //   toast.success('Đăng nhập không thành công vui lòng kiểm tra email hoặc mật khẩu', { autoClose: 2000 })
-    //   console.error('Error registering user', error);
-    // });
+ 
+    .then(() => {
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
+    })
+    .catch((error) => {
+      toast.success('Đăng nhập không thành công vui lòng kiểm tra email hoặc mật khẩu', { autoClose: 2000 })
+      console.error('Error registering user', error);
+    });
     
    
    

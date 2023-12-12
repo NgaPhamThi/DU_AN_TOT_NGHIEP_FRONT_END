@@ -83,14 +83,14 @@ const Header: React.FC = () => {
                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     role="menuitem"
                                 >
-                                    Đăng kí
+                                    Đăng Kí
                                 </a>
                                 <a
                                     href="/signin"
                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     role="menuitem"
                                 >
-                                    Đăng nhập
+                                    Đăng Nhập
                                 </a>
                             </div>
                         </div>
