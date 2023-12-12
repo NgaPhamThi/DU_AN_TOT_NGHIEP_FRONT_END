@@ -28,6 +28,8 @@ import OrderHistory from "./Pages/OrderHistory";
 import OrderDetails from "./Pages/OrderDetails";
 import ListOrders from "./Pages/Admin/Order/ListOrders";
 import InvoiceDetails from "./Pages/Admin/Order/InvoiceDetails";
+import Contact from "./Pages/Contact";
+import ListContact from "./Pages/Admin/Contact/ListContact";
 
 function App() {
   return (
@@ -38,6 +40,7 @@ function App() {
           <Route path="/product" element={<ProductPage />} />
           <Route path="/product/:productId" element={<DetailPage />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/purchase" element={<OrderHistory />} />
           <Route path="/purchase/order/:orderId" element={<OrderDetails />} />
           <Route path="/pay" element={<PayPage />} />
@@ -59,6 +62,7 @@ function App() {
           <Route path="Categories/update/:id" element={<UpdateCategories />} />
           <Route path="users" element={<ListUsers />} />
           <Route path="products" element={<ProductManager />} />
+          <Route path="contact" element={<ListContact />} />
           <Route path="products/addProduct" element={<AddProduct />} />
           <Route path="products/update/:id" element={<UpdateProduct />} />
           <Route path="orders" element={<ListOrders />} />

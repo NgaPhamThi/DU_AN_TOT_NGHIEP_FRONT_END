@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const AddProduct = ({onAdd}: any) => {
+const AddProduct = ({ onAdd }: any) => {
   const [categories, setcategories] = useState<ICategories[]>([])
   const navigate = useNavigate();
   console.log(categories);
@@ -22,16 +22,16 @@ const AddProduct = ({onAdd}: any) => {
   }, [])
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onHandleSubmit = (data: any) => {
-      onAdd(data)
-      setTimeout(() => {
-        navigate('/admin/products');
-      }, 3000);
-      toast.success('Add product Susscessfully !', { autoClose: 2000 })
+    onAdd(data)
+    setTimeout(() => {
+      navigate('/admin/products');
+    }, 3000);
+    toast.success('Add product Susscessfully !', { autoClose: 2000 })
   }
   return (
     // -----
     <div className="flex flex-col items-center mt-10">
-       <ToastContainer />
+      <ToastContainer />
       <h1 className="text-2xl font-bold mb-5">Thêm Sản Phẩm</h1>
       <form className="w-1/3" onSubmit={handleSubmit(onHandleSubmit)}>
         <div className="mb-4">
@@ -48,7 +48,7 @@ const AddProduct = ({onAdd}: any) => {
             type="text"
             {...register("name", { required: true })}
           />
-          {errors.name && <span style={{color:'red'}}>Bắt buộc nhập tên !</span>}
+          {errors.name && <span style={{ color: 'red' }}>Bắt buộc nhập tên !</span>}
         </div>
         <div className="mb-4">
           <label
@@ -64,7 +64,7 @@ const AddProduct = ({onAdd}: any) => {
             type="text"
             {...register("img", { required: true })}
           />
-              {errors.img && <span style={{color:'red'}}>Bắt buộc thêm ảnh !</span>}
+          {errors.img && <span style={{ color: 'red' }}>Bắt buộc thêm ảnh !</span>}
         </div>
         <div className="mb-4">
           <label
@@ -78,9 +78,9 @@ const AddProduct = ({onAdd}: any) => {
             placeholder="Nhập Giá"
             id="categoryImage"
             type="number"
-            {...register("price", {required:true})}
+            {...register("price", { required: true })}
           />
-              {errors.price && <span style={{color:'red'}}>Bắt buộc nhập giá !</span>}
+          {errors.price && <span style={{ color: 'red' }}>Bắt buộc nhập giá !</span>}
         </div>
         <div className="mb-4">
           <label
@@ -94,9 +94,9 @@ const AddProduct = ({onAdd}: any) => {
             placeholder="Nhập Giá Sale"
             id="categoryImage"
             type="number"
-            {...register("price_sale",{required:true})}
+            {...register("price_sale", { required: true })}
           />
-             {errors.price_sale && <span style={{color:'red'}}>Bắt buộc nhập giá sale !</span>}
+          {errors.price_sale && <span style={{ color: 'red' }}>Bắt buộc nhập giá sale !</span>}
         </div>
         <div className="mb-4">
           <label
@@ -107,30 +107,30 @@ const AddProduct = ({onAdd}: any) => {
           </label>
 
           <select
-            
+
             id="HeadlineAct"
-            {...register("categoryId",{required:true})}
+            {...register("categoryId", { required: true })}
             className="mt-1.5 shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline   sm:text-sm"
           >
             <option value="">Chọn Loại</option>
-            {categories.map((category)=>(
+            {categories.map((category) => (
               <option key={category._id} value={category._id}>{category.name}</option>
             ))}
           </select>
-          {errors.categoryId && <span style={{color:'red'}}>Bắt buộc chọn loại !</span>}
+          {errors.categoryId && <span style={{ color: 'red' }}>Bắt buộc chọn loại !</span>}
         </div>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="categoryImage"
-            {...register("description",{required:true})}
+            {...register("description", { required: true })}
           >
             Description
           </label>
-          <textarea  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="" {...register("description")}>
+          <textarea className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="" {...register("description")}>
 
           </textarea>
-          {errors.description && <span style={{color:'red'}}>Bắt buộc nhập mô tả !</span>}
+          {errors.description && <span style={{ color: 'red' }}>Bắt buộc nhập mô tả !</span>}
         </div>
 
         <div className="flex justify-between items-center">
