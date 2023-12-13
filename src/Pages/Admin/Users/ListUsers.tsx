@@ -42,7 +42,7 @@ const User = (props: Props) => {
       render:(status: any, record: IProduct)=>(
         <div className="inline-flex rounded-lg border  border-gray-100 bg-gray-100 p-1">
                    <Link to={`update/${record._id}`}>
-                   <button
+                   <button 
                       className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative"
                     >
                       <svg

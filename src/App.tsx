@@ -30,6 +30,7 @@ import ListOrders from "./Pages/Admin/Order/ListOrders";
 import InvoiceDetails from "./Pages/Admin/Order/InvoiceDetails";
 import Contact from "./Pages/Contact";
 import ListContact from "./Pages/Admin/Contact/ListContact";
+import Edituser from "./Pages/Admin/Users/edituser";
 
 function App() {
   return (
@@ -61,6 +62,8 @@ function App() {
           <Route path="Categories/add" element={<AddCategories />} />
           <Route path="Categories/update/:id" element={<UpdateCategories />} />
           <Route path="users" element={<ListUsers />} />
+          <Route path="users/update/:id" element={<Edituser/>} />
+
           <Route path="products" element={<ProductManager />} />
           <Route path="contact" element={<ListContact />} />
           <Route path="products/addProduct" element={<AddProduct />} />
