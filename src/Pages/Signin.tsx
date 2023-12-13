@@ -8,6 +8,9 @@ const Signin = () => {
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+
+  const [products, setproducts] = useState([])
+  
   const handleLogin = async (e: any) => {
     e.preventDefault();
 
@@ -21,22 +24,35 @@ const Signin = () => {
       password: password
     }
    
-    console.log(data);
-    const res = await signin(data)
-    .then(() => {
-      // Đăng ký thành công
-      toast.success('Đăng nhập thành công', { autoClose: 2000 })
-    })
- 
-    .then(() => {
-      setTimeout(() => {
-        navigate('/');
-      }, 3000);
-    })
-    .catch((error) => {
+    // console.log(data);
+    try {
+      const res = await signin(data)
+      const token= res.data.accessToken
+      const user = res.data.user
+      localStorage.setItem('token', token)
+      toast.success('Đăng nhập thành công ', { autoClose: 2000 })
+      //   console.error('Error registering user', error);
+      console.log(token);
+      console.log(user.role);
+      if(user.role=='admin') {
+        setTimeout(() => {
+              navigate('/admin');
+            }, 3000);
+      }else{
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
+      }
+
+    } catch (error) {
       toast.success('Đăng nhập không thành công vui lòng kiểm tra email hoặc mật khẩu', { autoClose: 2000 })
       console.error('Error registering user', error);
-    });
+    }
+    
+    
+    
+    
+    
     
    
    
