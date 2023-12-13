@@ -63,7 +63,7 @@ const AddVouchers = () => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="Discount_Type"
           >
-            Loại Giảm Giá
+            Số Tiền Được Giảm
           </label>
           <Controller
             name="Discount_Type"
@@ -72,7 +72,7 @@ const AddVouchers = () => {
               <input
                 {...field}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="Nhập Loại Giảm Giá"
+                placeholder="Nhập Số Tiền Được Giảm"
               />
             )}
           />
@@ -90,6 +90,7 @@ const AddVouchers = () => {
           <Controller
             name="Expiration_Date"
             control={control}
+            rules={{ required: true, pattern: /^\d{4}-\d{2}-\d{2}$/ }}
             render={({ field }) => (
               <input
                 type="date"
@@ -99,33 +100,16 @@ const AddVouchers = () => {
               />
             )}
           />
-          {errors.Expiration_Date && (
-            <p className="text-red-500">Bắt buộc phải nhập Ngày Hết Hạn.</p>
-          )}
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="IsActive"
-          >
-            Trạng Thái
-          </label>
-          <Controller
-            name="IsActive"
-            control={control}
-            render={({ field }) => (
-              <select
-                {...field}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              >
-                <option value="true">Active</option>
-                <option value="false">Inactive</option>
-              </select>
+          {errors.Expiration_Date &&
+            errors.Expiration_Date.type === "required" && (
+              <p className="text-red-500">Bắt buộc phải nhập Ngày Hết Hạn.</p>
             )}
-          />
-          {errors.IsActive && (
-            <p className="text-red-500">Bắt buộc phải chọn Trạng Thái.</p>
-          )}
+          {errors.Expiration_Date &&
+            errors.Expiration_Date.type === "pattern" && (
+              <p className="text-red-500">
+                Ngày Hết Hạn không hợp lệ (định dạng yyyy-mm-dd).
+              </p>
+            )}
         </div>
         <div className="mb-4">
           <label

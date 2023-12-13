@@ -53,7 +53,7 @@ const ListVouchers = () => {
       key: "Voucher_Code",
     },
     {
-      title: "Discount Type",
+      title: "Discount Money",
       dataIndex: "Discount_Type",
       key: "Discount_Type",
     },
@@ -61,14 +61,32 @@ const ListVouchers = () => {
       title: "Expiration Date",
       dataIndex: "Expiration_Date",
       key: "Expiration_Date",
-      render: (record: any) =>
-        new Date(record.Expiration_Date).toLocaleDateString(),
+      render: (text: string) => {
+        const expirationDate = new Date(text);
+        if (!isNaN(expirationDate.getTime())) {
+          return expirationDate.toLocaleDateString("en-US"); // Định dạng ngày tháng ở đây, ví dụ "en-US"
+        } else {
+          return "Invalid Date";
+        }
+      },
     },
     {
       title: "IsActive",
-      dataIndex: "IsActive",
+      dataIndex: "Expiration_Date",
       key: "IsActive",
-      // render: (record: any) => (record.IsActive ? "Active" : "InActive"),
+      render: (text: string) => {
+        const expirationDate = new Date(text);
+        if (!isNaN(expirationDate.getTime())) {
+          const currentDate = new Date(); // Ngày hiện tại
+          if (currentDate <= expirationDate) {
+            return "Active"; // Nếu chưa quá hạn thì hiển thị Active
+          } else {
+            return "InActive"; // Nếu đã quá hạn thì hiển thị InActive
+          }
+        } else {
+          return "Invalid Date"; // Ngày không hợp lệ
+        }
+      },
     },
 
     {
