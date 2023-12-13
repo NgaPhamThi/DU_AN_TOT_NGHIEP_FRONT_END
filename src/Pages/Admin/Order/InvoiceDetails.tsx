@@ -2,16 +2,26 @@ import { Table } from 'antd';
 import React, { useEffect, useState } from 'react'
 import { IOrderDetail } from '../../../interfaces/orderDetail';
 import { useParams } from 'react-router-dom';
-import { getByIdOrderDetail } from '../../../api/orders';
+import { getByIdOrderDetail,updateStatusOrder } from '../../../api/orders';
 import { IOrders } from '../../../interfaces/Orders';
 import { getSize } from '../../../api/size';
 import { getColor } from '../../../api/color';
 
+const statusOptions = [
+    { value: 'PENDING', label: 'chờ duyệt' },
+    { value: 'PROCESSING', label: 'lấy hàng' },
+    { value: 'ONDELIVERY', label: 'đang giao' },
+    { value: 'COMPLETED', label: 'giao hàng thành công' },
+    { value: 'CANCELLED', label: 'Hủy đơn hàng' }
+  ];
 type Props = {}
 
 const InvoiceDetails = (props: Props) => {
     const [orderDetails, setOrderDetails] = useState<IOrderDetail[]>([])
     const [orderInfo, setOrderInfo] = useState<IOrders> ({} as IOrders);
+    const [currentStatus, setCurrentStatus] = useState(orderInfo.status);
+    
+    // console.log(orderInfo,"dâda")
     const [sizes, setSizes] = useState<any[]>([]); // Replace 'any[]' with the actual type of your size objects
     const [colors, setColors] = useState<any[]>([]);
     const [subtotal, setSubtotal] = useState<number>(0);
@@ -32,11 +42,47 @@ const InvoiceDetails = (props: Props) => {
             console.error('Error fetching order details:', error);
         }
     }
+    const {orderId} = useParams()
+    console.log(orderId,"èddsds");
+    useEffect(() => {
+        if (orderId) {
+          fetchOrderDetail(orderId);
+        }
+      }, [orderId]);
+      
+  useEffect(() => {
+    // Cập nhật currentStatus từ orderInfo.status khi orderInfo thay đổi
+    setCurrentStatus(orderInfo.status || '');
+  }, [orderInfo]);
+//  console.log(orderInfo,"1323");
+const handleStatusChange = async (newStatus: string) => {
+    setCurrentStatus(newStatus);
+
+    try {
+      // Gọi API để cập nhật trạng thái
+      await updateStatusOrder(orderId, { status: newStatus });
+
+      // Sau khi cập nhật trạng thái thành công, cập nhật state
+      setOrderInfo((prevOrderInfo) => ({
+        ...prevOrderInfo,
+        status: newStatus,
+      }));
+    } catch (error) {
+      console.error('Error updating order status:', error);
+    }
+  };
+  useEffect(() => {
+    fetchOrderDetail();
+  }, [orderId]);
+
+  useEffect(() => {
+    // Cập nhật currentStatus từ orderInfo.status khi orderInfo thay đổi
+    setCurrentStatus(orderInfo.status || '');
+  }, [orderInfo]);
     useEffect(()=>{
         fetchOrderDetail()
         fetchSizesAndColors()
     },[])
-    const {orderId} = useParams()
     const fetchSizesAndColors = async () => {
         // Fetch sizes and setSizes
         // Replace 'fetchSizesFunction' with your actual function to fetch sizes
@@ -57,6 +103,28 @@ const InvoiceDetails = (props: Props) => {
         const color = colors.find((c) => c._id === colorId);
         return color ? color.name : colorId;
     };
+    const getFilteredOptions = (currentStatus: any) => {
+        // Nếu currentStatus không trống, thì trả về mảng chứa giá trị của currentStatus
+       
+      
+        // Nếu currentStatus trống, thực hiện các điều kiện lọc như trước
+        if (currentStatus === 'PENDING') {
+          return statusOptions.filter((status) => status.value === 'PROCESSING' || status.value === 'CANCELLED' || status.value === currentStatus);
+        } else if (currentStatus === 'PROCESSING') {
+          return statusOptions.filter((status) => status.value === 'ONDELIVERY' || status.value === currentStatus);
+        } else if (currentStatus === 'ONDELIVERY') {
+          return statusOptions.filter((status) => status.value === 'COMPLETED' || status.value === currentStatus);
+        }
+        else if (currentStatus === 'COMPLETED') {
+            return statusOptions.filter((status) => status.value === currentStatus);
+          }
+          else if (currentStatus === 'CANCELLED') {
+            return statusOptions.filter((status) => status.value === currentStatus);
+          }
+        // Mặc định hiển thị tất cả các tùy chọn nếu không khớp với các trường hợp trên
+        return statusOptions;
+      };
+      
   return (
     
     <div className="2xl:container 2xl:mx-auto py-14 px-4 md:px-6 xl:px-20">
@@ -69,7 +137,16 @@ const InvoiceDetails = (props: Props) => {
             <p className="text-base leading-none dark:text-white mt-4 text-gray-800">MÃ HĐ: <span className="font-semibold">{orderInfo._id}</span></p>
            </div>
            <div>
-           <p className="text-base leading-none flex items-center dark:text-white mt-4 text-gray-800"><img className='pr-3' src="/delivery.png" alt="" />Trạng Thái Đơn Hàng: <span className="font-semibold"> {orderInfo.status}</span></p>
+           <p className="text-base leading-none flex items-center dark:text-white mt-4 text-gray-800"><img className='pr-3' src="/delivery.png" alt="" />Trạng Thái Đơn Hàng: <span className="font-semibold">
+            <select value={currentStatus} onChange={(e) => handleStatusChange(e.target.value)}>
+            <option value="">chọn trạng thái--</option>
+            {getFilteredOptions(currentStatus).map((status) => (
+            <option key={status.value} value={status.value}>
+            {status.label}
+            </option>
+            ))}
+            </select>
+</span></p>
            </div>
            </div>
             <div className="flex justify-center items-center w-full mt-8 flex-col space-y-4">
