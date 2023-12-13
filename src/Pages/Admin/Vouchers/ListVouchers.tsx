@@ -64,7 +64,7 @@ const ListVouchers = () => {
       render: (text: string) => {
         const expirationDate = new Date(text);
         if (!isNaN(expirationDate.getTime())) {
-          return expirationDate.toLocaleDateString("en-US"); // Định dạng ngày tháng ở đây, ví dụ "en-US"
+          return expirationDate.toLocaleDateString("en-US");
         } else {
           return "Invalid Date";
         }
@@ -77,14 +77,14 @@ const ListVouchers = () => {
       render: (text: string) => {
         const expirationDate = new Date(text);
         if (!isNaN(expirationDate.getTime())) {
-          const currentDate = new Date(); // Ngày hiện tại
+          const currentDate = new Date();
           if (currentDate <= expirationDate) {
-            return "Active"; // Nếu chưa quá hạn thì hiển thị Active
+            return "Active";
           } else {
-            return "InActive"; // Nếu đã quá hạn thì hiển thị InActive
+            return "InActive";
           }
         } else {
-          return "Invalid Date"; // Ngày không hợp lệ
+          return "Invalid Date";
         }
       },
     },
