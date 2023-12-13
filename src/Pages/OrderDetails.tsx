@@ -81,7 +81,7 @@ const OrderDetails = (props: Props) => {
                 address: '', // Add the missing address property
                 orderTotal: 0, // Add the missing orderTotal property
                 orderDetails: [], // Add the missing orderDetails property
-                status: 'Hủy đơn hàng',
+                status: 'CANCELLED',
             };
             // Make API call to update order status to 'cancelled'
             if (orderId) {
