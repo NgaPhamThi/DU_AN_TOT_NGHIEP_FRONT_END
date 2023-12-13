@@ -5,7 +5,13 @@ import { getAllOrder } from '../../../api/orders';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 type Props = {}
-
+const statusOptions = [
+    { value: 'PENDING', label: 'chờ duyệt' },
+    { value: 'PROCESSING', label: 'lấy hàng' },
+    { value: 'ONDELIVERY', label: 'đang giao' },
+    { value: 'COMPLETED', label: 'giao hàng thành công' },
+    { value: 'CANCELLED', label: 'Hủy đơn hàng' }
+  ];
 const ListOrders = (props: Props) => {
     const [Orders, setOrders] = useState<IOrders[]>([])
     const fetchOrder = async () => {
@@ -50,7 +56,20 @@ const ListOrders = (props: Props) => {
             title: 'Trạng Thái Đơn Hàng',
             dataIndex: 'status',
             key: 'status',
-        },
+            render: (status: string) => {
+              const statusOption = statusOptions.find((option) => option.value === status);
+          
+              if (statusOption) {
+                return (
+                  <span className="text-base font-normal">
+                    <span className="bg-transparent border-none">{statusOption.label}</span>
+                  </span>
+                );
+              }
+          
+              return null;
+            },
+          },
         {
             title: 'Tổng Tiền',
             dataIndex: 'orderTotal',
