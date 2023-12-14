@@ -9,7 +9,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getSize } from '../api/size'
 import { getColor } from '../api/color'
 type Props = {}
-
+const statusOptions = [
+    { value: 'PENDING', label: 'chờ duyệt' },
+    { value: 'PROCESSING', label: 'lấy hàng' },
+    { value: 'ONDELIVERY', label: 'đang giao' },
+    { value: 'COMPLETED', label: 'giao hàng thành công' },
+    { value: 'CANCELLED', label: 'Hủy đơn hàng' }
+  ];
 const OrderDetails = (props: Props) => {
     const { orderId } = useParams()
     const [orderDetails, setOrderDetails] = useState<IOrderDetail[]>([])
@@ -18,7 +24,11 @@ const OrderDetails = (props: Props) => {
     const [isCancelModalVisible, setCancelModalVisible] = useState(false);
     const [sizes, setSizes] = useState<any[]>([]); // Replace 'any[]' with the actual type of your size objects
     const [colors, setColors] = useState<any[]>([]);
-
+    //chỉnh chữ
+    const getStatusLabel = (status) => {
+        const statusOption = statusOptions.find((option) => option.value === status);
+        return statusOption ? statusOption.label : 'Không xác định';
+      };
     const fetchOrderDetail = async () => {
         try {
             if (orderId) {
@@ -190,7 +200,11 @@ const OrderDetails = (props: Props) => {
                                         <img className="w-full h-full" alt="logo" src="https://i.ibb.co/L8KSdNQ/image-3.png" />
                                     </div>
                                     <div className="flex flex-col justify-start items-center">
-                                        <p className="text-lg leading-6 dark:text-white font-semibold text-gray-800">Trạng Thái Đơn Hàng<br /><span className="font-normal">{orderInfo?.status}</span></p>
+                                        {/* <p className="text-lg leading-6 dark:text-white font-semibold text-gray-800">Trạng Thái Đơn Hàng<br /><span className="font-normal">{orderInfo?.status}</span></p> */}
+                                        <p className="text-lg leading-6 dark:text-white font-semibold text-gray-800">
+                                    Trạng Thái Đơn Hàng<br />
+                                    <span className="font-normal">{getStatusLabel(orderInfo?.status)}</span>
+                                        </p>
                                     </div>
                                 </div>
 
