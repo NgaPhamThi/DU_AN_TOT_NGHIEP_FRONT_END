@@ -24,7 +24,7 @@ const OrderDetails = (props: Props) => {
     const [isCancelModalVisible, setCancelModalVisible] = useState(false);
     const [sizes, setSizes] = useState<any[]>([]); // Replace 'any[]' with the actual type of your size objects
     const [colors, setColors] = useState<any[]>([]);
-    //chỉnh chữ
+    //thay thế tiếng anh bằng tiếng việt
     const getStatusLabel = (status) => {
         const statusOption = statusOptions.find((option) => option.value === status);
         return statusOption ? statusOption.label : 'Không xác định';
@@ -244,7 +244,7 @@ const OrderDetails = (props: Props) => {
                             </div>
 
                             <div className="flex w-full justify-center items-center md:justify-start md:items-start">
-                                <button onClick={toggleCancelModal} className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800">Hủy Đơn Hàng</button>
+                               { orderInfo?.status === 'PENDING' ?  <button onClick={toggleCancelModal} className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800">Hủy Đơn Hàng</button>:<div></div>}
                             </div>
                             {isCancelModalVisible && <CancelModal />}
 
