@@ -6,12 +6,23 @@ import { getByColorId, getColor } from '../api/color'
 import { Link } from 'react-router-dom'
 import { getSize } from '../api/size'
 type Props = {}
-
+const statusOptions = [
+    { value: 'PENDING', label: 'chờ duyệt' },
+    { value: 'PROCESSING', label: 'lấy hàng' },
+    { value: 'ONDELIVERY', label: 'đang giao' },
+    { value: 'COMPLETED', label: 'giao hàng thành công' },
+    { value: 'CANCELLED', label: 'Hủy đơn hàng' }
+  ];
 const OrderHistory = (props: Props) => {
     const [OderDetail,setOderDetail] = useState<IOrders[]>([])
     const [sizes, setSizes] = useState<any[]>([]); // Replace 'any[]' with the actual type of your size objects
     const [colors, setColors] = useState<any[]>([]);
-    
+    //them
+    const getStatusLabel = (status: string) => {
+        const statusOption = statusOptions.find(option => option.value === status);
+        return statusOption ? statusOption.label : status;
+    };
+//    
     useEffect(() => {
         const fetchAllOrders = async () => {
           try {
@@ -98,8 +109,11 @@ const OrderHistory = (props: Props) => {
                                             <img className="w-full h-full" alt="logo" src="https://i.ibb.co/L8KSdNQ/image-3.png" />
                                         </div>
                                         <div className="flex flex-col justify-start items-center">
-                                            <p className="text-lg leading-6 dark:text-white font-semibold text-[#49bedb]">Trạng Thái Đơn Hàng<br /><span className="font-normal text-[#f1532d]">{order.status}</span></p>
-                                            
+                                            {/* <p className="text-lg leading-6 dark:text-white font-semibold text-[#49bedb]">Trạng Thái Đơn Hàng<br /><span className="font-normal text-[#f1532d]">{order.status}</span></p> */}
+                                            <p className="text-lg leading-6 dark:text-white font-semibold text-[#49bedb]">
+                                            Trạng Thái Đơn Hàng<br />
+                                            <span className="font-normal text-[#f1532d]">{getStatusLabel(order.status)}</span>
+                                            </p> 
                                         </div>
                                     </div>
                                     <p className="flex items-center gap-3 text-lg font-semibold leading-6 dark:text-white text-gray-800">
