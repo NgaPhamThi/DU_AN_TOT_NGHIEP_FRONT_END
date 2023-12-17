@@ -30,9 +30,19 @@ import ListOrders from "./Pages/Admin/Order/ListOrders";
 import InvoiceDetails from "./Pages/Admin/Order/InvoiceDetails";
 import Contact from "./Pages/Contact";
 import ListContact from "./Pages/Admin/Contact/ListContact";
-import Edituser from "./Pages/Admin/Users/edituser";
+import { addproduct } from "./api/product";
 
+// import Edituser from "./Pages/Admin/Users/edituser";
 function App() {
+  const onHandleAdd = async (product: any) => {
+    try {
+      const response = await addproduct(product)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+
+    }
+  }
   return (
     <>
       <Routes>
@@ -62,11 +72,12 @@ function App() {
           <Route path="Categories/add" element={<AddCategories />} />
           <Route path="Categories/update/:id" element={<UpdateCategories />} />
           <Route path="users" element={<ListUsers />} />
-          <Route path="users/update/:id" element={<Edituser/>} />
+          {/* <Route path="users/update/:id" element={<Edituser/>} /> */}
 
-          <Route path="products" element={<ProductManager />} />
+          <Route path="products" element={<ProductManager />}/>
           <Route path="contact" element={<ListContact />} />
-          <Route path="products/addProduct" element={<AddProduct />} />
+          <Route path="products/addProduct" element={<AddProduct onAdd={onHandleAdd} />}/>
+
           <Route path="products/update/:id" element={<UpdateProduct />} />
           <Route path="orders" element={<ListOrders />} />
           <Route path="orders/orderdetail/:orderId" element={<InvoiceDetails />} />
