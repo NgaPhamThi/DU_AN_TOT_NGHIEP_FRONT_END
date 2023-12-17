@@ -40,13 +40,25 @@ const UpdateProduct = () => {
     fetchProduct();
   },[id]);
   
+
+  
   const hanldeChage = (e: React.ChangeEvent<HTMLInputElement |HTMLTextAreaElement | HTMLSelectElement >)=>{
     const {name, value} = e.target;
+    
     setProduct((prevProduct)=>({
       ...prevProduct,
       [name]: value,
     }))
   }
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const categoryId = e.target.value;
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      categoryId: categoryId,
+    }));
+  };
+
   const handleSubmit = async( e:React.FormEvent)=>{
     e.preventDefault();
     try{
@@ -102,6 +114,8 @@ const UpdateProduct = () => {
             type="text"
             name='img'
             value={product.img}
+            onChange={hanldeChage}
+
           />
 
         </div>
@@ -150,17 +164,20 @@ const UpdateProduct = () => {
             Loại
           </label>
 
-          <select
-            id="HeadlineAct"
-            onChange={hanldeChage}
-            className="mt-1.5 shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline   sm:text-sm"
-          >
-            <option value="" >Nhập Loại</option>
-            {categories.map((category) => (
-              <option key={category._id} value={category._id}>{category.name}</option>
-            ))}
-          </select>
-
+         <select
+  id="HeadlineAct"
+  onChange={handleCategoryChange}
+  value={product.categoryId} // Đảm bảo giữ cho giá trị select được hiển thị đúng
+  className="mt-1.5 shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline sm:text-sm"
+>
+  <option value="">Nhập Loại</option>
+  {categories.map((category) => (
+    <option key={category._id} value={category._id}>
+      {category.name}
+    </option>
+  ))}
+</select>
+         
         </div>
         <div className="mb-4">
           <label
