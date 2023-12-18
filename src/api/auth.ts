@@ -7,13 +7,19 @@ export const signin = (data: { email: string, password: string }) => {
 export const getUser = () => {
     return instance.get('/user')
 }
-
+export const getUserById = (id: string)=>{
+    const uri = '/user/'+id
+    return instance.get(uri)
+}
 export const signup = (data: IUser) => {
    const uri = "/signup"
     return instance.post(uri, data)
 }
-
 export const deleteUser =(userId:string | number)=>{
     const uri = "/user/" +userId
     return instance.delete(uri)
+}
+export const updateUser = (user:IUser,id:string | number)=>{
+    const uri = '/user/'+id
+    return instance.put(uri,user)
 }
