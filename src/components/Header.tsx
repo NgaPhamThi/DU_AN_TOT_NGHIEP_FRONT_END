@@ -4,12 +4,16 @@ import { useShoppingContext } from '../context/ShoppingCartContext';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { searchProduct } from '../api/search';
+
 const Header: React.FC = () => {
 
     const [searchValue, setSearchValue] = useState<string>('');
     const [showSearch, setShowSearch] = useState<boolean>(false);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [showMenu, setShowMenu] = useState(false);
+    const [data, setData] = useState([]);
+
   const navigate = useNavigate();
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
@@ -35,6 +39,13 @@ const Header: React.FC = () => {
         console.error('Error during logout', error);
         }
     };
+    const hanldeSearch = async (e: any) => {
+      setSearchValue(e.target.value)
+      const res = await searchProduct(searchValue)
+      const { data } = res
+      console.log(data)
+      setData(data)
+  }
     const menuRef = useRef(null);
 
     useEffect(() => {
@@ -83,11 +94,27 @@ const Header: React.FC = () => {
                                 type="text"
                                 placeholder="Tìm kiếm sản phẩm..."
                                 value={searchValue}
-                                onChange={(e) => setSearchValue(e.target.value)}
-                                onBlur={() => setShowSearch(false)}
+                                onChange={(e) =>
+                                    hanldeSearch(e)
+                                }
+
+                                onBlur={() => {
+                                    if (!searchValue.trim()) {
+                                        setShowSearch(false);
+                                    }
+                                }}
                                 className="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300 transition-all"
                                 autoFocus
                             />
+  {searchValue.trim() && data.length > 0 && (
+            <div className="">
+                {data.map((value) => (
+                    <a key={value._id} href={`/product/${value._id}`}> <hr />
+                        {value.name}
+                    </a>
+                ))}
+            </div>
+        )}
                         </div>
                     )}
                     <Link to={'/cart'}>
