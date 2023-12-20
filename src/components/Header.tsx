@@ -1,13 +1,40 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import { Link  } from 'react-router-dom'
 import { useShoppingContext } from '../context/ShoppingCartContext';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Header: React.FC = () => {
+
     const [searchValue, setSearchValue] = useState<string>('');
     const [showSearch, setShowSearch] = useState<boolean>(false);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [showMenu, setShowMenu] = useState(false);
+  const navigate = useNavigate();
+    const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
+    const isAuthenticated = !!token && !!username;
 
+        if (isAuthenticated) {
+        console.log('Authenticated user:', username);
+        } else {
+        console.log('User not authenticated');
+        }
+    const handleLogout = () => {
+        try {
+        // Xóa token username khi đăng xuất
+        localStorage.removeItem('token'); 
+        localStorage.removeItem('username');
+        setTimeout(() => {
+            navigate('/');
+          }, 3000);
+      toast.success('Đăng xuất thành công ', { autoClose: 2000 })
 
+        } catch (error) {
+        toast.error('Đã xảy ra lỗi khi đăng xuất. Vui lòng thử lại sau.', { autoClose: 2000 });
+        console.error('Error during logout', error);
+        }
+    };
     const menuRef = useRef(null);
 
     useEffect(() => {
@@ -28,6 +55,7 @@ const Header: React.FC = () => {
 
     return (
         <header className="bg-white shadow-md relative">
+      <ToastContainer />
             <div className="text-center bg-black text-white">
                 <p className="text-[12px] pt-1 pb-1">Miễn Phí Đổi Hàng 30 Ngày</p>
             </div>
@@ -74,30 +102,41 @@ const Header: React.FC = () => {
                         </div>
                     </Link>
 
-                    <i className="fas fa-user text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => setShowMenu(!showMenu)}></i>
-                    {showMenu && (
-                        <div className={"absolute -right-11 mt-28 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 "} ref={menuRef}>
-                            <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                <a
-                                    href="/signup"
-                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                    role="menuitem"
-                                >
-                                    Đăng Kí
-                                </a>
-                                <a
-                                    href="/signin"
-                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                    role="menuitem"
-                                >
-                                    Đăng Nhập
-                                </a>
-                            </div>
-                        </div>
-                    )}
-                    <div className="md:hidden">
-                        <i className="fas fa-bars text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => setMenuOpen(true)}></i>
-                    </div>
+                    <i
+        className="fas fa-user text-gray-600 hover:text-gray-800 cursor-pointer"
+        onClick={() => setShowMenu(!showMenu)}
+      ></i>
+      {showMenu && (
+        <div className={`absolute -right-11 mt-28 w-56 rounded-md  shadow-lg bg-white ring-1 ring-black ring-opacity-5`} ref={menuRef}>
+        <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+          {isAuthenticated ? (
+            <>
+              <p className="block px-4 py-2 text-sm text-gray-700">Xin chào {username} </p>
+              <a href="/purchase" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                Đơn hàng đã đặt
+              </a>
+              <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={handleLogout}>
+                Đăng Xuất
+              </a>
+            </>
+          ) : (
+            <>
+              <a href="/signup" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                Đăng Kí
+              </a>
+              <a href="/signin" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                Đăng Nhập
+              </a>
+            </>
+          )}
+        </div>
+        <div className="md:hidden">
+          <i className="fas fa-bars text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => setMenuOpen(true)}></i>
+        </div>
+      </div>
+      
+      )}
+                 
                 </div>
             </div>
 
