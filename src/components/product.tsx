@@ -6,7 +6,7 @@ type Props = {
     data: IProduct
 
 }
-
+    
 const Product = ({ data }: Props) => {
     const { addCartItem } = useShoppingContext()
     console.log("data in product", data);
