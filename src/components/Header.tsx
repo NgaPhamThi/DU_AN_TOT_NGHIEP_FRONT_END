@@ -40,12 +40,19 @@ const Header: React.FC = () => {
         }
     };
     const hanldeSearch = async (e: any) => {
-      setSearchValue(e.target.value)
-      const res = await searchProduct(searchValue)
-      const { data } = res
-      console.log(data)
-      setData(data)
-  }
+        const value = e.target.value;
+        setSearchValue(value);
+    
+        if (value.trim() !== '') {
+            // Thực hiện tìm kiếm chỉ khi có giá trị trong ô tìm kiếm
+            const res = await searchProduct(value);
+            const { data } = res;
+            setData(data);
+        } else {
+            // Nếu giá trị trống, đặt data về mảng rỗng
+            setData([]);
+        }
+    }
     const menuRef = useRef(null);
 
     useEffect(() => {
