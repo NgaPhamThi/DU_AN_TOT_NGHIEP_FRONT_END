@@ -126,9 +126,9 @@ const ProductManager = (props: Props) => {
             <h1 className="text-2xl font-semibold">QUẢN LÝ SẢN PHẨM</h1>
           </div>
           <div className=''>
-          <Link to={"addProduct"}><button type="button" className="btn bg-blue-500 flex items-center gap-2 btn-primary">Thêm Sản Phẩm <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+          <Link to={"addProduct"}><button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded focus:outline-none focus:shadow-outline">Thêm Sản Phẩm <>
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+            </>
             </button></Link>
           </div>
         </div>

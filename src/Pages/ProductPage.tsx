@@ -1,13 +1,52 @@
-// import React, { useEffect, useState } from 'react';
-import { useEffect, useState } from 'react'; // Import useState and useEffect
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { getProduct } from '../api/product';
 import { IProduct } from '../interfaces/product';
-
-import FilProduct from "../components/FilProduct";
-import SideCatProduct from "../components/SideCatProduct";
-
+import { getCategory, getByidCategory } from '../api/categories';
+import { useNavigate } from 'react-router-dom';
 const ProductPage = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
+  const { categoryId } = useParams();
+  const [categories, setCategories] = useState([]);
+  const [sortOption, setSortOption] = useState('');
+  const navigate = useNavigate();
+  const fetchCategories = async () => {
+    try {
+      const { data } = await getCategory();
+      setCategories(data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  const handleCategoryClick = (categoryId) => {
+    // Chuyển hướng đến URL `/categories/:categoryId`
+    navigate(`/categories/${categoryId}`);
+  };
+  const handleSortChange = (event) => {
+    // Lưu giá trị lựa chọn của người dùng khi thay đổi sắp xếp
+    setSortOption(event.target.value);
+  };
+
+  const sortProducts = () => {
+    // Xử lý sắp xếp sản phẩm dựa trên lựa chọn của người dùng
+    let sortedProducts = [...products];
+
+    switch (sortOption) {
+      case 'low':
+        sortedProducts.sort((a, b) => a.price_sale - b.price_sale);
+        break;
+      case 'high':
+        sortedProducts.sort((a, b) => b.price_sale - a.price_sale);
+        break;
+      default:
+        // Mặc định sắp xếp theo giá thấp đến cao
+        sortedProducts.sort((a, b) => a.price_sale - b.price_sale);
+        break;
+    }
+
+    setProducts(sortedProducts);
+  };
 
   const fetchProducts = async () => {
     try {
@@ -19,35 +58,116 @@ const ProductPage = () => {
   };
 
   useEffect(() => {
+    fetchCategories();
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    // Gọi hàm sắp xếp khi giá trị lựa chọn thay đổi
+    sortProducts();
+  }, [sortOption]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Nếu có `categoryId`, thì lấy sản phẩm thuộc danh mục đó
+        if (categoryId) {
+          const response = await getByidCategory(categoryId);
+          // Kiểm tra xem response.data có phải là mảng không
+          if (Array.isArray(response.data)) {
+            setProducts(response.data);
+          } else {
+            console.error('Invalid data structure for products');
+          }
+        } else {
+          // Nếu không có `categoryId`, lấy tất cả sản phẩm
+          fetchProducts();
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+  
+    fetchData();
+  }, [categoryId]);
   return (
     <div className="container mx-auto p-6">
       <div className="grid grid-cols-[20%,75%]  mr-8">
-        <SideCatProduct />
+          {/* Phần danh mục */}
+        <div className="hidden md:block">
+          <div className="flex h-screen flex-col justify-between border-e bg-white">
+            <div className="px-4 py-6">
+              <span className="grid h-10 place-content-center rounded-lg bg-gray-100 text-xl text-gray-600">
+                Danh mục
+              </span>
+              <ul className="mt-6 space-y-1">
+                <li>
+                  <Link to="/product" className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700">
+                    Tất cả sản phẩm
+                  </Link>
+                </li>
+                  {categories.map((category) => (
+                  <li key={category._id} className="grid grid-cols-1">
+                      <Link to={`/categories/${category._id}`}
+                          className={`block rounded-lg px-4 py-2 text-sm font-medium text-black hover:bg-gray-100 hover:text-gray-700`}>
+                          {category.name}
+                      </Link>
+                  </li>
+                  ))}
+              </ul>
+            </div>
+          </div>
+        </div>
         <div className="">
-          <FilProduct />
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto">
-            {products.map((product) => (
-              <div key={product._id} className="rounded shadow-sm p-4 relative group hover:transition-all duration-300">
-                <a href="">
-                  <img
-                    src={product.img}
-                    className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
-                    alt=""
-                  />
-                </a>
-                <div className="text-center">
-                  <div className="text-lg my-2">
-                    <a href="" className="text-gray-400 hover:text-black">
-                      {product.name}
-                    </a>
-                  </div>
-                  <span className="text-sm font-bold">{`${product.price}đ`}</span>
-                </div>
+          {/* Phần lọc sản phẩm */}
+          <div className="grid grid-cols-1 justify-end">
+            <div className="md:col-span-2 lg:col-span-3">
+              <h2 className="text-lg md:text-xl lg:text-2xl font-bold ml-3 md:ml-5">
+                Tất cả sản phẩm
+              </h2>
+            </div>
+            <div className="flex flex-col md:flex-row gap-2 md:gap-5 lg:gap-10 justify-end">
+              <div className="w-full md:w-auto lg:w-auto">
+                <select
+                  name="HeadlineAct"
+                  id="HeadlineAct"
+                  className="mt-1 w-full md:w-auto lg:w-auto rounded-lg border-gray-300 text-sm text-gray-700"
+                  value={sortOption}
+                  onChange={handleSortChange}
+                >
+                  <option value="">Giá</option>
+                  <option value="low">Thấp nhất</option>
+                  <option value="high">Cao nhất</option>
+                </select>
               </div>
-            ))}
+            </div>
+          </div>
+          {/* Hiển thị sản phẩm */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto">
+            {products
+              .filter((product) => (categoryId ? product.categoryId === categoryId : true))
+              .map((product) => (
+                <div key={product._id} className="rounded shadow-sm p-4 relative group hover:transition-all duration-300">
+                  <Link to={`/product/${product._id}`}>
+                    <img
+                      src={product.img}
+                      className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
+                      alt=""
+                    />
+                  </Link>
+                  <div className="text-center">
+                    <div className="text-lg my-2">
+                      <Link to={`/product/${product._id}`} className="text-gray-400 hover:text-black">
+                        {product.name}
+                      </Link>
+                    </div>
+                    <span className="text-sm font-bold">
+                    <del className="mr-2 text-red-500" >{`${product.price}đ`}</del>
+                    {`${product.price_sale}đ`}
+                  </span>
+
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
       </div>
