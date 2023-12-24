@@ -31,13 +31,27 @@ import InvoiceDetails from "./Pages/Admin/Order/InvoiceDetails";
 import Contact from "./Pages/Contact";
 import ListContact from "./Pages/Admin/Contact/ListContact";
 import { addproduct } from "./api/product";
-import UpdateUser from "./Pages/Admin/Users/Edituser";
+import { addBlog } from "./api/blog"; 
 
-// import Edituser from "./Pages/Admin/Users/edituser";
+import UpdateUser from "./Pages/Admin/Users/Edituser";
+import ListBlog from "./Pages/Admin/Blog/ListBlog";
+import AddBlog from "./Pages/Admin/Blog/AddBLog";
+import EditBlog from "./Pages/Admin/Blog/EditBlog";
+import DetailBlogPage from "./Pages/DetailBlog";
+
 function App() {
   const onHandleAdd = async (product: any) => {
     try {
       const response = await addproduct(product)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+
+    }
+  }
+  const onHandleAddBlog = async (blog: any) => {
+    try {
+      const response = await addBlog(blog)
       console.log(response)
     } catch (error) {
       console.log(error)
@@ -53,6 +67,8 @@ function App() {
           <Route path="/product/:productId" element={<DetailPage />} />
           <Route path="/categories/:categoryId" element={<ProductPage />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:blogId" element={<DetailBlogPage />} />
+
           <Route path="/contact" element={<Contact />} />
           <Route path="/purchase" element={<OrderHistory />} />
           <Route path="/purchase/order/:orderId" element={<OrderDetails />} />
@@ -79,7 +95,9 @@ function App() {
           <Route path="products" element={<ProductManager />}/>
           <Route path="contact" element={<ListContact />} />
           <Route path="products/addProduct" element={<AddProduct onAdd={onHandleAdd} />}/>
-
+          <Route path="blog" element={<ListBlog />} />
+          <Route path="blog/addblog" element={<AddBlog onAdd={onHandleAddBlog} />} />
+          <Route path="blog/update/:id"  element={<EditBlog />} />
           <Route path="products/update/:id" element={<UpdateProduct />} />
           <Route path="orders" element={<ListOrders />} />
           <Route path="orders/orderdetail/:orderId" element={<InvoiceDetails />} />
