@@ -17,6 +17,7 @@ const PayPage = () => {
   const [sizes, setSizes] = useState<ISize[]>([]); // Add your size data
   const [colors, setColors] = useState<IColor[]>([]);
   const navigate = useNavigate();
+  const [paymentMethod, setPaymentMethod] = useState<string>("cashOnDelivery");
   const [formData, setFormData] = useState({
     fullname: "",
     phonenumber: "",
@@ -78,28 +79,57 @@ const PayPage = () => {
     e.preventDefault();
 
     try {
-      // Send order data to your server
-      const response = await axios.post("http://localhost:8080/api/order", {
-        userId: getUserIdFromToken(),
-        fullname: formData.fullname,
-        phonenumber: formData.phonenumber,
-        email: formData.email,
-        address: formData.address,
-        orderTotal: totalPrice + shippingFee - discount,
-        orderDetails: cartItems.map((item) => ({
-          productId: item._id,
-          quantity: item.quantity,
-          price: item.price,
-          sizeId: item.sizeId,
-          colorId: item.colorId,
-        })),
-      });
+      if (paymentMethod === "cashOnDelivery") {
+        // Handle cash on delivery logic
+        // Your existing code for cash on delivery goes here
+        const response = await axios.post("http://localhost:8080/api/order", {
+          userId: getUserIdFromToken(),
+          fullname: formData.fullname,
+          phonenumber: formData.phonenumber,
+          email: formData.email,
+          address: formData.address,
+          orderTotal: totalPrice + shippingFee - discount,
+          orderDetails: cartItems.map((item) => ({
+            productId: item._id,
+            quantity: item.quantity,
+            price: item.price,
+            sizeId: item.sizeId,
+            colorId: item.colorId,
+          })),
+        });
+        console.log("Order created:", response.data);
+      } else if (paymentMethod === "vnpay") {
+        // Handle VNPAY logic
+
+        // Fetch the VNPAY payment URL from your server
+        const vnpayResponse = await axios.post("http://localhost:8080/api/createVnpay", {
+          userId: getUserIdFromToken(),
+          amount: totalPrice + shippingFee - discount,
+          fullname: formData.fullname,
+          phonenumber: formData.phonenumber,
+          email: formData.email,
+          address: formData.address,
+          orderDetails: cartItems.map((item) => ({
+            productId: item._id,
+            quantity: item.quantity,
+            price: item.price,
+            sizeId: item.sizeId,
+            colorId: item.colorId,
+          }))
+         
+          // ... (other order details)
+        });
+        console.log(vnpayResponse);
+        
+        // Send order data to your server
+        window.location.href = vnpayResponse.data.vnp_Url;
+      }
       setTimeout(() => {
         navigate('/admin/products');
       }, 3000);
       toast.success('Đặt hàng thành công', { autoClose: 2000 })
 
-      console.log("Order created:", response.data);
+
       // Handle success, e.g., redirect or show a success message
     } catch (error) {
       console.error("Error creating order:", error);
@@ -112,7 +142,7 @@ const PayPage = () => {
     <div>
 
       <section className="flex gap-8 w-10/12 m-auto py-10">
-      <ToastContainer />
+        <ToastContainer />
         <section className="basis-3/6">
           <form onSubmit={handleFormSubmit}>
             <label htmlFor="fullname">Họ và tên</label>
@@ -134,7 +164,33 @@ const PayPage = () => {
             <input type="text" name="address" id="Address" className="input-full" placeholder="Địa chỉ"
               value={formData.address}
               onChange={(e) => setFormData({ ...formData, address: e.target.value })} />
-
+            <div className="pt-5">
+              <p>Hình thức thanh toán</p>
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="cashOnDelivery"
+                    checked={paymentMethod === "cashOnDelivery"}
+                    onChange={() => setPaymentMethod("cashOnDelivery")}
+                  />
+                  Thanh toán khi nhận hàng
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="vnpay"
+                    checked={paymentMethod === "vnpay"}
+                    onChange={() => setPaymentMethod("vnpay")}
+                  />
+                  Thanh toán bằng VNPAY
+                </label>
+              </div>
+            </div>
 
 
             <div className="border-t-2 flex justify-between">
@@ -165,7 +221,7 @@ const PayPage = () => {
                       </div>
                     </div>
                   </td>
-                  <td className="w-40"> {item.price *item.quantity} </td>
+                  <td className="w-40"> {item.price * item.quantity} </td>
                 </tr>
               ))}
 

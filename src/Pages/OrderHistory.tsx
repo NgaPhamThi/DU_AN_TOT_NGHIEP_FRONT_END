@@ -5,7 +5,14 @@ import { IOrders } from '../interfaces/Orders'
 import { getByColorId, getColor } from '../api/color'
 import { Link } from 'react-router-dom'
 import { getSize } from '../api/size'
+import { jwtDecode } from "jwt-decode"
+import { format } from 'date-fns';
+import viLocale from 'date-fns/locale/vi';
 type Props = {}
+interface TokenPayload {
+    id: string;
+    // Bạn cần thêm các trường khác từ payload token nếu cần
+}
 const statusOptions = [
     { value: 'PENDING', label: 'chờ duyệt' },
     { value: 'PROCESSING', label: 'lấy hàng' },
@@ -17,19 +24,55 @@ const OrderHistory = (props: Props) => {
     const [OderDetail,setOderDetail] = useState<IOrders[]>([])
     const [sizes, setSizes] = useState<any[]>([]); // Replace 'any[]' with the actual type of your size objects
     const [colors, setColors] = useState<any[]>([]);
+    const [currentDateTime, setCurrentDateTime] = useState(new Date());
     //them
+    const username = localStorage.getItem('username');
     const getStatusLabel = (status: string) => {
         const statusOption = statusOptions.find(option => option.value === status);
         return statusOption ? statusOption.label : status;
     };
-//    
+//    const getUserIdFromToken = (): string | null => {
+    const getUserIdFromToken = (): string | null => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.log('Token not found in localStorage.');
+            return null;
+        }
+
+        try {
+            const decoded = jwtDecode<TokenPayload>(token);
+            console.log(decoded); // Kiểm tra xem decoded token có đúng không
+            return decoded.id;
+        } catch (error) {
+            console.error('Error decoding token:', error);
+            return null;
+        }
+    };
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+          setCurrentDateTime(new Date());
+        }, 1000);
+    
+        return () => clearInterval(intervalId);
+      }, []);
+      const formattedDate = new Intl.DateTimeFormat('vi-VN', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      }).format(currentDateTime);
     useEffect(() => {
         const fetchAllOrders = async () => {
           try {
-            const response = await getAllOrderDetail();
+            const id = getUserIdFromToken();
+            console.log(id);
+            if(id !== null){
+                const response = await getAllOrderDetail(id);
             
-            setOderDetail(response.data);
-            console.log(response);
+                setOderDetail(response.data);
+                console.log(response);
+            }
+           
             
           } catch (error) {
             console.error('Error fetching orders:', error);
@@ -63,8 +106,8 @@ const OrderHistory = (props: Props) => {
 
         <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
             <div className="flex justify-start item-start space-y-2 flex-col">
-                <h1 className="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Order #13432</h1>
-                <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">21st Mart 2021 at 10:34 PM</p>
+                <h1 className="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Xin Chào {username}</h1>
+                <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">{formattedDate}</p>
             </div>
             {OderDetail.length === 0 ?(
                 <p>Ban chưa có hóa đơn nào</p>

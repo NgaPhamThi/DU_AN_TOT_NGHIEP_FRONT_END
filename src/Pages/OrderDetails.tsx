@@ -25,7 +25,7 @@ const OrderDetails = (props: Props) => {
     const [sizes, setSizes] = useState<any[]>([]); // Replace 'any[]' with the actual type of your size objects
     const [colors, setColors] = useState<any[]>([]);
     //thay thế tiếng anh bằng tiếng việt
-    const getStatusLabel = (status) => {
+    const getStatusLabel = (status:any) => {
         const statusOption = statusOptions.find((option) => option.value === status);
         return statusOption ? statusOption.label : 'Không xác định';
       };
