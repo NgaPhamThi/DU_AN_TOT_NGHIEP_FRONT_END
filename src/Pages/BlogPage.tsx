@@ -1,352 +1,142 @@
-// import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { IBlog } from "../interfaces/blog";
+import { getAllBlog } from "../api/blog";
+import { FaSearch } from "react-icons/fa";
+import { searchBlog } from "../api/search";
 
 const BlogPage = () => {
+  const [blogs, setBlogs] = useState<IBlog[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [searchData, setSearchData] = useState<IBlog[]>([]);
+
+  const truncateDescription = (description: string, maxLength: number) => {
+    return description.length > maxLength
+      ? `${description.slice(0, maxLength)}[...]`
+      : description;
+  };
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const hanldeSearch = async (e: any) => {
+    const value = e.target.value;
+    setSearchValue(value);
+
+    if (value.trim() !== '') {
+      const res = await searchBlog(value);
+      const { data } = res;
+      setSearchData(data);
+    } else {
+      setSearchData([]);
+    }
+  };
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await getAllBlog();
+        setBlogs(response.data);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
   return (
     <div className="mx-auto px-6">
-      <section>
-        <h1 className="pl-8 py-4 text-4xl">Góc Tư Vấn Mặc Đẹp</h1>
-        <div className="flex flex-col-reverse lg:flex-row bg-[#F9F7F7] border rounded-2xl">
-          <div className="lg:w-2/3 p-4 ">
+   <div className="flex flex-col md:flex-row gap-2 md:gap-5 lg:gap-10 items-center mt-4 relative mb-5">
+   <h1 className="text-4xl flex-shrink-0 font-mtd-balerno">Góc Tư Vấn Mặc Đẹp</h1>
+    <div className="relative ml-auto flex-shrink-0">
+    <input
+      type="text"
+      placeholder="Tìm kiếm blog"
+      value={searchValue}
+      onChange={(e) => hanldeSearch(e)}
+      onBlur={() => {
+        if (!searchValue.trim()) {
+          setSearchData([]);
+        }
+      }}
+      className="p-2 pl-8 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300 transition-all"
+      autoFocus
+    />
+    <span className="absolute top-0 left-0 bottom-0 px-2 flex items-center">
+      <FaSearch className="text-gray-400" />
+    </span>
+    {searchValue.trim() && searchData.length > 0 && (
+      <div className="absolute z-10 bg-white border border-gray-300 mt-2 mt-auto w-full rounded-md shadow-md right-0">
+        {searchData.map((value) => (
+          <Link
+            key={value._id}
+            to={`/blog/${value._id}`}
+            className="block px-4 py-2 hover:bg-gray-100"
+          >
+            <div className="flex items-center">
+              <img
+                src={value.img}
+                alt={value.title}
+                className="w-8 h-8 object-cover mr-2"
+              />
+              <div>
+                <div className="text-[#FFB000] text-[13px]">{value.title}</div>
+                <div  className="text-[#FF0000] text-[10px]"> {value.date || new Date().toLocaleDateString()}</div>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    )}
+  </div>
+</div>
+        
             <img
-              src="new2.png"
+              src="blog.png"
               alt=""
-              className=" w-full h-auto border rounded-2xl"
+              className="h-auto mx-auto"
             />
+        <section>
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto ml-4">
+    {blogs.map((blog) => (
+      <div
+        key={blog._id}
+        className="rounded shadow-sm p-4 relative group hover:transition-all duration-300 bg-white dark:bg-gray-800"
+      >
+        <div className="">
+          <div className="">
+            <Link to={`/blog/${blog._id}`}>
+              <img
+                src={blog.img}
+                className="w-full h-auto object-cover mb-4 transition-transform transform rounded-xl"
+                alt=""
+              />
+            </Link>
           </div>
-          <div className="grid grid-rows-4 items-center justify-center px-2 ml-5 lg:w-1/3 p-4 ">
-            <div className="grid grid-cols-2 gap-4 lg:gap-8 mt-4 lg:mt-0">
-              <a href="" className="text-[#E49595]">
-                GÓC TƯ VẤN MẶC ĐẸP
-              </a>
-              <span>24/09/2023</span>
+          <div className="flex flex-col flex-grow ml-4">
+            <div className="text-[14px] justify-between mb-3 mr-5">
+              <Link to={`/blog/${blog._id}`} className="text-[#FF0000]">
+                Ngày Đăng : {blog.date || new Date().toLocaleDateString()}
+              </Link>
+              <div className="my-2">
+                <Link to={`/blog/${blog._id}`} className="text-[#FFB000] text-[20px]">
+                  {blog.title}
+                </Link>
+                <Link to={`/blog/${blog._id}`} className="">
+                  <p className="my-2">{truncateDescription(blog.description, 300)}</p>
+                </Link>
+              </div>
             </div>
-            <a href="" className="text-2xl mt-2 ">
-              Ra mắt nhà người yêu nên mặc gì để gây ẤN TƯỢNG TỐT?
-            </a>
-            <p className="mt-4">
-              Lần đầu ra mắt nhà người yêu chắc hẳn rất run phải không? Chắc
-              chắn bạn sẽ phải chuẩn bị rất nhiều thứ để gây ấn tượng với người
-              thân của chàng. Cùng YODY tìm hiểu ngay ra mắt nhà người yêu nên
-              mặc gì để lại dấu ấn tốt nhé.
-            </p>
-            <a href="" className="text-[#E49595] mt-4">
-              ĐỌC TIN NGAY
-            </a>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto ml-4">
-          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
-            <a href="">
-              <img
-                src="blog5.png"
-                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
-                alt=""
-              />
-            </a>
-            <div className="flex text-[14px] justify-between my-4">
-              <a href="" className="text-[#E49595] ">
-                GÓC TƯ VẤN MẶC ĐẸP
-              </a>
-              <span className="mr-4">24/09/2023</span>
-            </div>
-            <a href="" className=" text-[16px]">
-              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
-            </a>
-            <p className="text-[14px] my-4">
-              Thật không ngoa khi nói áo polo có túi luôn là những item không
-              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
-              trưởng thành.
-            </p>
-          </div>
-          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
-            <a href="">
-              <img
-                src="blog5.png"
-                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
-                alt=""
-              />
-            </a>
-            <div className="flex text-[14px] justify-between my-4">
-              <a href="" className="text-[#E49595] ">
-                GÓC TƯ VẤN MẶC ĐẸP
-              </a>
-              <span className="mr-4">24/09/2023</span>
-            </div>
-            <a href="" className=" text-[16px]">
-              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
-            </a>
-            <p className="text-[14px] my-4">
-              Thật không ngoa khi nói áo polo có túi luôn là những item không
-              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
-              trưởng thành.
-            </p>
-          </div>
-          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
-            <a href="">
-              <img
-                src="blog5.png"
-                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
-                alt=""
-              />
-            </a>
-            <div className="flex text-[14px] justify-between my-4">
-              <a href="" className="text-[#E49595] ">
-                GÓC TƯ VẤN MẶC ĐẸP
-              </a>
-              <span className="mr-4">24/09/2023</span>
-            </div>
-            <a href="" className=" text-[16px]">
-              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
-            </a>
-            <p className="text-[14px] my-4">
-              Thật không ngoa khi nói áo polo có túi luôn là những item không
-              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
-              trưởng thành.
-            </p>
-          </div>
-          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
-            <a href="">
-              <img
-                src="blog5.png"
-                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
-                alt=""
-              />
-            </a>
-            <div className="flex text-[14px] justify-between my-4">
-              <a href="" className="text-[#E49595] ">
-                GÓC TƯ VẤN MẶC ĐẸP
-              </a>
-              <span className="mr-4">24/09/2023</span>
-            </div>
-            <a href="" className=" text-[16px]">
-              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
-            </a>
-            <p className="text-[14px] my-4">
-              Thật không ngoa khi nói áo polo có túi luôn là những item không
-              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
-              trưởng thành.
-            </p>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto ml-4">
-          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
-            <a href="">
-              <img
-                src="blog5.png"
-                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
-                alt=""
-              />
-            </a>
-            <div className="flex text-[14px] justify-between my-4">
-              <a href="" className="text-[#E49595] ">
-                GÓC TƯ VẤN MẶC ĐẸP
-              </a>
-              <span className="mr-4">24/09/2023</span>
-            </div>
-            <a href="" className=" text-[16px]">
-              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
-            </a>
-            <p className="text-[14px] my-4">
-              Thật không ngoa khi nói áo polo có túi luôn là những item không
-              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
-              trưởng thành.
-            </p>
-          </div>
-          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
-            <a href="">
-              <img
-                src="blog5.png"
-                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
-                alt=""
-              />
-            </a>
-            <div className="flex text-[14px] justify-between my-4">
-              <a href="" className="text-[#E49595] ">
-                GÓC TƯ VẤN MẶC ĐẸP
-              </a>
-              <span className="mr-4">24/09/2023</span>
-            </div>
-            <a href="" className=" text-[16px]">
-              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
-            </a>
-            <p className="text-[14px] my-4">
-              Thật không ngoa khi nói áo polo có túi luôn là những item không
-              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
-              trưởng thành.
-            </p>
-          </div>
-          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
-            <a href="">
-              <img
-                src="blog5.png"
-                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
-                alt=""
-              />
-            </a>
-            <div className="flex text-[14px] justify-between my-4">
-              <a href="" className="text-[#E49595] ">
-                GÓC TƯ VẤN MẶC ĐẸP
-              </a>
-              <span className="mr-4">24/09/2023</span>
-            </div>
-            <a href="" className=" text-[16px]">
-              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
-            </a>
-            <p className="text-[14px] my-4">
-              Thật không ngoa khi nói áo polo có túi luôn là những item không
-              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
-              trưởng thành.
-            </p>
-          </div>
-          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
-            <a href="">
-              <img
-                src="blog5.png"
-                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
-                alt=""
-              />
-            </a>
-            <div className="flex text-[14px] justify-between my-4">
-              <a href="" className="text-[#E49595] ">
-                GÓC TƯ VẤN MẶC ĐẸP
-              </a>
-              <span className="mr-4">24/09/2023</span>
-            </div>
-            <a href="" className=" text-[16px]">
-              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
-            </a>
-            <p className="text-[14px] my-4">
-              Thật không ngoa khi nói áo polo có túi luôn là những item không
-              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
-              trưởng thành.
-            </p>
-          </div>
-        </div>
-        <h1 className="pl-8 py-4 text-4xl">Tin tức nhà TND</h1>
-        <div className="flex flex-col-reverse lg:flex-row bg-[#F9F7F7] border rounded-2xl">
-          <div className="lg:w-2/3 p-4 ">
-            <img
-              src="new2.png"
-              alt=""
-              className="w-full h-auto border rounded-2xl"
-            />
-          </div>
-          <div className="grid grid-rows-4 items-center justify-center px-2 ml-5 lg:w-1/3 p-4 ">
-            <div className="grid grid-cols-2 gap-4 lg:gap-8 mt-4 lg:mt-0">
-              <a href="" className="text-[#E49595]">
-                TIN TỨC NHÀ TND
-              </a>
-              <span>15/09/2023</span>
-            </div>
-            <a href="" className="text-2xl mt-2 ">
-              [ TND x REshare ] Chiến dịch GREENER: Thu quần áo cũ - Lan tỏa
-              sống xanh
-            </a>
-            <p className="mt-4">
-              Phải chăng Nàng vẫn thường suy nghĩ “Phải làm gì với quần áo
-              cũ?”TND có câu trả lời cho Nàng đây: Quần áo cũ của Nàng sẽ bắt
-              đầu một...
-            </p>
-            <a href="" className="text-[#E49595] mt-4">
-              ĐỌC TIN NGAY
-            </a>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto ml-4">
-          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
-            <a href="">
-              <img
-                src="blog5.png"
-                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
-                alt=""
-              />
-            </a>
-            <div className="flex text-[14px] justify-between my-4">
-              <a href="" className="text-[#E49595] ">
-                GÓC TƯ VẤN MẶC ĐẸP
-              </a>
-              <span className="mr-4">24/09/2023</span>
-            </div>
-            <a href="" className=" text-[16px]">
-              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
-            </a>
-            <p className="text-[14px] my-4">
-              Thật không ngoa khi nói áo polo có túi luôn là những item không
-              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
-              trưởng thành.
-            </p>
-          </div>
-          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
-            <a href="">
-              <img
-                src="blog5.png"
-                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
-                alt=""
-              />
-            </a>
-            <div className="flex text-[14px] justify-between my-4">
-              <a href="" className="text-[#E49595] ">
-                GÓC TƯ VẤN MẶC ĐẸP
-              </a>
-              <span className="mr-4">24/09/2023</span>
-            </div>
-            <a href="" className=" text-[16px]">
-              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
-            </a>
-            <p className="text-[14px] my-4">
-              Thật không ngoa khi nói áo polo có túi luôn là những item không
-              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
-              trưởng thành.
-            </p>
-          </div>
-          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
-            <a href="">
-              <img
-                src="blog5.png"
-                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
-                alt=""
-              />
-            </a>
-            <div className="flex text-[14px] justify-between my-4">
-              <a href="" className="text-[#E49595] ">
-                GÓC TƯ VẤN MẶC ĐẸP
-              </a>
-              <span className="mr-4">24/09/2023</span>
-            </div>
-            <a href="" className=" text-[16px]">
-              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
-            </a>
-            <p className="text-[14px] my-4">
-              Thật không ngoa khi nói áo polo có túi luôn là những item không
-              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
-              trưởng thành.
-            </p>
-          </div>
-          <div className="rounded shadow-sm p-4 relative group hover: transition-all duration-300">
-            <a href="">
-              <img
-                src="blog5.png"
-                className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
-                alt=""
-              />
-            </a>
-            <div className="flex text-[14px] justify-between my-4">
-              <a href="" className="text-[#E49595] ">
-                GÓC TƯ VẤN MẶC ĐẸP
-              </a>
-              <span className="mr-4">24/09/2023</span>
-            </div>
-            <a href="" className=" text-[16px]">
-              Áo polo có túi: Must-have-item của những anh chàng thanh lịch
-            </a>
-            <p className="text-[14px] my-4">
-              Thật không ngoa khi nói áo polo có túi luôn là những item không
-              thể thiếu đối với những anh chàng đam mê phong cách thanh lịch
-              trưởng thành.
-            </p>
-          </div>
-        </div>
-      </section>
+      </div>
+    ))}
+  </div>
+</section>
+
     </div>
   );
 };
