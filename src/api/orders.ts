@@ -4,8 +4,8 @@ export const getAllOrder = ()=>{
     const uri = '/order';
     return instance.get(uri);
 }
-export const getAllOrderDetail = ()=>{
-    const uri = '/purchase';
+export const getAllOrderDetail = (id:string)=>{
+    const uri = '/purchase/'+id;
     return instance.get(uri);
 }
 export const getByIdOrderDetail = (id:string)=>{

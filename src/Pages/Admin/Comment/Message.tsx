@@ -66,9 +66,9 @@ const Message = () => {
                         {comments.map((comment, index) => (
                             <tr className='text-center' key={comment._id}>
                                 <td className="border p-2">{index + 1}</td>
-                                <td className="border p-2">{typeof comment.userId === 'object' && 'username' in comment.userId
-                                    ? (comment.userId as { username: string }).username
-                                    : 'Unknown'}</td>
+                                <td className="border p-2"> {comment.userId && typeof comment.userId === 'object' && 'username' in comment.userId
+                                                        ? (comment.userId as { username?: string }).username || 'Unknown'
+                                                        : 'Unknown'}</td>
                                 <td className="border p-2">{comment.content}</td>
                                 <td className="border p-2">{comment.createdAt ? new Date(comment.createdAt).toLocaleDateString() : "Không rõ"}</td>
                                 <td className="border p-2 text-center">
