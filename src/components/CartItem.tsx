@@ -14,14 +14,7 @@ const CartItem = ({ _id, name, price, quantity, img }: cartItemProps) => {
     return (
         <div>
             <table className="table-auto w-full ">
-                <thead className="pb-10 ">
-                    <tr className="text-left ">
-                        <th className=" font-semibold pb-10">Sản phẩm</th>
-                        <th className="font-semibold pb-10">Số lượng</th>
-                        <th className="font-semibold pb-10">Giá tiền</th>
-                        <th className="font-semibold pb-10">Tổng tiền</th>
-                    </tr>
-                </thead>
+
                 <tbody>
                     <tr key={_id} className="border-t-2">
                         <td className=" flex py-10  gap-8">

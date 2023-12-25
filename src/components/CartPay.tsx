@@ -15,6 +15,8 @@ const CartPay = ({ name, quantity, img }: cartPayProps) => {
     return (
         <div>
             <table className="table-auto w-full ">
+                <thead className="pb-10 ">
+                </thead>
                 <tbody className="w-full ">
                     <tr className="border-t-2">
                         <td className="flex py-10  gap-8">
@@ -27,7 +29,9 @@ const CartPay = ({ name, quantity, img }: cartPayProps) => {
                         <td className="w-40">{totalPrice} </td>
                     </tr>
                 </tbody>
-            </table></div>
+
+
+            </table></div >
     )
 }
 
