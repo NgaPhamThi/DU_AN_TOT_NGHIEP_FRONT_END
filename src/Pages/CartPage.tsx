@@ -20,7 +20,16 @@ const CartPage = () => {
         </div>
         <section className="flex gap-8 w-10/12 m-auto py-20 ">
           <section className="basis-4/6">
-
+            <table className="table-auto w-full ">
+              <thead className="pb-10 ">
+                <tr className="text-left ">
+                  <th className=" font-semibold pb-10">Sản phẩm</th>
+                  <th className="font-semibold pb-10">Số lượng</th>
+                  <th className="font-semibold pb-10">Giá tiền</th>
+                  <th className="font-semibold pb-10">Tổng tiền</th>
+                </tr>
+              </thead>
+            </table>
             {cartItem.map(item => {
               console.log("item", item);
               return <CartItem key={item._id} {...item} />

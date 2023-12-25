@@ -100,15 +100,6 @@ const DetailPage = () => {
         }
     }
 
-
-
-
-
-
-
-
-
-
     useEffect(() => {
         fetchComment()
     }, [])
@@ -117,7 +108,7 @@ const DetailPage = () => {
             const { data } = await getById(productId)
             // console.log(data);
             setProduct(data)
-            
+
         }
     }
     useEffect(() => {
