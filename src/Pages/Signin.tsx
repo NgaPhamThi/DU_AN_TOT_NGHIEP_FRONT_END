@@ -29,8 +29,10 @@ const Signin = () => {
       const res = await signin(data)
       const token= res.data.accessToken
       const user = res.data.user
-      localStorage.setItem('token', token)
+      localStorage.setItem('token', token);
       localStorage.setItem('username', user.username);
+      localStorage.setItem('role', user.role);
+
       toast.success('Đăng nhập thành công ', { autoClose: 2000 })
       //   console.error('Error registering user', error);
       console.log(token);

@@ -29,6 +29,8 @@ const Header: React.FC = () => {
         // Xóa token username khi đăng xuất
         localStorage.removeItem('token'); 
         localStorage.removeItem('username');
+        localStorage.removeItem('role');
+
         setTimeout(() => {
             navigate('/');
           }, 3000);
