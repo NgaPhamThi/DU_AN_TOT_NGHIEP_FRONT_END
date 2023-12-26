@@ -4,12 +4,36 @@ import { getProduct } from '../api/product';
 import { IProduct } from '../interfaces/product';
 import { getCategory, getByidCategory } from '../api/categories';
 import { useNavigate } from 'react-router-dom';
+import { searchProduct } from '../api/search';
+import { FaSearch } from "react-icons/fa";
 const ProductPage = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const { categoryId } = useParams();
   const [categories, setCategories] = useState([]);
   const [sortOption, setSortOption] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [searchData, setSearchData] = useState<IProduct[]>([]);
+
+
+
+
   const navigate = useNavigate();
+  const hanldeSearch = async (e: any) => {
+    const value = e.target.value;
+    setSearchValue(value);
+
+
+    if (value.trim() !== '') {
+        // Thực hiện tìm kiếm chỉ khi có giá trị trong ô tìm kiếm
+        const res = await searchProduct(value);
+        const { data } = res;
+        setSearchData(data);
+    } else {
+        // Nếu giá trị trống, đặt data về mảng rỗng
+        setSearchData([]);
+    }
+}
   const fetchCategories = async () => {
     try {
       const { data } = await getCategory();
@@ -19,18 +43,40 @@ const ProductPage = () => {
     }
   };
 
+
+  const handleSearchChange = (event) => {
+    // Lưu giá trị nhập từ người dùng khi thay đổi ô tìm kiếm
+    setSearchTerm(event.target.value);
+  };
+
+
+  const searchProducts = () => {
+    // Lọc sản phẩm theo từ khóa tìm kiếm
+    const filteredProducts = products.filter((product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+
+    setProducts(filteredProducts);
+  };
+
+
   const handleCategoryClick = (categoryId) => {
     // Chuyển hướng đến URL `/categories/:categoryId`
     navigate(`/categories/${categoryId}`);
   };
+
+
   const handleSortChange = (event) => {
     // Lưu giá trị lựa chọn của người dùng khi thay đổi sắp xếp
     setSortOption(event.target.value);
   };
 
+
   const sortProducts = () => {
     // Xử lý sắp xếp sản phẩm dựa trên lựa chọn của người dùng
     let sortedProducts = [...products];
+
 
     switch (sortOption) {
       case 'low':
@@ -45,8 +91,10 @@ const ProductPage = () => {
         break;
     }
 
+
     setProducts(sortedProducts);
   };
+
 
   const fetchProducts = async () => {
     try {
@@ -57,15 +105,25 @@ const ProductPage = () => {
     }
   };
 
+
   useEffect(() => {
     fetchCategories();
     fetchProducts();
   }, []);
 
+
+  useEffect(() => {
+    // Gọi hàm tìm kiếm khi giá trị từ khóa thay đổi
+    searchProducts();
+  }, [searchTerm]);
+
+
   useEffect(() => {
     // Gọi hàm sắp xếp khi giá trị lựa chọn thay đổi
     sortProducts();
   }, [sortOption]);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -86,35 +144,94 @@ const ProductPage = () => {
         console.error('Error fetching products:', error);
       }
     };
-  
+
+
     fetchData();
   }, [categoryId]);
+
+
   return (
     <div className="container mx-auto p-6">
       <div className="grid grid-cols-[20%,75%]  mr-8">
-          {/* Phần danh mục */}
+        {/* Phần danh mục */}
         <div className="hidden md:block">
           <div className="flex h-screen flex-col justify-between border-e bg-white">
             <div className="px-4 py-6">
+           
               <span className="grid h-10 place-content-center rounded-lg bg-gray-100 text-xl text-gray-600">
                 Danh mục
               </span>
               <ul className="mt-6 space-y-1">
                 <li>
-                  <Link to="/product" className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700">
+                  <Link
+                    to="/product"
+                    className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
+                  >
                     Tất cả sản phẩm
                   </Link>
                 </li>
-                  {categories.map((category) => (
+                {categories.map((category) => (
                   <li key={category._id} className="grid grid-cols-1">
-                      <Link to={`/categories/${category._id}`}
-                          className={`block rounded-lg px-4 py-2 text-sm font-medium text-black hover:bg-gray-100 hover:text-gray-700`}>
-                          {category.name}
-                      </Link>
+                    <Link
+                      to={`/categories/${category._id}`}
+                      className={`block rounded-lg px-4 py-2 text-sm font-medium text-black hover:bg-gray-100 hover:text-gray-700`}
+                    >
+                      {category.name}
+                    </Link>
                   </li>
-                  ))}
+                ))}
               </ul>
+        {/* Phần tìm kiếm */}
+
+
+        <div className=" flex-col md:flex-row gap-2 md:gap-5 lg:gap-10 items-center mt-4 relative mb-5">
+        <div className="relative ml-auto flex-shrink-0 search-bar">
+  <input
+    type="text"
+    placeholder="Tìm kiếm sản phẩm"
+    value={searchValue}
+    onChange={(e) => hanldeSearch(e)}
+    onBlur={() => {
+      if (!searchValue.trim()) {
+        setSearchData([]);
+      }
+    }}
+    className="w-full p-2 pl-8 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300 transition-all"
+    autoFocus
+  />
+  <span className="absolute top-0 left-0 bottom-0 px-2 flex items-center">
+    <FaSearch className="text-gray-400" />
+  </span>
+  {searchValue.trim() && searchData.length > 0 && (
+    <div className="absolute z-10 bg-white border border-gray-300 mt-2 mt-auto w-full rounded-md shadow-md">
+      {searchData.map((value) => (
+        <Link
+          key={value._id}
+          to={`/product/${value._id}`}
+          className="block px-4 py-2 hover:bg-gray-100"
+        >
+          <div className="flex items-center">
+            <img
+              src={value.img}
+              alt={value.name}
+              className="w-8 h-8 object-cover mr-2"
+            />
+            <div>
+              <div>{value.name}</div>
+              <span className="text-sm font-bold">
+                <del className="mr-2 text-red-500">{`${value.price}đ`}</del>
+                {`${value.price_sale}đ`}
+              </span>
             </div>
+          </div>
+        </Link>
+      ))}
+    </div>
+  )}
+</div>
+</div>
+            </div>
+           
           </div>
         </div>
         <div className="">
@@ -141,12 +258,16 @@ const ProductPage = () => {
               </div>
             </div>
           </div>
+         
           {/* Hiển thị sản phẩm */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto">
             {products
               .filter((product) => (categoryId ? product.categoryId === categoryId : true))
               .map((product) => (
-                <div key={product._id} className="rounded shadow-sm p-4 relative group hover:transition-all duration-300">
+                <div
+                  key={product._id}
+                  className="rounded shadow-sm p-4 relative group hover:transition-all duration-300"
+                >
                   <Link to={`/product/${product._id}`}>
                     <img
                       src={product.img}
@@ -156,15 +277,17 @@ const ProductPage = () => {
                   </Link>
                   <div className="text-center">
                     <div className="text-lg my-2">
-                      <Link to={`/product/${product._id}`} className="text-gray-400 hover:text-black">
+                      <Link
+                        to={`/product/${product._id}`}
+                        className="text-gray-400 hover:text-black"
+                      >
                         {product.name}
                       </Link>
                     </div>
                     <span className="text-sm font-bold">
-                    <del className="mr-2 text-red-500" >{`${product.price}đ`}</del>
-                    {`${product.price_sale}đ`}
-                  </span>
-
+                      <del className="mr-2 text-red-500">{`${product.price}đ`}</del>
+                      {`${product.price_sale}đ`}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -174,5 +297,8 @@ const ProductPage = () => {
     </div>
   );
 };
+
+
+
 
 export default ProductPage;
