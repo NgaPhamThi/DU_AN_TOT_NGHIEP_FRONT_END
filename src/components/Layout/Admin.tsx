@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import withAuthorization from "../../path/to/withAuthorization";
 
 type Props = {};
 
@@ -212,4 +213,4 @@ const Admin = (props: Props) => {
   );
 };
 
-export default Admin;
+export default withAuthorization(Admin);
