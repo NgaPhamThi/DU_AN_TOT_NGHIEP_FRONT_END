@@ -87,6 +87,7 @@ const UpdateVouchers = () => {
                 placeholder="Nhập Mã Phiếu Voucher"
               />
             )}
+            disabled
           />
           {errors.Voucher_Code && (
             <p className="text-red-500">Bắt buộc phải nhập Mã Phiếu Voucher.</p>
@@ -133,6 +134,7 @@ const UpdateVouchers = () => {
                 placeholder="Nhập Ngày Hết Hạn"
               />
             )}
+            disabled
           />
           {errors.Expiration_Date && (
             <p className="text-red-500">Bắt buộc phải nhập Ngày Hết Hạn.</p>
@@ -158,6 +160,7 @@ const UpdateVouchers = () => {
                 <option value="false">Inactive</option>
               </select>
             )}
+            disabled
           />
         </div>
 

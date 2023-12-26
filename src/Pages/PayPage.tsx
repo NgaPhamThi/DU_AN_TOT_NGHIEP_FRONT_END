@@ -4,20 +4,20 @@ import { ISize } from "../interfaces/size";
 import { IColor } from "../interfaces/color";
 import axios from "axios";
 import { IOrders } from "../interfaces/Orders";
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 interface TokenPayload {
   id: string;
   // Bạn cần thêm các trường khác từ payload token nếu cần
 }
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 const PayPage = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [sizes, setSizes] = useState<ISize[]>([]); // Add your size data
   const [colors, setColors] = useState<IColor[]>([]);
+  const [discount, setDiscount] = useState(0);
   const navigate = useNavigate();
-  const [paymentMethod, setPaymentMethod] = useState<string>("cashOnDelivery");
   const [formData, setFormData] = useState({
     fullname: "",
     phonenumber: "",
@@ -26,38 +26,46 @@ const PayPage = () => {
   });
   useEffect(() => {
     // Fetch cart information from local storage
-    const storedCart: string | null = localStorage.getItem('shopping_cart');
+    const storedCart: string | null = localStorage.getItem("shopping_cart");
     if (storedCart !== null) {
       const parsedCart: CartItem[] = JSON.parse(storedCart);
       setCartItems(parsedCart);
     }
-    axios.get<ISize[]>('http://localhost:8080/api/size')
-      .then(response => setSizes(response.data))
-      .catch(error => console.error('Error fetching size data:', error));
+    axios
+      .get<ISize[]>("http://localhost:8080/api/size")
+      .then((response) => setSizes(response.data))
+      .catch((error) => console.error("Error fetching size data:", error));
 
     // Fetch color data from your API
-    axios.get<IColor[]>('http://localhost:8080/api/color')
-      .then(response => setColors(response.data))
-      .catch(error => console.error('Error fetching color data:', error));
+    axios
+      .get<IColor[]>("http://localhost:8080/api/color")
+      .then((response) => setColors(response.data))
+      .catch((error) => console.error("Error fetching color data:", error));
     console.log(storedCart);
-
+    const storedDiscount: string | null = localStorage.getItem("Discount_Type");
+    if (storedDiscount !== null) {
+      const discountValue: number = parseFloat(storedDiscount);
+      setDiscount(discountValue);
+    }
   }, []);
-  const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  const shippingFee = 0;
-  const discount = 100;
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+  const shippingFee = 100;
   const getSizeNameById = (sizeId: any): any => {
     const size = sizes.find((s) => s._id === sizeId);
-    return size ? size.name : 'Unknown Size';
+    return size ? size.name : "Unknown Size";
   };
   const getColorNameById = (colorId: any): any => {
     const color = colors.find((c) => c._id === colorId);
-    return color ? color.name : 'Unknown Color';
+    return color ? color.name : "Unknown Color";
   };
 
   const getUserIdFromToken = (): string | null => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
-      console.log('Token not found in localStorage.');
+      console.log("Token not found in localStorage.");
       return null;
     }
 
@@ -66,144 +74,116 @@ const PayPage = () => {
       console.log(decoded); // Kiểm tra xem decoded token có đúng không
       return decoded.id;
     } catch (error) {
-      console.error('Error decoding token:', error);
+      console.error("Error decoding token:", error);
       return null;
     }
   };
-  const id = getUserIdFromToken()
+  const id = getUserIdFromToken();
   console.log(id);
-
-
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      if (paymentMethod === "cashOnDelivery") {
-        // Handle cash on delivery logic
-        // Your existing code for cash on delivery goes here
-        const response = await axios.post("http://localhost:8080/api/order", {
-          userId: getUserIdFromToken(),
-          fullname: formData.fullname,
-          phonenumber: formData.phonenumber,
-          email: formData.email,
-          address: formData.address,
-          orderTotal: totalPrice + shippingFee - discount,
-          orderDetails: cartItems.map((item) => ({
-            productId: item._id,
-            quantity: item.quantity,
-            price: item.price,
-            sizeId: item.sizeId,
-            colorId: item.colorId,
-          })),
-        });
-        console.log("Order created:", response.data);
-      } else if (paymentMethod === "vnpay") {
-        // Handle VNPAY logic
+      // Send order data to your server
+      const response = await axios.post("http://localhost:8080/api/order", {
+        userId: getUserIdFromToken(),
+        fullname: formData.fullname,
+        phonenumber: formData.phonenumber,
+        email: formData.email,
+        address: formData.address,
+        orderTotal: totalPrice + shippingFee - discount,
+        orderDetails: cartItems.map((item) => ({
+          productId: item._id,
+          quantity: item.quantity,
+          price: item.price,
+          sizeId: item.sizeId,
+          colorId: item.colorId,
+        })),
+      });
+      localStorage.removeItem("Discount_Type");
 
-        // Fetch the VNPAY payment URL from your server
-        const vnpayResponse = await axios.post("http://localhost:8080/api/createVnpay", {
-          userId: getUserIdFromToken(),
-          amount: totalPrice + shippingFee - discount,
-          fullname: formData.fullname,
-          phonenumber: formData.phonenumber,
-          email: formData.email,
-          address: formData.address,
-          orderDetails: cartItems.map((item) => ({
-            productId: item._id,
-            quantity: item.quantity,
-            price: item.price,
-            sizeId: item.sizeId,
-            colorId: item.colorId,
-          }))
-         
-          // ... (other order details)
-        });
-        console.log(vnpayResponse);
-        
-        // Send order data to your server
-        window.location.href = vnpayResponse.data.vnp_Url;
-      }
       setTimeout(() => {
-        navigate('/admin/products');
+        navigate("/purchase");
       }, 3000);
-      toast.success('Đặt hàng thành công', { autoClose: 2000 })
+      toast.success("Đặt hàng thành công", { autoClose: 2000 });
 
-
+      console.log("Order created:", response.data);
       // Handle success, e.g., redirect or show a success message
     } catch (error) {
       console.error("Error creating order:", error);
-      toast.error('Hãy điền đầy đủ thông tin', { autoClose: 2000 })
+      toast.error("Hãy điền đầy đủ thông tin", { autoClose: 2000 });
       // Handle error, e.g., show an error message to the user
     }
   };
 
   return (
     <div>
-
       <section className="flex gap-8 w-10/12 m-auto py-10">
         <ToastContainer />
         <section className="basis-3/6">
           <form onSubmit={handleFormSubmit}>
             <label htmlFor="fullname">Họ và tên</label>
-            <input type="text" name="fullname" id="fullname" className="input-full" placeholder="Họ Tên"
+            <input
+              type="text"
+              name="fullname"
+              id="fullname"
+              className="input-full"
+              placeholder="Họ Tên"
               value={formData.fullname}
-              onChange={(e) => setFormData({ ...formData, fullname: e.target.value })} />
+              onChange={(e) =>
+                setFormData({ ...formData, fullname: e.target.value })
+              }
+            />
 
             <label htmlFor="email">Email</label>
-            <input type="text" name="email" id="email" className="input-full" placeholder="Email"
+            <input
+              type="text"
+              name="email"
+              id="email"
+              className="input-full"
+              placeholder="Email"
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+            />
 
             <label htmlFor="phonenumber">Số điện thoại</label>
-            <input type="text" name="phonenumber" id="phonenumber" className="input-full" placeholder="Số điện thoại"
+            <input
+              type="text"
+              name="phonenumber"
+              id="phonenumber"
+              className="input-full"
+              placeholder="Số điện thoại"
               value={formData.phonenumber}
-              onChange={(e) => setFormData({ ...formData, phonenumber: e.target.value })} />
+              onChange={(e) =>
+                setFormData({ ...formData, phonenumber: e.target.value })
+              }
+            />
 
             <label htmlFor="Address">Địa chỉ</label>
-            <input type="text" name="address" id="Address" className="input-full" placeholder="Địa chỉ"
+            <input
+              type="text"
+              name="address"
+              id="Address"
+              className="input-full"
+              placeholder="Địa chỉ"
               value={formData.address}
-              onChange={(e) => setFormData({ ...formData, address: e.target.value })} />
-            <div className="pt-5">
-              <p>Hình thức thanh toán</p>
-              <div>
-                <label>
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    value="cashOnDelivery"
-                    checked={paymentMethod === "cashOnDelivery"}
-                    onChange={() => setPaymentMethod("cashOnDelivery")}
-                  />
-                  Thanh toán khi nhận hàng
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    value="vnpay"
-                    checked={paymentMethod === "vnpay"}
-                    onChange={() => setPaymentMethod("vnpay")}
-                  />
-                  Thanh toán bằng VNPAY
-                </label>
-              </div>
-            </div>
-
+              onChange={(e) =>
+                setFormData({ ...formData, address: e.target.value })
+              }
+            />
 
             <div className="border-t-2 flex justify-between">
               <button className="border-2  font-semibold p-3 px-5 mt-10">
                 Giỏ hàng
               </button>
-              <button className="bg-black text-white font-semibold p-3 px-7 mt-10 " >
+              <button className="bg-black text-white font-semibold p-3 px-7 mt-10 ">
                 Phương thức thanh toán
               </button>
             </div>
-
           </form>
-
         </section>
         <section className="basis-3/6 w-full">
           <table className="table-auto w-full ">
@@ -216,15 +196,22 @@ const PayPage = () => {
                     <div className="pt-7">
                       <p>{item.name}</p>
                       <div>
-                        <p>{`Size: ${item.sizeId !== null ? getSizeNameById(String(item.sizeId)) : 'N/A'}`}</p>
-                        <p>{`Color: ${item.colorId !== null ? getColorNameById(String(item.colorId)) : 'N/A'}`}</p>
+                        <p>{`Size: ${
+                          item.sizeId !== null
+                            ? getSizeNameById(String(item.sizeId))
+                            : "N/A"
+                        }`}</p>
+                        <p>{`Color: ${
+                          item.colorId !== null
+                            ? getColorNameById(String(item.colorId))
+                            : "N/A"
+                        }`}</p>
                       </div>
                     </div>
                   </td>
                   <td className="w-40"> {item.price * item.quantity} </td>
                 </tr>
               ))}
-
             </tbody>
           </table>
           <section className="bg-zinc-100 mt-12">
@@ -232,33 +219,53 @@ const PayPage = () => {
               {" "}
               <p>Tổng giỏ hàng</p>
               <div className=" pt-5 flex">
+                <span className="grow">Voucher</span>
+                <span className="text-right ">{`giảm giá ${discount}%`}</span>
+              </div>
+              <div className=" pt-5 flex">
                 {" "}
                 <span className="grow">Tổng tiền</span>
-                <span className="text-right ">{`${totalPrice.toLocaleString()}`} vnd</span>
+                <span className="text-right ">
+                  {`${totalPrice.toLocaleString()}`} vnd
+                </span>
+              </div>
+              <div className=" pt-5 flex">
+                {" "}
+                <span className="grow">Tổng giảm giá</span>
+                <span className="text-right ">
+                  {`${(totalPrice * discount) / 100}`} vnd
+                </span>
+              </div>
+              <div className=" pt-5 flex">
+                {" "}
+                <span className="grow">Tổng tiền sau giảm giá</span>
+                <span className="text-right ">
+                  {`${totalPrice - (totalPrice * discount) / 100}`} vnd
+                </span>
               </div>
               <div className=" pt-5 flex">
                 {" "}
                 <span className="grow">Phí ship</span>
-                <span className="text-right ">{`${shippingFee.toLocaleString()}`} vnd</span>
-              </div>
-
-              <div className=" pt-5 flex">
-                {" "}
-                <span className="grow">Giảm giá</span>
-                <span className="text-right ">{`${discount.toLocaleString()}`} vnd</span>
+                <span className="text-right ">
+                  {`${shippingFee.toLocaleString()}`} vnd
+                </span>
               </div>
               <div className=" pt-5 flex">
                 {" "}
                 <span className="grow">Thanh toán</span>
-                <span className="text-right ">{`${(totalPrice + shippingFee - discount).toLocaleString()}`} vnd</span>
+                <span className="text-right ">
+                  {`${
+                    totalPrice - (totalPrice * discount) / 100 - shippingFee
+                  }`}{" "}
+                  vnd
+                </span>
               </div>
             </div>
           </section>
-
         </section>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default PayPage
+export default PayPage;

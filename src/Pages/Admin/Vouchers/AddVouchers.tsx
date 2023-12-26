@@ -3,25 +3,35 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addVoucher } from "../../../api/vouchers";
 import { useNavigate } from "react-router-dom";
-
+import { nanoid } from "nanoid";
+import { useState } from "react";
 const AddVouchers = () => {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const [randomCode, setRandomCode] = useState(nanoid(6));
 
   const onSubmit = async (data: any) => {
+    setValue("Voucher_Code", randomCode);
+    const discountAmount = parseInt(data.Discount_Type);
+    if (isNaN(discountAmount) || discountAmount < 1 || discountAmount > 100) {
+      toast.error("voucher giảm % là một số từ 1 đến 100");
+      return;
+    }
     try {
       const response = await addVoucher(data);
       if (response.status === 201) {
         console.log("Thêm phiếu voucher thành công:", response.data);
+        toast.success("Thêm phiếu voucher thành công", { autoClose: 2000 });
+
         navigate("/admin/vouchers");
       } else {
         console.error("Có lỗi khi thêm phiếu voucher:", response.data.message);
       }
-      toast.success("Thêm phiếu voucher thành công", { autoClose: 2000 });
     } catch (error) {
       if (error instanceof Error && "message" in error) {
         console.error("Có lỗi:", error.message);
@@ -49,10 +59,12 @@ const AddVouchers = () => {
             render={({ field }) => (
               <input
                 {...field}
+                value={randomCode}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Nhập Mã Phiếu Voucher"
               />
             )}
+            disabled
           />
           {errors.Voucher_Code && (
             <p className="text-red-500">Bắt buộc phải nhập Mã Phiếu Voucher.</p>
@@ -63,7 +75,7 @@ const AddVouchers = () => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="Discount_Type"
           >
-            Số Tiền Được Giảm
+            voucher giảm %
           </label>
           <Controller
             name="Discount_Type"
@@ -72,10 +84,11 @@ const AddVouchers = () => {
               <input
                 {...field}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="Nhập Số Tiền Được Giảm"
+                placeholder="Nhập % muốn giảm"
               />
             )}
           />
+
           {errors.Discount_Type && (
             <p className="text-red-500">Bắt buộc phải nhập Loại Giảm Giá.</p>
           )}
