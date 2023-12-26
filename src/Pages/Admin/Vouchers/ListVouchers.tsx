@@ -56,6 +56,7 @@ const ListVouchers = () => {
       title: "Discount Money",
       dataIndex: "Discount_Type",
       key: "Discount_Type",
+      render: (text: string) => `${text}%`,
     },
     {
       title: "Expiration Date",
