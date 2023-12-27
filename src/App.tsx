@@ -31,13 +31,14 @@ import InvoiceDetails from "./Pages/Admin/Order/InvoiceDetails";
 import Contact from "./Pages/Contact";
 import ListContact from "./Pages/Admin/Contact/ListContact";
 import { addproduct } from "./api/product";
-import { addBlog } from "./api/blog"; 
+import { addBlog } from "./api/blog";
 
 import UpdateUser from "./Pages/Admin/Users/Edituser";
 import ListBlog from "./Pages/Admin/Blog/ListBlog";
 import AddBlog from "./Pages/Admin/Blog/AddBLog";
 import EditBlog from "./Pages/Admin/Blog/EditBlog";
 import DetailBlogPage from "./Pages/DetailBlog";
+import EditContact from "./Pages/Admin/Contact/EditContact";
 
 function App() {
   const onHandleAdd = async (product: any) => {
@@ -90,14 +91,16 @@ function App() {
           <Route path="Categories/add" element={<AddCategories />} />
           <Route path="Categories/update/:id" element={<UpdateCategories />} />
           <Route path="users" element={<ListUsers />} />
-          <Route path="users/update/:id" element={<UpdateUser/>} />
+          <Route path="users/update/:id" element={<UpdateUser />} />
 
-          <Route path="products" element={<ProductManager />}/>
+          <Route path="products" element={<ProductManager />} />
           <Route path="contact" element={<ListContact />} />
-          <Route path="products/addProduct" element={<AddProduct onAdd={onHandleAdd} />}/>
+          <Route path="contact/update/:id" element={<EditContact />} />
+
+          <Route path="products/addProduct" element={<AddProduct onAdd={onHandleAdd} />} />
           <Route path="blog" element={<ListBlog />} />
           <Route path="blog/addblog" element={<AddBlog onAdd={onHandleAddBlog} />} />
-          <Route path="blog/update/:id"  element={<EditBlog />} />
+          <Route path="blog/update/:id" element={<EditBlog />} />
           <Route path="products/update/:id" element={<UpdateProduct />} />
           <Route path="orders" element={<ListOrders />} />
           <Route path="orders/orderdetail/:orderId" element={<InvoiceDetails />} />

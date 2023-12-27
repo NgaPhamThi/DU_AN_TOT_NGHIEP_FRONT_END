@@ -1,16 +1,9 @@
-import { Popconfirm, Table } from "antd";
+import { Popconfirm, Table, Select } from "antd";
 import React, { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { Select } from 'antd';
 import { IContact } from "../../../interfaces/contact";
 import { deleteContact, getAllContact } from "../../../api/contact";
-
-const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
-};
-
-// type Props = {};
+import { Link } from "react-router-dom";
 
 const ListContact = () => {
     const columns = [
@@ -35,31 +28,39 @@ const ListContact = () => {
             key: "description",
         },
         {
-            title: "Action",
-            dataIndex: "action",
-            key: "action",
-            render: () => (
-                <div className="inline-flex rounded-lg border  border-gray-100 bg-gray-100 p-1">
-
-                    <Select
-                        defaultValue="Not approved yet"
-                        style={{ width: 120 }}
-                        onChange={handleChange}
-                        options={[
-                            { value: 'not approved yet', label: 'Not approved yet' },
-                            { value: 'Approved', label: 'Approved' },
-                        ]}
-                    />
-                </div>
-            )
+            title: "Status",
+            dataIndex: "status",
+            key: "status",
         },
         {
             title: "Action",
-            dataIndex: "status",
-            key: "status",
-            render: (status: any, record: IContact) => (
-                <div className="inline-flex rounded-lg border  border-gray-100 bg-gray-100 p-1">
+            dataIndex: "action",
+            key: "action",
+            render: (text: any, record: IContact) => (
+                <div className="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+                    <Link to={`update/${record._id}`}>
+                        <button
+                            className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative"
+                            onClick={() => handleEditContact(record._id)}
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                className="h-4 w-4"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                                />
+                            </svg>
 
+                            Edit
+                        </button>
+                    </Link>
                     <Popconfirm
                         title="Bạn có chắc chắn muốn xóa sản phẩm này?"
                         onConfirm={() => handleDeleteContact(record._id)}
@@ -91,30 +92,37 @@ const ListContact = () => {
             )
         },
     ];
-    const [contacts, setContacts] = useState<IContact[]>([])
-    console.log("log contact", contacts);
+
+    const [contacts, setContacts] = useState<IContact[]>([]);
+
     useEffect(() => {
-        async function fetchProduct() {
+        async function fetchContacts() {
             const { data } = await getAllContact();
             setContacts(data);
-            // console.log(data);
         }
-        fetchProduct()
-    }, [])
+        fetchContacts();
+    }, []);
+
     const handleDeleteContact = async (id: any) => {
         try {
             if (id) {
-                await deleteContact(id)
-                window.location.reload()
-                toast.success('Delete Susscessfully !', { autoClose: 2000 })
+                await deleteContact(id);
+                setContacts(prevContacts => prevContacts.filter(contact => contact._id !== id));
+                toast.success('Delete Successfully!', { autoClose: 2000 });
             }
         } catch (error) {
-            console.log('Error deleting comment:', error);
-            toast.error('Error Delete Product !');
+            console.error('Error deleting contact:', error);
+            toast.error('Error Deleting Contact!');
         }
-    }
+    };
+
+    const handleEditContact = (id: any) => {
+        // Handle edit logic here
+        console.log(`Editing contact with ID: ${id}`);
+    };
+
     return (
-        <div className="ml-4  mr-4 mt-4">
+        <div className="ml-4 mr-4 mt-4">
             <ToastContainer />
             <div className="text-center pb-7 flex justify-between items-center ">
                 <div>
