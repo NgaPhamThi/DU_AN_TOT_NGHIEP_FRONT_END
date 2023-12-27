@@ -30,11 +30,11 @@ const DetailBlogPage = () => {
     <div className="mx-auto px-6">
       <section>
         <div className="mx-auto grid grid-cols-1 gap-4 mx-auto ml-4">
-          <div className="shadow appearance-none border group hover:transition-all duration-300 max-w-[1000px] mx-auto my-auto rounded-md">
-          <div className="flex items-center text-[36px] font-bold text-black justify-center my-4">
+        <div className=" appearance-none duration-300 max-w-[1000px] mx-auto my-auto rounded-md mt-10 ">
+          <div className="flex items-center text-[36px] font-bold text-black justify-center my-4 ">
           <span className="mr-4 text-center text-[#FFB000] font-roboto">{blog.title}</span>
           </div>
-            <span className="flex justify-center">
+            <span className="mt-10 flex justify-center">
               <img
                 src={blog.img}
                 className="w-200 h-auto object-cover rounded-xl"
@@ -43,8 +43,10 @@ const DetailBlogPage = () => {
             </span>
 
             <div className="flex flex-col text-[14px] mt-4">
-              <span className="self-end mb-4 text-[#FF0000] mr-5">Ngày đăng : {blog.date || new Date().toLocaleDateString()}</span>
-            <p className="mb-4 mr-5 mx-5" style={{ whiteSpace: "pre-wrap" }}>{blog.description}</p>
+              <span className="mt-5 self-end mb-4 text-[#FF0000] mr-5">Ngày đăng : {blog.date || new Date().toLocaleDateString()}</span>
+              <p className="mb-4 mr-5 mx-5 mt-5 leading-6 text-justify" style={{ whiteSpace: "pre-wrap" }}>
+                {blog.description}
+              </p>
 
             </div>
           </div>

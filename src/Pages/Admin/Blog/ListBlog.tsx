@@ -19,22 +19,13 @@ const ListBlog = (props: Props) => {
     {
       title: "Date",
       dataIndex: "date",
-      key: "date",
-      render: () => new Date().toLocaleDateString()
+      key: {render: () => new Date().toLocaleDateString()},
     },
     
     {
       title: "Title",
       dataIndex: "title",
       key: "title",
-    },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-      render: (text: string) => (
-        <div style={{ whiteSpace: "pre-wrap" }}>{text}</div>
-      ),
     },
     {
         title: "Action",
