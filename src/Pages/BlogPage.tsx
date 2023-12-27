@@ -8,45 +8,48 @@ import { searchBlog } from "../api/search";
 
 const BlogPage = () => {
   const [blogs, setBlogs] = useState<IBlog[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchValue, setSearchValue] = useState<string>('');
   const [searchData, setSearchData] = useState<IBlog[]>([]);
-
+  const [sortedBlogs, setSortedBlogs] = useState<IBlog[]>([]);
   const truncateDescription = (description: string, maxLength: number) => {
     return description.length > maxLength
-      ? `${description.slice(0, maxLength)}[...]`
+      ? `${description.slice(0, maxLength)}[xem thêm...]`
       : description;
   };
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
   const hanldeSearch = async (e: any) => {
-    const value = e.target.value;
+    const value = e.target.value.toLowerCase();
     setSearchValue(value);
-
+  
     if (value.trim() !== '') {
       const res = await searchBlog(value);
       const { data } = res;
-      setSearchData(data);
+  
+      const searchDataMatchingCase = data.filter(blog => {
+        const titleLowerCase = blog.title.toLowerCase();
+        return titleLowerCase.includes(value);
+      });
+  
+      setSearchData(searchDataMatchingCase);
     } else {
       setSearchData([]);
     }
   };
-
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const response = await getAllBlog();
-        setBlogs(response.data);
+        const sortedBlogs = response.data.sort((a, b) => {
+          // Sắp xếp theo thời gian mới nhất đến cũ nhất
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        });
+        setSortedBlogs(sortedBlogs);
       } catch (error) {
         console.error("Error fetching blogs:", error);
       }
     };
-
+  
     fetchBlogs();
   }, []);
-
   return (
     <div className="mx-auto px-6">
    <div className="flex flex-col md:flex-row gap-2 md:gap-5 lg:gap-10 items-center mt-4 relative mb-5">
@@ -69,7 +72,7 @@ const BlogPage = () => {
       <FaSearch className="text-gray-400" />
     </span>
     {searchValue.trim() && searchData.length > 0 && (
-      <div className="absolute z-10 bg-white border border-gray-300 mt-2 mt-auto w-full rounded-md shadow-md right-0">
+      <div className="absolute z-10 bg-white border border-gray-300 mt-2 mt-auto w-full rounded-md shadow-md right-0 max-h-80 overflow-y-auto">
         {searchData.map((value) => (
           <Link
             key={value._id}
@@ -101,7 +104,7 @@ const BlogPage = () => {
             />
         <section>
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto ml-4">
-    {blogs.map((blog) => (
+    {sortedBlogs.map((blog) => (
       <div
         key={blog._id}
         className="rounded shadow-sm p-4 relative group hover:transition-all duration-300 bg-white dark:bg-gray-800"
