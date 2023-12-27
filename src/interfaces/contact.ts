@@ -4,4 +4,5 @@ export interface IContact {
     email: string
     phonenumber: string
     description: string
+    status: string
 }
