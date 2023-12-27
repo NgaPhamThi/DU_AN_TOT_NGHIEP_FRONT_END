@@ -5,47 +5,72 @@ type cartItemProps = {
     name: string
     price: number
     quantity: number,
-    img: string
+    img: string,
+    sizeId:string,
+    colorId: string
 }
 
-const CartItem = ({ _id, name, price, quantity, img }: cartItemProps) => {
+const CartItem = ({ _id, name, price,sizeId,colorId, quantity, img }: cartItemProps) => {
     const { increaseQty, decreaseQty, removeCartItem } = useShoppingContext()
-
+    if(colorId === '6567184222b9ae3620657026'){
+        var color = 'grey'
+    }
+    if(colorId === '6567186022b9ae362065702e'){
+       var color = "white"
+    }
+    if(colorId === '6567187222b9ae3620657030'){
+        var color ="blue"
+    }
+    if(sizeId === '656717da22b9ae362065700a'){
+        var size = 'M'
+    }
+    if(sizeId === '656717e222b9ae362065700c'){
+       var size = "L"
+    }
+    if(sizeId === '656717e722b9ae362065700e'){
+        var size ="XL"
+    }
     return (
-        <div>
-            <table className="table-auto w-full ">
-
-                <tbody>
-                    <tr key={_id} className="border-t-2">
-                        <td className=" flex py-10  gap-8">
-                            <img className='w-[100px] h-[100px]' src={img} alt="" />
-                            <div className="pt-7">
-                                <p>{name}</p>
-                            </div>
-                        </td>
-                        <td className="w-40 ">
-                            <button onClick={() => decreaseQty(_id as string)}>{`-`}</button>
-                            <span className="px-6">{quantity}</span>
-                            <button onClick={() => increaseQty(_id as string)}>{`+`}</button>
-                        </td>
-
-                        <td className="w-40">{price}</td>
-                        <td className="w-40">{quantity * price}</td>
-                        <td>
+        <div className="border-t-2 p-4 bg-white shadow-md rounded-md mb-4">
+      <table className="table-auto w-full">
+        <tbody>
+          <tr key={_id} className="border-t-2">
+            <td className="flex items-center py-4 gap-4">
+              <img className="w-16 h-16 object-cover rounded" src={img} alt="" />
+              <div>
+                <p className="text-gray-800 font-semibold">{name}</p>
+              </div>
+            </td>
+            <td className="w-20 flex items-center space-x-2">
+              <button
+                onClick={() => decreaseQty(_id as string)}
+                className="text-red-500 bg-gray-200 px-3 py-1 rounded"
+              >
+                -
+              </button>
+              <span className="font-bold">{quantity}</span>
+              <button
+                onClick={() => increaseQty(_id as string)}
+                className="text-green-500 bg-gray-200 px-3 py-1 rounded"
+              >
+                +
+              </button>
+            </td>
+            <td className="w-20 text-center font-semibold">{size}</td>
+            <td className="w-20 text-center font-semibold">{color}</td>
+            <td className="w-20 font-semibold">${price}</td>
+            <td className="w-20 font-semibold">${quantity * price}</td>
+            <td>
                             <button onClick={() => removeCartItem(_id as string)}>
                                 <i className="fa-sharp fa-solid fa-circle-xmark text-slate-300 bg-black rounded-full shadow-md shadow-black text-3xl"></i>
                             </button>
                         </td>
-                    </tr>
-
-
-                </tbody>
-
-
-            </table>
-
-        </div>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     )
+    
 }
 
 export default CartItem

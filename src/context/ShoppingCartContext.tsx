@@ -80,13 +80,23 @@ export const ShoppingContextProvider = ({ children }: ShoppingContextProviderPro
     const addCartItem = (product: CartItem) => {
         console.log("product", product)
         if (product) {
-            const currentCartItem = cartItem.find((item) => item._id == product._id)
+            const currentCartItem = cartItem.find(
+                (item) =>
+                    item._id === product._id &&
+                    item.sizeId === product.sizeId &&
+                    item.colorId === product.colorId
+            );
+    
+
             if (currentCartItem) {
                 const newItems = cartItem.map((item) => {
-                    if (item._id === product._id) {
+                    if ( item._id === product._id &&
+                        item.sizeId === product.sizeId &&
+                        item.colorId === product.colorId ) {
                         return { ...item, quantity: item.quantity + product.quantity }
 
-                    } else {
+                    }
+                     else {
                         return item
                     }
                 })
