@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
-import { CartItem } from "../context/ShoppingCartContext";
-import { ISize } from "../interfaces/size";
-import { IColor } from "../interfaces/color";
 import axios from "axios";
-import { IOrders } from "../interfaces/Orders";
 import { jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { CartItem } from "../context/ShoppingCartContext";
+import { IColor } from "../interfaces/color";
+import { ISize } from "../interfaces/size";
 interface TokenPayload {
   id: string;
   // Bạn cần thêm các trường khác từ payload token nếu cần
 }
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
 const PayPage = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [sizes, setSizes] = useState<ISize[]>([]); // Add your size data
   const [colors, setColors] = useState<IColor[]>([]);
   const [discount, setDiscount] = useState(0);
   const navigate = useNavigate();
+  const [paymentMethod, setPaymentMethod] = useState<string>("cashOnDelivery");
   const [formData, setFormData] = useState({
     fullname: "",
     phonenumber: "",
@@ -53,16 +53,16 @@ const PayPage = () => {
     0
   );
   const shippingFee = 100;
-  const getSizeNameById = (sizeId: any): any => {
+  const getSizeNameById = (sizeId: string) => {
     const size = sizes.find((s) => s._id === sizeId);
     return size ? size.name : "Unknown Size";
   };
-  const getColorNameById = (colorId: any): any => {
+  const getColorNameById = (colorId: string) => {
     const color = colors.find((c) => c._id === colorId);
     return color ? color.name : "Unknown Color";
   };
 
-  const getUserIdFromToken = (): string | null => {
+  const getUserIdFromToken = () => {
     const token = localStorage.getItem("token");
     if (!token) {
       console.log("Token not found in localStorage.");
@@ -81,13 +81,14 @@ const PayPage = () => {
   const id = getUserIdFromToken();
   console.log(id);
 
+  // thằng nào code đoạn này ngu vãi
+  // call api tạo hook hoặc k tao Instance
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      // Send order data to your server
-      const response = await axios.post("http://localhost:8080/api/order", {
-        userId: getUserIdFromToken(),
+      const dataForm = {
+        userId: getUserIdFromToken() || " ",
         fullname: formData.fullname,
         phonenumber: formData.phonenumber,
         email: formData.email,
@@ -100,16 +101,37 @@ const PayPage = () => {
           sizeId: item.sizeId,
           colorId: item.colorId,
         })),
-      });
-      localStorage.removeItem("Discount_Type");
-
-      setTimeout(() => {
+        
+      };
+      if(paymentMethod === "cashOnDelivery"){
+        const createOrder = await axios.post(
+          "http://localhost:8080/api/order",
+          dataForm
+        )
+        console.log(createOrder);
+        setTimeout(() => {
         navigate("/purchase");
       }, 3000);
       toast.success("Đặt hàng thành công", { autoClose: 2000 });
+        
+      }else if (paymentMethod === "vnpay"){
+        const vnPay = await axios.post(
+          "http://localhost:8080/api/createVnpay",
+          dataForm
+        );
+        if (vnPay.data) {
+          window.location.href = vnPay.data;
+        }
+      }
+      
 
-      console.log("Order created:", response.data);
-      // Handle success, e.g., redirect or show a success message
+      // Send order data to your server
+      // const response = await axios.post("http://localhost:8080/api/order", );
+      // localStorage.removeItem("Discount_Type");
+
+      
+
+      // console.log("Order created:", response.data);
     } catch (error) {
       console.error("Error creating order:", error);
       toast.error("Hãy điền đầy đủ thông tin", { autoClose: 2000 });
@@ -174,12 +196,47 @@ const PayPage = () => {
                 setFormData({ ...formData, address: e.target.value })
               }
             />
-
+          <div className="pt-5">
+              <p>Hình thức thanh toán</p>
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="cashOnDelivery"
+                    checked={paymentMethod === "cashOnDelivery"}
+                    onChange={() => setPaymentMethod("cashOnDelivery")}
+                  />
+                  Thanh toán khi nhận hàng
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="vnpay"
+                    checked={paymentMethod === "vnpay"}
+                    onChange={() => setPaymentMethod("vnpay")}
+                  />
+                  Thanh toán bằng VNPAY
+                </label>
+              </div>
+            </div>
+            
+           
             <div className="border-t-2 flex justify-between">
-              <button className="border-2  font-semibold p-3 px-5 mt-10">
+              <button
+                onClick={() => navigate("/cart")}
+                type="button"
+                className="border-2  font-semibold p-3 px-5 mt-10"
+              >
                 Giỏ hàng
               </button>
-              <button className="bg-black text-white font-semibold p-3 px-7 mt-10 ">
+              <button
+                type="submit"
+                className="bg-black text-white font-semibold p-3 px-7 mt-10 "
+              >
                 Phương thức thanh toán
               </button>
             </div>
@@ -196,16 +253,14 @@ const PayPage = () => {
                     <div className="pt-7">
                       <p>{item.name}</p>
                       <div>
-                        <p>{`Size: ${
-                          item.sizeId !== null
+                        <p>{`Size: ${item.sizeId !== null
                             ? getSizeNameById(String(item.sizeId))
                             : "N/A"
-                        }`}</p>
-                        <p>{`Color: ${
-                          item.colorId !== null
+                          }`}</p>
+                        <p>{`Color: ${item.colorId !== null
                             ? getColorNameById(String(item.colorId))
                             : "N/A"
-                        }`}</p>
+                          }`}</p>
                       </div>
                     </div>
                   </td>
@@ -254,9 +309,8 @@ const PayPage = () => {
                 {" "}
                 <span className="grow">Thanh toán</span>
                 <span className="text-right ">
-                  {`${
-                    totalPrice - (totalPrice * discount) / 100 - shippingFee
-                  }`}{" "}
+                  {`${totalPrice - (totalPrice * discount) / 100 - shippingFee
+                    }`}{" "}
                   vnd
                 </span>
               </div>
