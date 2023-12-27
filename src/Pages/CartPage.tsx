@@ -77,6 +77,7 @@ const CartPage = () => {
         </div>
         <section className="flex gap-8 w-10/12 m-auto py-20 ">
           <section className="basis-4/6">
+          
             {cartItem.map((item) => {
               console.log("item", item);
               return <CartItem key={item._id} {...item} />;
