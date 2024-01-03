@@ -8,6 +8,7 @@ import { IOrders } from "../interfaces/Orders";
 import { toast } from "react-toastify";
 import { CartItem } from "../context/ShoppingCartContext";
 import axios from "axios";
+import OrderDetails from "./OrderDetails";
 
 interface TokenPayload {
   id: string;
@@ -36,7 +37,7 @@ const OrderHistory = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-
+  const  voucherId = localStorage.getItem("id");
   useEffect(() => {
     if (!searchParams.get("encode") && !searchParams.get("userId")) {
       navigate("/purchase");
@@ -44,7 +45,7 @@ const OrderHistory = () => {
     const date = new Date();
     if (searchParams.get("expire")) {
       if (Number(searchParams.get("expire")) < date.getTime()) {
-        navigate("/");
+        navigate("/purchase");
       } else {
         if (
           Number(searchParams.get("vnp_ResponseCode")) != 24 &&
@@ -66,6 +67,7 @@ const OrderHistory = () => {
               productId: item._id,
               quantity: item.quantity,
               price: item.price,
+              voucherId: voucherId,
               sizeId: item.sizeId,
               colorId: item.colorId,
             })),
@@ -130,7 +132,12 @@ const OrderHistory = () => {
         const id = getUserIdFromToken();
         if (id) {
           const res = await getAllOrderDetail(id);
-          setOderDetail(res.data);
+          const sortedOrders = res.data.sort((a:any, b:any) => {
+            return new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime();
+          });
+          setOderDetail(sortedOrders);
+          console.log(res);
+          
         }
       } catch (error) {
         console.log(error);
@@ -172,9 +179,9 @@ const OrderHistory = () => {
       {OderDetail.length === 0 ? (
         <p>Ban chưa có hóa đơn nào</p>
       ) : (
-        OderDetail.map((order, i) => (
+        OderDetail.map((order) => (
           <div
-            key={i}
+            key={order._id}
             className="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0"
           >
             <div className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
@@ -258,7 +265,7 @@ const OrderHistory = () => {
                             Trạng Thái Đơn Hàng
                             <br />
                             <span className="font-normal text-[#f1532d]">
-                              {getStatusLabel(order.status)}
+                              {order.status !== undefined && getStatusLabel(order.status)}
                             </span>
                           </p>
                         </div>

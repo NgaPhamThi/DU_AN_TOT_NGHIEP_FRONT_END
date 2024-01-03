@@ -10,5 +10,9 @@ export const getComment =(productId:string)=>{
 }
 export const deleteComment =(commentId:string)=>{
     const uri = "/comment/" +commentId
-    return instance.delete(uri)
+    return instance.delete(uri,{
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    })
 }

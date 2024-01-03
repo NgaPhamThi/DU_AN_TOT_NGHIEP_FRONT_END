@@ -16,6 +16,8 @@ const PayPage = () => {
   const [sizes, setSizes] = useState<ISize[]>([]); // Add your size data
   const [colors, setColors] = useState<IColor[]>([]);
   const [discount, setDiscount] = useState(0);
+  
+  
   const navigate = useNavigate();
   const [paymentMethod, setPaymentMethod] = useState<string>("cashOnDelivery");
   const [formData, setFormData] = useState({
@@ -48,6 +50,8 @@ const PayPage = () => {
       setDiscount(discountValue);
     }
   }, []);
+  const  voucherId = localStorage.getItem("id");
+    console.log("voucher:",voucherId);
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -78,26 +82,35 @@ const PayPage = () => {
       return null;
     }
   };
-  const id = getUserIdFromToken();
-  console.log(id);
+  
 
-  // thằng nào code đoạn này ngu vãi
-  // call api tạo hook hoặc k tao Instance
+
+ 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
+      const userId = getUserIdFromToken() || ""
+      if (!userId) {
+        toast.success("Đặt hàng thành công", { autoClose: 2000 });
+        // Nếu userId không tồn tại, hiển thị thông báo lỗi và không thực hiện navigate
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+        return;
+      }
       const dataForm = {
-        userId: getUserIdFromToken() || " ",
+       userId: userId,
         fullname: formData.fullname,
         phonenumber: formData.phonenumber,
         email: formData.email,
         address: formData.address,
-        orderTotal: totalPrice + shippingFee - discount,
+        orderTotal: totalPrice -shippingFee - (totalPrice * discount) / 100,
         orderDetails: cartItems.map((item) => ({
           productId: item._id,
           quantity: item.quantity,
           price: item.price,
+          voucherId: voucherId,  
           sizeId: item.sizeId,
           colorId: item.colorId,
         })),
@@ -237,7 +250,7 @@ const PayPage = () => {
                 type="submit"
                 className="bg-black text-white font-semibold p-3 px-7 mt-10 "
               >
-                Phương thức thanh toán
+                Đặt Hàng
               </button>
             </div>
           </form>

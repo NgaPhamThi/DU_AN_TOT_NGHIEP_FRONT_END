@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { getSize } from '../api/size'
 import { getColor } from '../api/color'
+import { getVoucher, getVoucherById } from '../api/vouchers'
 type Props = {}
 const statusOptions = [
     { value: 'PENDING', label: 'chờ duyệt' },
@@ -15,7 +16,7 @@ const statusOptions = [
     { value: 'ONDELIVERY', label: 'đang giao' },
     { value: 'COMPLETED', label: 'giao hàng thành công' },
     { value: 'CANCELLED', label: 'Hủy đơn hàng' }
-  ];
+];
 const OrderDetails = (props: Props) => {
     const { orderId } = useParams()
     const [orderDetails, setOrderDetails] = useState<IOrderDetail[]>([])
@@ -24,11 +25,12 @@ const OrderDetails = (props: Props) => {
     const [isCancelModalVisible, setCancelModalVisible] = useState(false);
     const [sizes, setSizes] = useState<any[]>([]); // Replace 'any[]' with the actual type of your size objects
     const [colors, setColors] = useState<any[]>([]);
+    const [voucherName, setVoucherName] = useState<string | null>(null);
     //thay thế tiếng anh bằng tiếng việt
-    const getStatusLabel = (status:any) => {
+    const getStatusLabel = (status: any) => {
         const statusOption = statusOptions.find((option) => option.value === status);
         return statusOption ? statusOption.label : 'Không xác định';
-      };
+    };
     const fetchOrderDetail = async () => {
         try {
             if (orderId) {
@@ -51,30 +53,30 @@ const OrderDetails = (props: Props) => {
     }, [orderId])
     const CancelModal = () => (
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-8 shadow-2xl">
-        <h2 className="text-lg font-bold mb-2">Bạn chắc chắn muốn hủy đơn hàng?</h2>
+            <h2 className="text-lg font-bold mb-2">Bạn chắc chắn muốn hủy đơn hàng?</h2>
 
-        {/* <p className="text-sm text-gray-500 mb-4">
+            {/* <p className="text-sm text-gray-500 mb-4">
             Doing that could cause some issues elsewhere. Are you 100% sure it's OK?
         </p> */}
 
-        <div className="flex justify-between gap-2">
-            <button
-            onClick={handleCancelYes}
-                type="button"
-                className="rounded bg-green-50 px-4 py-2 text-sm font-medium text-green-600"
-            >
-               Có
-            </button>
+            <div className="flex justify-between gap-2">
+                <button
+                    onClick={handleCancelYes}
+                    type="button"
+                    className="rounded bg-green-50 px-4 py-2 text-sm font-medium text-green-600"
+                >
+                    Có
+                </button>
 
-            <button
-                onClick={toggleCancelModal}
-                type="button"
-                className="rounded bg-gray-50 px-4 py-2 text-sm font-medium text-gray-600"
-            >
-                Không
-            </button>
+                <button
+                    onClick={toggleCancelModal}
+                    type="button"
+                    className="rounded bg-gray-50 px-4 py-2 text-sm font-medium text-gray-600"
+                >
+                    Không
+                </button>
+            </div>
         </div>
-    </div>
     );
 
     // Step 3: Toggle pop-up visibility
@@ -109,6 +111,7 @@ const OrderDetails = (props: Props) => {
     useEffect(() => {
         fetchOrderDetail()
         fetchSizesAndColors()
+
     }, [])
     const fetchSizesAndColors = async () => {
         // Fetch sizes and setSizes
@@ -120,20 +123,42 @@ const OrderDetails = (props: Props) => {
         // Replace 'fetchColorsFunction' with your actual function to fetch colors
         const colorsData = await getColor();
         setColors(colorsData.data);
+
+       
+
     };
+   
+
     const getSizeName = (sizeId: string) => {
         const size = sizes.find((s) => s._id === sizeId);
         return size ? size.name : sizeId;
     };
 
+
     const getColorName = (colorId: string) => {
         const color = colors.find((c) => c._id === colorId);
+
         return color ? color.name : colorId;
     };
+    useEffect(() => {
+        const fetchVoucherName = async () => {
+          try {
+            const voucherId = orderInfo?.orderDetails[0].voucherId || ''; // Lấy voucherId từ orderInfo
+            const response = await getVoucherById(voucherId); // Gọi API để lấy thông tin voucher
+            console.log(response.data);
+            
+            setVoucherName(response.data.Discount_Type); // Lưu tên voucher vào state
+          } catch (error) {
+            console.error('Error fetching voucher:', error);
+          }
+        };
+      
+        fetchVoucherName();
+      }, [orderInfo]);
     return (
 
         <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
-             <ToastContainer />
+            <ToastContainer />
             <div className="flex justify-start item-start space-y-2 flex-col">
                 <h1 className="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Order #13432</h1>
                 <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">21st Mart 2021 at 10:34 PM</p>
@@ -180,7 +205,7 @@ const OrderDetails = (props: Props) => {
                                 </div>
                                 <div className="flex justify-between items-center w-full">
                                     <p className="text-base dark:text-white leading-4 text-gray-800">Voucher <span className="bg-gray-200 p-1 text-xs font-medium dark:bg-white dark:text-gray-800 leading-3 text-gray-800">STUDENT</span></p>
-                                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">0</p>
+                                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">  {voucherName}%</p>
                                 </div>
                                 <div className="flex justify-between items-center w-full">
                                     <p className="text-base dark:text-white leading-4 text-gray-800">Phí Vận Chuyển</p>
@@ -202,8 +227,8 @@ const OrderDetails = (props: Props) => {
                                     <div className="flex flex-col justify-start items-center">
                                         {/* <p className="text-lg leading-6 dark:text-white font-semibold text-gray-800">Trạng Thái Đơn Hàng<br /><span className="font-normal">{orderInfo?.status}</span></p> */}
                                         <p className="text-lg leading-6 dark:text-white font-semibold text-gray-800">
-                                    Trạng Thái Đơn Hàng<br />
-                                    <span className="font-normal">{getStatusLabel(orderInfo?.status)}</span>
+                                            Trạng Thái Đơn Hàng<br />
+                                            <span className="font-normal">{getStatusLabel(orderInfo?.status)}</span>
                                         </p>
                                     </div>
                                 </div>
@@ -244,7 +269,7 @@ const OrderDetails = (props: Props) => {
                             </div>
 
                             <div className="flex w-full justify-center items-center md:justify-start md:items-start">
-                               { orderInfo?.status === 'PENDING' ?  <button onClick={toggleCancelModal} className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800">Hủy Đơn Hàng</button>:<div></div>}
+                                {orderInfo?.status === 'PENDING' ? <button onClick={toggleCancelModal} className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800">Hủy Đơn Hàng</button> : <div></div>}
                             </div>
                             {isCancelModalVisible && <CancelModal />}
 
