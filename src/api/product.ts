@@ -10,13 +10,25 @@ export const getById = (id: string) => {
 }
 export const addproduct =(product:IProduct)=>{
     const uri = "/products";
-    return instance.post(uri, product)
+    return instance.post(uri, product,{
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    })
 }
 export const updateproduct =(product:IProduct, id:string |number)=>{
     const uri = "/products/"+ id;
-    return instance.patch(uri,product)
+    return instance.patch(uri,product,{
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    })
 }
 export const deleteproduct =(product:string | number)=>{
     const uri = "/products/" +product
-    return instance.delete(uri)
+    return instance.delete(uri,{
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    })
 }

@@ -35,7 +35,7 @@ const OrderHistory = () => {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const [cartItems, setCartItems] = useState<CartItem[]>([])
-
+  const  voucherId = localStorage.getItem("id");
   useEffect(() => {
     if (!searchParams.get('encode') && !searchParams.get('userId')) {
       navigate('/purchase')
@@ -61,6 +61,7 @@ const OrderHistory = () => {
               productId: item._id,
               quantity: item.quantity,
               price: item.price,
+              voucherId: voucherId,
               sizeId: item.sizeId,
               colorId: item.colorId
             }))
@@ -123,7 +124,10 @@ const OrderHistory = () => {
         const id = getUserIdFromToken()
         if (id) {
           const res = await getAllOrderDetail(id)
-          setOderDetail(res.data)
+          const sortedOrders = res.data.sort((a:any, b:any) => {
+            return new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime();
+          });
+          setOderDetail(sortedOrders)
         }
       } catch (error) {
         console.log(error)
@@ -225,7 +229,7 @@ const OrderHistory = () => {
                           <p className='text-lg leading-6 dark:text-white font-semibold text-[#49bedb]'>
                             Trạng Thái Đơn Hàng
                             <br />
-                            <span className='font-normal text-[#f1532d]'>{getStatusLabel(order.status)}</span>
+                            <span className='font-normal text-[#f1532d]'>{order.status !== undefined && getStatusLabel(order.status)}</span>
                           </p>
                         </div>
                       </div>

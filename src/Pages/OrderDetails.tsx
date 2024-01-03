@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { getSize } from '../api/size'
 import { getColor } from '../api/color'
+import { getVoucher, getVoucherById } from '../api/vouchers'
 type Props = {}
 const statusOptions = [
     { value: 'PENDING', label: 'chờ duyệt' },
@@ -24,6 +25,7 @@ const OrderDetails = (props: Props) => {
     const [isCancelModalVisible, setCancelModalVisible] = useState(false);
     const [sizes, setSizes] = useState<any[]>([]); // Replace 'any[]' with the actual type of your size objects
     const [colors, setColors] = useState<any[]>([]);
+    const [voucherName, setVoucherName] = useState<string | null>(null);
     //thay thế tiếng anh bằng tiếng việt
     const getStatusLabel = (status:any) => {
         const statusOption = statusOptions.find((option) => option.value === status);
@@ -130,6 +132,21 @@ const OrderDetails = (props: Props) => {
         const color = colors.find((c) => c._id === colorId);
         return color ? color.name : colorId;
     };
+    useEffect(() => {
+        const fetchVoucherName = async () => {
+          try {
+            const voucherId = orderInfo?.orderDetails[0].voucherId || ''; // Lấy voucherId từ orderInfo
+            const response = await getVoucherById(voucherId); // Gọi API để lấy thông tin voucher
+            console.log(response.data);
+
+            setVoucherName(response.data.Discount_Type); // Lưu tên voucher vào state
+          } catch (error) {
+            console.error('Error fetching voucher:', error);
+          }
+        };
+
+        fetchVoucherName();
+      }, [orderInfo]);
     return (
 
         <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
@@ -180,7 +197,7 @@ const OrderDetails = (props: Props) => {
                                 </div>
                                 <div className="flex justify-between items-center w-full">
                                     <p className="text-base dark:text-white leading-4 text-gray-800">Voucher <span className="bg-gray-200 p-1 text-xs font-medium dark:bg-white dark:text-gray-800 leading-3 text-gray-800">STUDENT</span></p>
-                                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">0</p>
+                                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">{voucherName}%</p>
                                 </div>
                                 <div className="flex justify-between items-center w-full">
                                     <p className="text-base dark:text-white leading-4 text-gray-800">Phí Vận Chuyển</p>
