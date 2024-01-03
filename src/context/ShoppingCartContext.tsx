@@ -44,31 +44,46 @@ export const ShoppingContextProvider = ({ children }: ShoppingContextProviderPro
     }, [cartItem])
     const cartQty = cartItem.length
     const totalPrice = cartItem.reduce((total, item) => total + item.quantity * item.price, 0)
-    const increaseQty = (id: string) => {
+
+    const increaseQty = (id: string , sizeId:string , colorId:string) => {
         console.log("increaseQty => ", id);
-        const currentCartItem = cartItem.find(item => item._id === id)
+        const currentCartItem = cartItem.find(item =>
+            item._id === id &&
+            item.colorId === colorId &&
+            item.sizeId === sizeId)
         if (currentCartItem) {
             const newItems = cartItem.map((item) => {
-                if (item._id === id) {
+                if (item._id === id &&
+                    item.colorId === colorId &&
+                    item.sizeId === sizeId) {
                     return { ...item, quantity: item.quantity + 1 }
 
+
                 } else {
                     return item
                 }
             })
             setCartItem(newItems)
 
+
         }
     }
-    const decreaseQty = (id: string) => {
+
+    const decreaseQty = (id: string , sizeId:string , colorId:string) => {
         console.log("increaseQty => ", id);
-        const currentCartItem = cartItem.find(item => item._id === id)
+        const currentCartItem = cartItem.find(item =>  
+            item._id === id &&
+            item.colorId ===colorId &&
+            item.sizeId === sizeId)
         if (currentCartItem?.quantity == 1) {
-            removeCartItem(id)
+            removeCartItem(id,sizeId,colorId);
         } else {
             const newItems = cartItem.map((item) => {
-                if (item._id === id) {
+                if (item._id === id &&
+                    item.colorId ===colorId &&
+                    item.sizeId === sizeId) {
                     return { ...item, quantity: item.quantity - 1 }
+
 
                 } else {
                     return item
@@ -77,6 +92,7 @@ export const ShoppingContextProvider = ({ children }: ShoppingContextProviderPro
             setCartItem(newItems)
         }
     }
+
     const addCartItem = (product: CartItem) => {
         console.log("product", product)
         if (product) {
