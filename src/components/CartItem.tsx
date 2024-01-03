@@ -33,8 +33,19 @@ const CartItem = ({ _id, name, price,sizeId,colorId, quantity, img }: cartItemPr
     return (
         <div className="border-t-2 p-4 bg-white shadow-md rounded-md mb-4">
       <table className="table-auto w-full">
+          <thead className="pb-10 ">
+                <tr className="text-left ">
+                    <th className=" font-semibold pb-10">Sản phẩm</th>
+                    <th className="font-semibold pb-10">Size</th>
+                    <th className="font-semibold pb-10">Màu</th>
+                    <th className="font-semibold pb-10">Giá tiền</th>
+                    <th className="font-semibold pb-10">Tổng tiền</th>
+                </tr>
+            </thead>
+
         <tbody>
           <tr key={_id} className="border-t-2">
+            
             <td className="flex items-center py-4 gap-4">
               <img className="w-16 h-16 object-cover rounded" src={img} alt="" />
               <div>
@@ -43,14 +54,14 @@ const CartItem = ({ _id, name, price,sizeId,colorId, quantity, img }: cartItemPr
             </td>
             <td className="w-20 flex items-center space-x-2">
               <button
-                onClick={() => decreaseQty(_id as string)}
+                onClick={() => decreaseQty(_id as string, sizeId, colorId)}
                 className="text-red-500 bg-gray-200 px-3 py-1 rounded"
               >
                 -
               </button>
               <span className="font-bold">{quantity}</span>
               <button
-                onClick={() => increaseQty(_id as string)}
+                onClick={() => increaseQty(_id as string, sizeId, colorId)}
                 className="text-green-500 bg-gray-200 px-3 py-1 rounded"
               >
                 +
@@ -61,7 +72,7 @@ const CartItem = ({ _id, name, price,sizeId,colorId, quantity, img }: cartItemPr
             <td className="w-20 font-semibold">${price}</td>
             <td className="w-20 font-semibold">${quantity * price}</td>
             <td>
-                            <button onClick={() => removeCartItem(_id as string)}>
+            <button onClick={() => removeCartItem(_id as string ,sizeId, colorId)}>
                                 <i className="fa-sharp fa-solid fa-circle-xmark text-slate-300 bg-black rounded-full shadow-md shadow-black text-3xl"></i>
                             </button>
                         </td>
