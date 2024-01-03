@@ -22,11 +22,12 @@ const CartPage = () => {
     );
     // Nếu voucher tồn tại, áp dụng giảm giá và tính toán giá mới
     if (voucher) {
-      const { Discount_Type, Expiration_Date } = voucher;
+      const { Discount_Type,_id, Expiration_Date } = voucher;
       const expiryDate = new Date(Expiration_Date);
       if (expiryDate > new Date()) {
         setDiscountPercentage(Discount_Type);
         localStorage.setItem("Discount_Type", Discount_Type);
+        localStorage.setItem("id", _id);
       } else {
         console.log(
           `Mã giảm giá ${voucherCode} không hợp lệ do đã hết hạn sử dụng!`

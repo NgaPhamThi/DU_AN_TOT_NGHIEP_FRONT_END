@@ -9,4 +9,5 @@ export interface IOrderDetail {
   price: number;
   sizeId: string | null;
   colorId: string;
+  voucherId: string | null;
 }

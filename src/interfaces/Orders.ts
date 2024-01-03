@@ -5,7 +5,7 @@ export interface IOrders {
   userId: string
   fullname: string
   email: string
-  status: string
+  status?: string
   phonenumber: string
   address: string
   orderTotal: number
