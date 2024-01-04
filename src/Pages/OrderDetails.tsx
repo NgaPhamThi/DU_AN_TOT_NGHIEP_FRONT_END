@@ -193,20 +193,20 @@ const OrderDetails = (props: Props) => {
                             <div className="flex justify-center items-center w-full space-y-4 flex-col border-gray-200 border-b pb-4">
                                 <div className="flex justify-between w-full">
                                     <p className="text-base dark:text-white leading-4 text-gray-800">Tổng Tiền Hàng</p>
-                                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">{subtotal}</p>
+                                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">{subtotal}Vnđ</p>
                                 </div>
                                 <div className="flex justify-between items-center w-full">
                                     <p className="text-base dark:text-white leading-4 text-gray-800">Voucher <span className="bg-gray-200 p-1 text-xs font-medium dark:bg-white dark:text-gray-800 leading-3 text-gray-800">STUDENT</span></p>
-                                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">{voucherName}%</p>
+                                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">{voucherName}Vnđ</p>
                                 </div>
                                 <div className="flex justify-between items-center w-full">
                                     <p className="text-base dark:text-white leading-4 text-gray-800">Phí Vận Chuyển</p>
-                                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">100</p>
+                                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">100Vnđ</p>
                                 </div>
                             </div>
                             <div className="flex justify-between items-center w-full">
                                 <p className="text-base dark:text-white font-semibold leading-4 text-gray-800">Thành Tiền</p>
-                                <p className="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">{orderInfo?.orderTotal}</p>
+                                <p className="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">{orderInfo?.orderTotal}Vnđ</p>
                             </div>
                         </div>
                         <div className="flex flex-col justify-center px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 dark:bg-gray-800 space-y-6">
