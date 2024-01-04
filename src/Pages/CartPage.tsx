@@ -1,162 +1,192 @@
-import { Link } from "react-router-dom";
-import CartItem from "../components/CartItem";
-import { useShoppingContext } from "../context/ShoppingCartContext";
-import React, { useEffect, useState } from "react";
-import { IVouchers } from "../interfaces/vouchers";
-import { getVoucher } from "../api/vouchers";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Link } from 'react-router-dom'
+import CartItem from '../components/CartItem'
+import { useShoppingContext } from '../context/ShoppingCartContext'
+import React, { useEffect, useState } from 'react'
+import { IVouchers } from '../interfaces/vouchers'
+import { getVoucher } from '../api/vouchers'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 const CartPage = () => {
-  const { totalPrice, cartQty, cartItem } = useShoppingContext();
-  console.log(totalPrice, "djdjd");
-  const [voucherCode, setVoucherCode] = useState("");
-  const [discountPercentage, setDiscountPercentage] = useState(0);
-  const [vouchers, setVouchers] = useState<IVouchers[]>([]);
+  const { totalPrice, cartQty, cartItem } = useShoppingContext()
+  console.log(totalPrice, 'djdjd')
+  // const [voucherCode, setVoucherCode] = useState("");
+  const [discountPercentage, setDiscountPercentage] = useState(0)
+  const [vouchers, setVouchers] = useState<IVouchers[]>([])
+  const [selectedVoucher, setSelectedVoucher] = useState('')
 
-  console.log(vouchers, "aaaa");
+  console.log(vouchers, 'aaaa')
   const handleApplyVoucher = () => {
     // Tìm voucher trong danh sách dựa trên mã
-    console.log(vouchers, "tung");
-    const voucher = vouchers.data.vouchers.find(
-      (voucher) => voucher.Voucher_Code === voucherCode
-    );
+    console.log(vouchers, 'tung')
+
+    const voucher = vouchers.data.vouchers.find((voucher) => voucher.Voucher_Code === selectedVoucher)
+
     // Nếu voucher tồn tại, áp dụng giảm giá và tính toán giá mới
-    if (voucher) {
-      const { Discount_Type,_id, Expiration_Date } = voucher;
-      const expiryDate = new Date(Expiration_Date);
-      if (expiryDate > new Date()) {
-        setDiscountPercentage(Discount_Type);
-        localStorage.setItem("Discount_Type", Discount_Type);
-        localStorage.setItem("id", _id);
+    if (voucher && voucher.Quantity !== undefined && voucher.Quantity !== null && voucher.Quantity !== 0) {
+      const { Quantity, Discount_Type, Expiration_Date, Start_Date, _id } = voucher
+      const currentDate = new Date()
+      const startDate = new Date(Start_Date)
+      const expiryDate = new Date(Expiration_Date)
+      if (startDate <= currentDate && expiryDate > currentDate) {
+        if (totalPrice >= 100000 && totalPrice < 200000 && Discount_Type <= 35000) {
+          setDiscountPercentage(Discount_Type)
+          localStorage.setItem('Discount_Type', Discount_Type)
+          localStorage.setItem('Quantity', Quantity)
+          localStorage.setItem('id', _id)
+          toast.success('Áp dụng voucher thành công', { autoClose: 2000 })
+        } else if (totalPrice >= 200000 && Discount_Type <= 65000) {
+          setDiscountPercentage(Discount_Type)
+          localStorage.setItem('Discount_Type', Discount_Type)
+          localStorage.setItem('Quantity', Quantity)
+          localStorage.setItem('id', _id)
+          toast.success('Áp dụng voucher thành công', { autoClose: 2000 })
+        } else if (totalPrice > 500000 && Discount_Type <= 100000) {
+          setDiscountPercentage(Discount_Type)
+          localStorage.setItem('Discount_Type', Discount_Type)
+          localStorage.setItem('Quantity', Quantity)
+          localStorage.setItem('id', _id)
+          toast.success('Áp dụng voucher thành công', { autoClose: 2000 })
+        } else if (totalPrice > 1000000 && Discount_Type <= 200000) {
+          setDiscountPercentage(Discount_Type)
+          localStorage.setItem('Discount_Type', Discount_Type)
+          localStorage.setItem('Quantity', Quantity)
+          localStorage.setItem('id', _id)
+          toast.success('Áp dụng voucher thành công', { autoClose: 2000 })
+        } else {
+          console.log('Không áp dụng được voucher này cho đơn hàng của bạn!')
+          toast.error('Không áp dụng được voucher này cho đơn hàng của bạn hãy chọn mã giảm giá khác!', {
+            autoClose: 2000
+          })
+          localStorage.removeItem('Discount_Type')
+          localStorage.removeItem('Quantity')
+          localStorage.removeItem('id')
+        }
+      } else if (startDate > currentDate) {
+        console.log(`Mã giảm giá ${selectedVoucher} chưa có hiệu lực do chưa đến ngày bắt đầu sử dụng!`)
+        toast.error('Mã giảm giá của bạn chưa có hiệu lực!', { autoClose: 2000 })
+        localStorage.removeItem('Discount_Type')
+        localStorage.removeItem('Quantity')
+        localStorage.removeItem('id')
       } else {
-        console.log(
-          `Mã giảm giá ${voucherCode} không hợp lệ do đã hết hạn sử dụng!`
-        );
-        toast.error("Mã giảm giá của bạn không hợp lệ hoặc đã hết hạn", {
-          autoClose: 2000,
-        });
-        localStorage.removeItem("Discount_Type");
-        setTimeout(() => {
-          window.location.reload();
-        }, 2500);
+        console.log(`Mã giảm giá ${selectedVoucher} không hợp lệ do đã hết hạn sử dụng!`)
+        toast.error('Mã giảm giá của bạn không hợp lệ do đã hết hạn sử dụng!', { autoClose: 2000 })
+        localStorage.removeItem('Discount_Type')
+        localStorage.removeItem('Quantity')
+        localStorage.removeItem('id')
       }
     } else {
-      toast.error("Mã giảm giá của bạn không hợp lệ hoặc đã hết hạn", {
-        autoClose: 2000,
-      });
-      localStorage.removeItem("Discount_Type");
-      setTimeout(() => {
-        window.location.reload();
-      }, 2500);
+      console.log(`Mã giảm giá ${selectedVoucher} đã hết số lượng!`)
+      toast.error('Mã giảm giá của bạn đã được sử dụng hết vui lòng chọn mã giảm giá khác!', { autoClose: 2000 })
+      localStorage.removeItem('Discount_Type')
+      localStorage.removeItem('Quantity')
+      localStorage.removeItem('id')
     }
-  };
+  }
+
   useEffect(() => {
     const fetchVouchers = async () => {
       try {
-        const vouchersData = await getVoucher();
-        console.log(vouchersData, "3131");
-        setVouchers(vouchersData);
+        const vouchersData = await getVoucher()
+        console.log(vouchersData, '3131')
+        setVouchers(vouchersData)
       } catch (error) {
-        console.error("Error fetching vouchers:", error);
+        console.error('Error fetching vouchers:', error)
       }
-    };
+    }
 
-    fetchVouchers();
-  }, []);
-
+    fetchVouchers()
+  }, [])
+  if (!vouchers.data) {
+    return <p>Đang tải vouchers...</p> // Thêm một thông báo hoặc chỉ báo đang tải
+  }
+  const validVouchers = vouchers.data.vouchers.filter((voucher) => {
+    const currentDate = new Date()
+    const startDate = new Date(voucher.Start_Date)
+    const expiryDate = new Date(voucher.Expiration_Date)
+    return startDate <= currentDate && expiryDate > currentDate
+  })
   if (cartItem.length === 0) {
-    return (
-      <h2 className=" text-center py-[150px] font-bold text-[30px]">
-        Không có sản phẩm nào
-      </h2>
-    );
+    return <h2 className=' text-center py-[150px] font-bold text-[30px]'>Không có sản phẩm nào</h2>
   } else {
     return (
       <div>
         <div>
-          <ul className="flex"></ul>
+          <ul className='flex'></ul>
         </div>
-        <section className="flex gap-8 w-10/12 m-auto py-20 ">
-          <section className="basis-4/6">
-          
+        <section className='flex gap-8 w-10/12 m-auto py-20 '>
+          <section className='basis-4/6'>
             {cartItem.map((item) => {
-              console.log("item", item);
-              return <CartItem key={item._id} {...item} />;
+              console.log('item', item)
+              return <CartItem key={item._id} {...item} />
             })}
 
-            <div className="border-t-2 flex justify-between">
-              <Link to={"/product"}>
-                <button className="border-2  font-semibold p-3 px-5 mt-10">
-                  Tiếp tục mua sắm
-                </button>{" "}
+            <div className='border-t-2 flex justify-between'>
+              <Link to={'/product'}>
+                <button className='border-2  font-semibold p-3 px-5 mt-10'>Tiếp tục mua sắm</button>{' '}
               </Link>
 
-              <button className="bg-black text-white font-semibold p-3 px-7 mt-10 ">
-                Cập nhật giỏ hàng{" "}
-              </button>
+              <button className='bg-black text-white font-semibold p-3 px-7 mt-10 '>Cập nhật giỏ hàng </button>
             </div>
           </section>
-          <section className="basis-2/6 w-full">
-            <p className="font-semibold">Mã giảm giá</p>
-            <div className=" w-full">
-              <input
-                className="border w-8/12 py-3 px-2 mt-10"
-                type="text"
-                placeholder="Mã giảm giá"
-                value={voucherCode}
-                onChange={(e) => setVoucherCode(e.target.value)}
-              />
-              <button
-                className="border w-3/12 py-3 px-2 mt-10 bg-black text-white"
-                onClick={handleApplyVoucher}
+          <section className='basis-2/6 w-full'>
+            <p className='font-semibold'>Mã giảm giá</p>
+            <div className='w-full'>
+              <select
+                className='border w-8/12 py-3 px-2 mt-10'
+                value={selectedVoucher}
+                onChange={(e) => setSelectedVoucher(e.target.value)}
               >
+                <option value='' disabled hidden>
+                  Chọn voucher
+                </option>
+                {validVouchers.map((voucher) => (
+                  <option key={voucher._id} value={voucher.Voucher_Code}>
+                    {`${voucher.Voucher_Code} - Giảm :${voucher.Discount_Type}vnd`}
+                  </option>
+                ))}
+              </select>
+              <button className='border w-3/12 py-3 px-2 mt-10 bg-black text-white' onClick={handleApplyVoucher}>
                 Áp dụng
               </button>
             </div>
-            <section className="bg-zinc-100 mt-12">
-              <div className="p-10">
-                {" "}
-                <div className=" pt-5 flex">
-                  {" "}
-                  <span className="grow">Tổng giỏ hàng</span>
-                  <span className="text-right ">{cartQty}</span>
+            <section className='bg-zinc-100 mt-12'>
+              <div className='p-10'>
+                {' '}
+                <div className=' pt-5 flex'>
+                  {' '}
+                  <span className='grow'>Tổng giỏ hàng</span>
+                  <span className='text-right '>{cartQty}</span>
                 </div>
-                <div className=" pt-5 flex">
-                  {" "}
-                  <span className="grow">voucher</span>
-                  <span className="text-right">
-                    giảm giá {discountPercentage}%
-                  </span>
+                <div className=' pt-5 flex'>
+                  {' '}
+                  <span className='grow'>Tổng tiền </span>
+                  <span className='text-right '>{totalPrice} vnd</span>
                 </div>
-                <div className=" pt-5 flex">
-                  {" "}
-                  <span className="grow">Tổng tiền</span>
-                  <span className="text-right ">{totalPrice} vnd</span>
+                <div className=' pt-5 flex'>
+                  {' '}
+                  <span className='grow'>voucher</span>
+                  <span className='text-right'>giảm giá {discountPercentage} vnd</span>
                 </div>
-                <div className="pt-5 flex">
+                {/* <div className="pt-5 flex">
                   <span className="grow">Tổng giảm giá</span>
                   <span className="text-right">
                     {(totalPrice * discountPercentage) / 100} vnd
                   </span>
+                </div> */}
+                <div className='pt-5 flex'>
+                  <span className='grow'>Tổng tiền sau giảm giá</span>
+                  <span className='text-right'>{totalPrice - discountPercentage} vnd</span>
                 </div>
-                <div className="pt-5 flex">
-                  <span className="grow">Tổng tiền sau giảm giá</span>
-                  <span className="text-right">
-                    {totalPrice - (totalPrice * discountPercentage) / 100} vnd
-                  </span>
-                </div>
-                <Link to={"/pay"}>
-                  <button className="bg-black text-white font-semibold p-3 mt-10 w-full">
-                    Thanh toán
-                  </button>
+                <Link to={'/pay'}>
+                  <button className='bg-black text-white font-semibold p-3 mt-10 w-full'>Thanh toán</button>
                 </Link>
               </div>
             </section>
           </section>
         </section>
       </div>
-    );
+    )
   }
-};
+}
 
-export default CartPage;
+export default CartPage
