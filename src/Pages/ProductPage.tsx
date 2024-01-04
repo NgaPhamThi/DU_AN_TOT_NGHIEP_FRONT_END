@@ -211,11 +211,16 @@ const ProductPage = () => {
           className="block px-4 py-2 hover:bg-gray-100"
         >
           <div className="flex items-center">
-            <img
-              src={value.img}
-              alt={value.name}
-              className="w-8 h-8 object-cover mr-2"
-            />
+          {value.img && value.img.length > 0 ? (
+             <img
+             src={value.img[0]}
+             alt={value.name}
+             className="w-8 h-8 object-cover mr-2"
+           />
+          ):(
+            <div className="w-8 h-8 bg-gray-300 mr-2 rounded-md">{/* Hiển thị một phần nào đó khi không có ảnh */}</div>
+          )}
+           
             <div>
               <div>{value.name}</div>
               <span className="text-sm font-bold">
@@ -270,7 +275,7 @@ const ProductPage = () => {
                 >
                   <Link to={`/product/${product._id}`}>
                     <img
-                      src={product.img}
+                      src={product.img[0]}
                       className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
                       alt=""
                     />

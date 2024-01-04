@@ -5,7 +5,7 @@ type cartItemProps = {
     name: string
     price: number
     quantity: number,
-    img: string,
+    img: string[],
     sizeId:string,
     colorId: string
 }
@@ -47,7 +47,7 @@ const CartItem = ({ _id, name, price,sizeId,colorId, quantity, img }: cartItemPr
           <tr key={_id} className="border-t-2">
             
             <td className="flex items-center py-4 gap-4">
-              <img className="w-16 h-16 object-cover rounded" src={img} alt="" />
+              <img className="w-16 h-16 object-cover rounded" src={img.length > 0 ? img[0] : ''} alt="" />
               <div>
                 <p className="text-gray-800 font-semibold">{name}</p>
               </div>

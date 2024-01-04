@@ -258,7 +258,7 @@ const PayPage = () => {
               {cartItems.map((item) => (
                 <tr key={item._id} className="border-t-2">
                   <td className="flex py-10  gap-8">
-                    <img src={item.img} className="w-20"></img>
+                    <img src={item.img[0]} className="w-20"></img>
 
                     <div className="pt-7">
                       <p>{item.name}</p>

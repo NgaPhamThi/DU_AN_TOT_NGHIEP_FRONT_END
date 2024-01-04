@@ -17,8 +17,11 @@ const Product = ({ data }: Props) => {
 
         <div className=" rounded shadow-sm p-4 relative group hover: transition-all duration-300">
             <Link to={`/product/${data._id}`}>
-                <img src={data.img} alt="Product 1"
-                    className="w-full h-[421px] object-cover mb-4 transition-transform transform hover:scale-105" />
+                {data.img.length >0 && 
+                     <img src={data.img[0]} alt="Product 1"
+                     className="w-full h-[421px] object-cover mb-4 transition-transform transform hover:scale-105" />
+            }
+               
             </Link>
             <div className='flex justify-between items-center pl-4 pr-4'>
                 <div>

@@ -18,7 +18,9 @@ const ProductManager = (props: Props) => {
       title: "Image",
       dataIndex: "img",
       key: "img",
-      render: (src: string) => <img src={src} alt="product" style={{ width: '50px' }} />
+      render: (img: string[]) => (
+        <img src={img[0]} alt="product" style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
+      ),
     },
     {
       title: "Price",

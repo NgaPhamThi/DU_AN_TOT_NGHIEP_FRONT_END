@@ -31,6 +31,7 @@ const DetailPage = () => {
     const [comments, setComments] = useState<Comments[]>([]);
     const [comment, setComment] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     console.log("log id", productId);
     const getUserIdFromToken = (): string | null => {
@@ -189,14 +190,24 @@ const DetailPage = () => {
             <div className="product_detail_row_1 flex mb-[80px]">
                 <div className=" basis-3/6">
                     <div className="image_detail_big">
-                        <img className="w-[600px] h-[450px]" src={product.img} alt="" />
+                        <img className="w-[600px] h-[450px]" src={selectedImage || (product.img && product.img[0])} alt="" />
                     </div>
                     <div className="image_detail_small mt-[10px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-[10px]">
+                        {product.img && product.img.map((image, index) => (
+                            // <img
+                            //     key={index}
+                            //     className="w-[110px] h-[100px] mb-[20px]"
+                            //     src={image}
+                            //     alt={`Product ${product.name} - Image ${index + 1}`}
+                            //     onClick={() => setSelectedImage(image)}
+                            // />
+                            <img className="w-[110px] h-[100px] mb-[20px]" src={image} alt={`Product ${product.name} - Image ${index + 1}`} onClick={() => setSelectedImage(image)} />
+                        ))}
+                        {/* <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" />
                         <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" />
                         <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" />
                         <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" />
-                        <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" />
-                        <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" />
+                        <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" /> */}
 
                     </div>
 
@@ -285,48 +296,7 @@ const DetailPage = () => {
             <hr />
             <div className="product_detail_row_2 mt-[50px]">
                 <div className="describe_product pr-[20px] mt-[5px]">
-                    <div className="describe_product_row mt-[30px]">
-                        <div className="title_describe bg-neutral-400 h-[60px] flex products-center">
-                            <h3 className='text-[20px] px-[50px] font-bold pt-[5px]'>ĐÁNH GIÁ SẢN PHẨM  </h3>
-                        </div>
-                        <div className="content_describe flex mt-[30px] bg-neutral-400 h-[130px] pl-[50px]">
 
-                            <div className=" basis-1/6 pt-[25px]">
-                                <span className='text-[35px]'>4.6 </span> <span>trên 5</span>
-                                <div className="icon_user flex text-red-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 ">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div className=" basis-5/6 pt-[20px]">
-                                <div className="flex gap-[20px]">
-                                    <button className=' border px-[30px] py-[5px] rounded-lg bg-white'>Tất cả </button>
-                                    <button className='border px-[30px] py-[5px] rounded-lg bg-white'>5 sao(5,4 k)</button>
-                                    <button className='border px-[30px] py-[5px] rounded-lg bg-white'>4 sao(806)</button>
-                                    <button className='border px-[30px] py-[5px] rounded-lg bg-white'>3 sao(206)</button>
-                                    <button className='border px-[30px] py-[5px] rounded-lg bg-white'>2 sao(106)</button>
-                                    <button className='border px-[30px] py-[5px] rounded-lg bg-white'>1 sao(6)</button>
-                                </div>
-                                <div className="mt-[20px] flex gap-[50px]">
-                                    <button className='border px-[30px] py-[5px] rounded-lg bg-white'>có bình luận (2,4 k)</button>
-                                    <button className='border px-[30px] py-[5px] rounded-lg bg-white'>có hình ảnh/ video(1,1k) </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div>
                         <div className="w-full bg-white rounded-lg border p-2 my-4 mx-6">
 
