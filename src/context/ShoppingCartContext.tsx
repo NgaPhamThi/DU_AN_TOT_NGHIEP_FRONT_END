@@ -47,17 +47,16 @@ export const ShoppingContextProvider = ({ children }: ShoppingContextProviderPro
 
     const increaseQty = (id: string , sizeId:string , colorId:string) => {
         console.log("increaseQty => ", id);
-        const currentCartItem = cartItem.find(item =>
-            item._id === id &&
-            item.colorId === colorId &&
+        const currentCartItem = cartItem.find(item => 
+            item._id === id && 
+            item.colorId === colorId && 
             item.sizeId === sizeId)
         if (currentCartItem) {
             const newItems = cartItem.map((item) => {
                 if (item._id === id &&
-                    item.colorId === colorId &&
+                    item.colorId === colorId && 
                     item.sizeId === sizeId) {
                     return { ...item, quantity: item.quantity + 1 }
-
 
                 } else {
                     return item
@@ -65,14 +64,12 @@ export const ShoppingContextProvider = ({ children }: ShoppingContextProviderPro
             })
             setCartItem(newItems)
 
-
         }
     }
-
     const decreaseQty = (id: string , sizeId:string , colorId:string) => {
         console.log("increaseQty => ", id);
         const currentCartItem = cartItem.find(item =>  
-            item._id === id &&
+            item._id === id && 
             item.colorId ===colorId &&
             item.sizeId === sizeId)
         if (currentCartItem?.quantity == 1) {
@@ -84,7 +81,6 @@ export const ShoppingContextProvider = ({ children }: ShoppingContextProviderPro
                     item.sizeId === sizeId) {
                     return { ...item, quantity: item.quantity - 1 }
 
-
                 } else {
                     return item
                 }
@@ -92,7 +88,6 @@ export const ShoppingContextProvider = ({ children }: ShoppingContextProviderPro
             setCartItem(newItems)
         }
     }
-
     const addCartItem = (product: CartItem) => {
         console.log("product", product)
         if (product) {
@@ -125,9 +120,12 @@ export const ShoppingContextProvider = ({ children }: ShoppingContextProviderPro
 
         }
     }
-    const removeCartItem = (id: string) => {
+    const removeCartItem = (id: string , sizeId:string , colorId:string) => {
         console.log("removeCartItem =>", id);
-        const currentCartItemIndex = cartItem.findIndex((item) => item._id == id)
+        const currentCartItemIndex = cartItem.findIndex((item) => 
+            item._id === id &&
+            item.colorId ===colorId &&
+            item.sizeId === sizeId)
         const newItem = [...cartItem]
         newItem.splice(currentCartItemIndex, 1)
         setCartItem(newItem)
