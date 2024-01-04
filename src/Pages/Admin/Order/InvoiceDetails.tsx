@@ -6,6 +6,7 @@ import { getByIdOrderDetail,updateStatusOrder } from '../../../api/orders';
 import { IOrders } from '../../../interfaces/Orders';
 import { getSize } from '../../../api/size';
 import { getColor } from '../../../api/color';
+import { getVoucherById } from '../../../api/vouchers'; 
 
 const statusOptions = [
     { value: 'PENDING', label: 'chờ duyệt' },
@@ -20,6 +21,7 @@ const InvoiceDetails = (props: Props) => {
     const [orderDetails, setOrderDetails] = useState<IOrderDetail[]>([])
     const [orderInfo, setOrderInfo] = useState<IOrders> ({} as IOrders);
     const [currentStatus, setCurrentStatus] = useState(orderInfo.status);
+    const [voucherName, setVoucherName] = useState<string | null>(null);
     
     // console.log(orderInfo,"dâda")
     const [sizes, setSizes] = useState<any[]>([]); // Replace 'any[]' with the actual type of your size objects
@@ -76,8 +78,21 @@ const handleStatusChange = async (newStatus: string) => {
   }, [orderId]);
 
   useEffect(() => {
-    // Cập nhật currentStatus từ orderInfo.status khi orderInfo thay đổi
-    setCurrentStatus(orderInfo.status || '');
+   
+    // setCurrentStatus(orderInfo.status || '');
+    const fetchVoucherName = async () => {
+        try {
+          const voucherId = orderInfo?.orderDetails[0].voucherId || ''; // Lấy voucherId từ orderInfo
+          const response = await getVoucherById(voucherId); // Gọi API để lấy thông tin voucher
+          console.log(response.data);
+
+          setVoucherName(response.data.Discount_Type); // Lưu tên voucher vào state
+        } catch (error) {
+          console.error('Error fetching voucher:', error);
+        }
+      };
+
+      fetchVoucherName();
   }, [orderInfo]);
     useEffect(()=>{
         fetchOrderDetail()
@@ -104,16 +119,13 @@ const handleStatusChange = async (newStatus: string) => {
         return color ? color.name : colorId;
     };
     const getFilteredOptions = (currentStatus: any) => {
-        // Nếu currentStatus không trống, thì trả về mảng chứa giá trị của currentStatus
-       
-      
-        // Nếu currentStatus trống, thực hiện các điều kiện lọc như trước
+    
         if (currentStatus === 'PENDING') {
           return statusOptions.filter((status) => status.value === 'PROCESSING' || status.value === 'CANCELLED' || status.value === currentStatus);
         } else if (currentStatus === 'PROCESSING') {
-          return statusOptions.filter((status) => status.value === 'ONDELIVERY' || status.value === currentStatus);
+          return statusOptions.filter((status) => status.value === 'ONDELIVERY'|| status.value === 'CANCELLED' || status.value === currentStatus);
         } else if (currentStatus === 'ONDELIVERY') {
-          return statusOptions.filter((status) => status.value === 'COMPLETED' || status.value === currentStatus);
+          return statusOptions.filter((status) => status.value === 'COMPLETED'|| status.value === 'CANCELLED' || status.value === currentStatus);
         }
         else if (currentStatus === 'COMPLETED') {
             return statusOptions.filter((status) => status.value === currentStatus);
@@ -121,10 +133,9 @@ const handleStatusChange = async (newStatus: string) => {
           else if (currentStatus === 'CANCELLED') {
             return statusOptions.filter((status) => status.value === currentStatus);
           }
-        // Mặc định hiển thị tất cả các tùy chọn nếu không khớp với các trường hợp trên
         return statusOptions;
       };
-      
+   
   return (
     
     <div className="2xl:container 2xl:mx-auto py-14 px-4 md:px-6 xl:px-20">
@@ -206,11 +217,11 @@ const handleStatusChange = async (newStatus: string) => {
                                 Discount
                                 <span className="bg-gray-200  p-1 text-xs font-medium leading-3 text-gray-800">Voucher</span>
                             </p>
-                            <p className="text-base dark:text-gray-300 leading-4 text-gray-600">-$28.00 (50%)</p>
+                            <p className="text-base dark:text-gray-300 leading-4 text-gray-600">{voucherName}Vnđ</p>
                         </div>
                         <div className="flex justify-between w-full">
                             <p className="text-base dark:text-white leading-4 text-gray-800">Phí Vận Chuyển</p>
-                            <p className="text-base dark:text-gray-300 leading-4 text-gray-600">$8.00</p>
+                            <p className="text-base dark:text-gray-300 leading-4 text-gray-600">100Vnđ</p>
                         </div>
                     </div>
                     <div className="flex justify-between items-center w-full">
