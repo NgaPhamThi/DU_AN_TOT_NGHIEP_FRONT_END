@@ -23,6 +23,7 @@ const PayPage = () => {
     phonenumber: "",
     email: "",
     address: "",
+    
   });
   useEffect(() => {
     // Fetch cart information from local storage
@@ -102,7 +103,8 @@ const PayPage = () => {
         phonenumber: formData.phonenumber,
         email: formData.email,
         address: formData.address,
-        orderTotal:  totalPrice -shippingFee - (totalPrice * discount) / 100,
+        
+        orderTotal:  totalPrice -shippingFee - discount,
         orderDetails: cartItems.map((item) => ({
           productId: item._id,
           quantity: item.quantity,
@@ -111,14 +113,12 @@ const PayPage = () => {
           colorId: item.colorId,
           voucherId: voucherId, 
         })),
-        
       };
       if(paymentMethod === "cashOnDelivery"){
         const createOrder = await axios.post(
           "http://localhost:8080/api/order",
           dataForm
         )
-        console.log(createOrder);
         setTimeout(() => {
         navigate("/purchase");
       }, 3000);
@@ -283,10 +283,7 @@ const PayPage = () => {
             <div className="p-5">
               {" "}
               <p>Tổng giỏ hàng</p>
-              <div className=" pt-5 flex">
-                <span className="grow">Voucher</span>
-                <span className="text-right ">{`giảm giá ${discount}%`}</span>
-              </div>
+             
               <div className=" pt-5 flex">
                 {" "}
                 <span className="grow">Tổng tiền</span>
@@ -295,17 +292,21 @@ const PayPage = () => {
                 </span>
               </div>
               <div className=" pt-5 flex">
+                <span className="grow">Voucher</span>
+                <span className="text-right ">{`giảm giá ${discount} vnd`}</span>
+              </div>
+              {/* <div className=" pt-5 flex">
                 {" "}
                 <span className="grow">Tổng giảm giá</span>
                 <span className="text-right ">
                   {`${(totalPrice * discount) / 100}`} vnd
                 </span>
-              </div>
+              </div> */}
               <div className=" pt-5 flex">
                 {" "}
                 <span className="grow">Tổng tiền sau giảm giá</span>
                 <span className="text-right ">
-                  {`${totalPrice - (totalPrice * discount) / 100}`} vnd
+                  {`${(totalPrice - discount)}`} vnd
                 </span>
               </div>
               <div className=" pt-5 flex">
@@ -319,7 +320,7 @@ const PayPage = () => {
                 {" "}
                 <span className="grow">Thanh toán</span>
                 <span className="text-right ">
-                  {`${totalPrice - (totalPrice * discount) / 100 - shippingFee
+                  {`${ (totalPrice - discount) - shippingFee
                     }`}{" "}
                   vnd
                 </span>
