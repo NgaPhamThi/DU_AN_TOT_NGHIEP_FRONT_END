@@ -5,9 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import 'react-toastify/dist/ReactToastify.css';
+import { addproduct } from "../../../api/product";
 
 
-const AddProduct = ({onAdd}: any) => {
+const AddProduct = () => {
   const [categories, setcategories] = useState<ICategories[]>([])
   const navigate = useNavigate();
   console.log(categories);
@@ -21,12 +22,18 @@ const AddProduct = ({onAdd}: any) => {
     fetchProduct()
   }, [])
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const onHandleSubmit = (data: any) => {
-      onAdd(data)
-      setTimeout(() => {
-        navigate('/admin/products');
-      }, 3000);
+  const onHandleSubmit = async (data: any) => {
+    try {
+      data.img = data.img.split(',').map((url: string) => url.trim());
+
+      const createProduct = await addproduct(data)
+      // setTimeout(() => {
+      //   navigate('/admin/products');
+      // }, 3000);
       toast.success('Thêm sản phẩm thành công', { autoClose: 2000 })
+    } catch (error) {
+      
+    }
   }
   return (
     // -----

@@ -41,15 +41,7 @@ import DetailBlogPage from "./Pages/DetailBlog";
 import EditContact from "./Pages/Admin/Contact/EditContact";
 
 function App() {
-  const onHandleAdd = async (product: any) => {
-    try {
-      const response = await addproduct(product)
-      console.log(response)
-    } catch (error) {
-      console.log(error)
-
-    }
-  }
+  
   const onHandleAddBlog = async (blog: any) => {
     try {
       const response = await addBlog(blog)
@@ -97,7 +89,7 @@ function App() {
           <Route path="contact" element={<ListContact />} />
           <Route path="contact/update/:id" element={<EditContact />} />
 
-          <Route path="products/addProduct" element={<AddProduct onAdd={onHandleAdd} />} />
+          <Route path="products/addProduct" element={<AddProduct />} />
           <Route path="blog" element={<ListBlog />} />
           <Route path="blog/addblog" element={<AddBlog onAdd={onHandleAddBlog} />} />
           <Route path="blog/update/:id" element={<EditBlog />} />

@@ -153,7 +153,7 @@ const handleStatusChange = async (newStatus: string) => {
                 {orderDetails.map((orderDetail)=>(
                     <div key={orderDetail._id} className="flex md:flex-row justify-start items-start md:items-center border border-gray-200 w-full">
                     <div className="-m-px w-40 md:w-32">
-                        <img className="hidden md:block" src={orderDetail.productInfo.img} alt="girl-in-red-dress" />
+                        <img className="hidden md:block" src={orderDetail.productInfo.img[0]} alt="girl-in-red-dress" />
                         <img className="md:hidden" src="https://i.ibb.co/f8pyz8q/Rectangle-8.png" alt="girl-in-red-dress" />
                     </div>
                     <div className="flex justify-start md:justify-between items-start md:items-center flex-col md:flex-row w-full p-4 md:px-8">

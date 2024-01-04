@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { getProduct } from '../api/product'
 import { IProduct } from '../interfaces/product'
 import Product from '../components/product'
+import ListCategories from '../components/ListCategories'
 
 const HomePage = () => {
     const [products, setProducts] = useState<IProduct[]>([])
@@ -59,10 +60,7 @@ const HomePage = () => {
             {/* ListProduct1 */}
             <div className='max-w-[1440px] mx-auto mb-10'>
                 <h2 className="font-bold text-[27px] text-center pt-8 pb-8">Áo Blazer Cao Cấp</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {products.map((item) => <Product key={item._id} data={item} />)}
-
-                </div>
+                <ListCategories/>
             </div>
             <div className='border-b-2'>
                 <img className='w-full' src="slide_1.png" alt="" />

@@ -164,7 +164,7 @@ const OrderDetails = (props: Props) => {
                         {orderDetails.map((orderDetail) => (
                             <div key={orderDetail._id} className="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
                                 <div className="pb-4 md:pb-8 w-full md:w-40">
-                                    <img className="w-full hidden md:block" src={orderDetail.productInfo.img} alt="dress" />
+                                    <img className="w-full hidden md:block" src={orderDetail.productInfo.img[0]} alt="dress" />
                                     <img className="w-full md:hidden" src="https://i.ibb.co/L039qbN/Rectangle-10.png" alt="dress" />
                                 </div>
                                 <div className="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
