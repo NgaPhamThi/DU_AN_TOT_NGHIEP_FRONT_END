@@ -49,6 +49,7 @@ const ListContact = () => {
             title: "Email",
             dataIndex: "email",
             key: "email",
+            width: "20%",
         },
         {
             title: "PhoneNumber",

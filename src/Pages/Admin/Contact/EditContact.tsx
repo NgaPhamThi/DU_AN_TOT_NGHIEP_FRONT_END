@@ -122,7 +122,7 @@ const EditContact = () => {
                         disabled={contact.status === 'Approved'}
                         className="mt-1.5 shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline sm:text-sm"
                     >
-                        <option value="">--Chọn trạng thái--</option>
+                        <option value="" disabled hidden>--Chọn trạng thái--</option>
                         <option value="Not approved yet">Not approved yet</option>
                         <option value="Approved">Approved</option>
                     </select>

@@ -75,6 +75,7 @@ const UpdateUser = () => {
             id="username"
             name="username"
             value={user.username}
+            disabled
           />
         </div>
 
@@ -88,17 +89,7 @@ const UpdateUser = () => {
             id="email"
             name="email"
             value={user.email}
-          />
-        </div><div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-            Mật khẩu
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="password"
-            id="password"
-            name="password"
-            value={user.password}
+            disabled
           />
         </div>
 
@@ -113,7 +104,7 @@ const UpdateUser = () => {
           onChange={handleChange}
           className="mt-1.5 shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline sm:text-sm"
           >
-          <option value="">Chọn trạng thái</option>
+          <option value="" disabled hidden>Chọn trạng thái</option>
           <option value="member">Thành viên</option>
           <option value="admin">Quản trị viên</option>
           </select>

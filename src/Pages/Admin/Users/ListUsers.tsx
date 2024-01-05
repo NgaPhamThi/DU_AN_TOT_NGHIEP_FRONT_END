@@ -41,20 +41,19 @@ const User = (props: Props) => {
     {
       title: "User Name",
       dataIndex: "username",
-      with:"20%",
+      width: "15%",
       key: "username",
     },
    
     {
       title: "Email",
       dataIndex: "email",
-      with:"20%",
+      width: "30%",
       key: "email",
     },
     {
       title: "Trạng thái",
       dataIndex: "role",
-      with:"20%",
       key: "role",
     },
     {
