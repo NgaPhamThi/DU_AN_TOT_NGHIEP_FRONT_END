@@ -203,7 +203,7 @@ const ProductPage = () => {
     <FaSearch className="text-gray-400" />
   </span>
   {searchValue.trim() && searchData.length > 0 && (
-    <div className="absolute z-10 bg-white border border-gray-300 mt-2 mt-auto w-full rounded-md shadow-md">
+          <div className="absolute z-10 bg-white border border-gray-300 mt-2 mt-auto w-full rounded-md shadow-md right-0 max-h-80 overflow-y-auto">
       {searchData.map((value) => (
         <Link
           key={value._id}

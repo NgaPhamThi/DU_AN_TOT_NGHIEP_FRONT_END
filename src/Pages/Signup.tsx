@@ -64,7 +64,7 @@ console.log(user);
       }, 3000);
     })
     .catch((error) => {
-      toast.success('Đăng ký không thành công vui lòng kiểm tra lại thông tin đăng ký', { autoClose: 2000 })
+      toast.error('Đăng ký không thành công vui lòng kiểm tra lại thông tin đăng ký', { autoClose: 2000 })
       console.error('Error registering user', error);
     });   
     

@@ -9,7 +9,6 @@ import { searchProduct } from '../api/search';
 const Header: React.FC = () => {
 
     const [searchValue, setSearchValue] = useState<string>('');
-    const [showSearch, setShowSearch] = useState<boolean>(false);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [showMenu, setShowMenu] = useState(false);
     const [data, setData] = useState([]);
@@ -41,20 +40,7 @@ const Header: React.FC = () => {
         console.error('Error during logout', error);
         }
     };
-    const hanldeSearch = async (e: any) => {
-        const value = e.target.value;
-        setSearchValue(value);
-    
-        if (value.trim() !== '') {
-            // Thực hiện tìm kiếm chỉ khi có giá trị trong ô tìm kiếm
-            const res = await searchProduct(value);
-            const { data } = res;
-            setData(data);
-        } else {
-            // Nếu giá trị trống, đặt data về mảng rỗng
-            setData([]);
-        }
-    }
+   
     const menuRef = useRef(null);
 
     useEffect(() => {
@@ -86,46 +72,14 @@ const Header: React.FC = () => {
 
                 <nav className="hidden md:flex space-x-4 mr-8 lg:flex lg:items-center lg:justify-end lg:gap-8 uppercase text-sm text-gray-500 font-medium">
                     <a href="/" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Trang chủ</a>
-                    <a href="/product" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Sản Phẩm</a>
+                    <a href="/product" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Cửa hàng</a>
                     <a href="/blog" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Blog</a>
-                    <a href="#" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Cửa Hàng</a>
                     <a href="/contact" className="cursor-pointer py-1 hover: transform hover:scale-110 transition-transform hover:text-gray-800 relative after:absolute after:bottom-0 after:left-0 after:bg-slate-900 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300">Liên Hệ</a>
 
                 </nav>
 
                 <div className="flex items-center space-x-4 relative">
-                    <i className="fas fa-search text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => setShowSearch(prev => !prev)}></i>
 
-                    {/* Cửa sổ tìm kiếm trượt ra */}
-                    {showSearch && (
-                        <div className="absolute top-full right-0 mt-2 w-72 bg-white border rounded-md shadow-lg p-4 z-10 transition-transform transform hover:scale-105">
-                            <input
-                                type="text"
-                                placeholder="Tìm kiếm sản phẩm..."
-                                value={searchValue}
-                                onChange={(e) =>
-                                    hanldeSearch(e)
-                                }
-
-                                onBlur={() => {
-                                    if (!searchValue.trim()) {
-                                        setShowSearch(false);
-                                    }
-                                }}
-                                className="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300 transition-all"
-                                autoFocus
-                            />
-  {searchValue.trim() && data.length > 0 && (
-            <div className="">
-                {data.map((value) => (
-                    <a key={value._id} href={`/product/${value._id}`}> <hr />
-                        {value.name}
-                    </a>
-                ))}
-            </div>
-        )}
-                        </div>
-                    )}
                     <Link to={'/cart'}>
                         <div className="relative group">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">

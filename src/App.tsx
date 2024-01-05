@@ -89,9 +89,9 @@ function App() {
           <Route path="contact" element={<ListContact />} />
           <Route path="contact/update/:id" element={<EditContact />} />
 
-          <Route path="products/addProduct" element={<AddProduct />} />
+          <Route path="products/add" element={<AddProduct />} />
           <Route path="blog" element={<ListBlog />} />
-          <Route path="blog/addblog" element={<AddBlog onAdd={onHandleAddBlog} />} />
+          <Route path="blog/add" element={<AddBlog onAdd={onHandleAddBlog} />} />
           <Route path="blog/update/:id" element={<EditBlog />} />
           <Route path="products/update/:id" element={<UpdateProduct />} />
           <Route path="orders" element={<ListOrders />} />
