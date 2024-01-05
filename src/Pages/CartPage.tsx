@@ -116,9 +116,9 @@ const CartPage = () => {
       if (
         (totalPrice >= 100000 && totalPrice < 200000 && voucher.Discount_Type <= 20000) ||
         (totalPrice >= 200000 && voucher.Discount_Type <= 65000) ||
-        (totalPrice > 500000 && voucher.Discount_Type <= 100000) ||
-        (totalPrice > 1000000 && voucher.Discount_Type <= 200000)||
-        (totalPrice > 5000000 && voucher.Discount_Type <= 500000)
+        (totalPrice >= 500000 && voucher.Discount_Type <= 100000) ||
+        (totalPrice >= 1000000 && voucher.Discount_Type <= 200000)||
+        (totalPrice >= 5000000 && voucher.Discount_Type <= 500000)
 
       ) {
         return true;
@@ -252,7 +252,7 @@ const CartPage = () => {
         </div>
         <div className="flex flex-col p-4 gap-4 text-lg font-semibold shadow-md border rounded-sm">
             <div className="flex flex-row justify-between">
-                <p className="text-gray-600">Tổng ({cartQty} Items)</p>
+                <p className="text-gray-600">Tổng Tiền({cartQty} Items)</p>
                 <p className="text-end font-bold">{totalPrice.toLocaleString()}</p>
             </div>
             <hr className="bg-gray-200 h-0.5"/>
@@ -267,9 +267,9 @@ const CartPage = () => {
                 <p className="text-gray-600">Discount Coupon</p>
                 <p className="text-gray-500 text-base underline">{((totalPrice - discountPercentage)).toLocaleString()}</p>
             </div> */}
-            <hr className="bg-gray-200 h-0.5"/>
+            {/* <hr className="bg-gray-200 h-0.5"/> */}
             <div className="flex flex-row justify-between">
-                <p className="text-gray-600">Tổng tiền sau giảm giá</p>
+                <p className="text-gray-600">Tổng Tiền Sau Giảm Giá</p>
                 <div>
                 <p className="text-end font-bold">{(totalPrice - discountPercentage).toLocaleString()}đ</p>
                 </div>

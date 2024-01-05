@@ -150,7 +150,7 @@ const handleStatusChange = async (newStatus: string) => {
            <div>
            <p className="text-base leading-none flex items-center dark:text-white mt-4 text-gray-800"><img className='pr-3' src="/delivery.png" alt="" />Trạng Thái Đơn Hàng: <span className="font-semibold">
             <select value={currentStatus} onChange={(e) => handleStatusChange(e.target.value)}>
-            <option value="">chọn trạng thái--</option>
+            <option value="" disabled hidden>--chọn trạng thái--</option>
             {getFilteredOptions(currentStatus).map((status) => (
             <option key={status.value} value={status.value}>
             {status.label}

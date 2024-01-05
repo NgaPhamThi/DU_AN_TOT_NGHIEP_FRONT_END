@@ -60,6 +60,7 @@ const [searchKeyword, setSearchKeyword] = useState('');
       title: "Title",
       dataIndex: "title",
       key: "title",
+      width: "40%",
     },
     {
         title: "Action",

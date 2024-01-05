@@ -157,26 +157,6 @@ const UpdateVouchers = () => {
         </div>
 
         <div className='mb-4'>
-          <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='IsActive'>
-            Trạng Thái
-          </label>
-          <Controller
-            name='IsActive'
-            control={control}
-            render={({ field }) => (
-              <select
-                {...field}
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              >
-                <option value='true'>Active</option>
-                <option value='false'>Inactive</option>
-              </select>
-            )}
-            disabled
-          />
-        </div>
-
-        <div className='mb-4'>
           <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='Description'>
             Mô Tả
           </label>
@@ -188,7 +168,7 @@ const UpdateVouchers = () => {
                 {...field}
                 className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 placeholder='Nhập Mô Tả'
-                disabled
+    
               />
             )}
           />

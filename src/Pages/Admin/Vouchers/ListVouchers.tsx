@@ -91,25 +91,29 @@ const ListVouchers = () => {
         }
       }
     },
-    {
-      title: 'IsActive',
-      dataIndex: 'Expiration_Date',
-      key: 'IsActive',
-      render: (text: string) => {
-        const expirationDate = new Date(text)
-        if (!isNaN(expirationDate.getTime())) {
-          const currentDate = new Date()
-          if (currentDate <= expirationDate) {
-            return 'Active'
-          } else {
-            return 'InActive'
-          }
-        } else {
-          return 'Invalid Date'
-        }
-      }
-    },
-
+    // {
+    //   title: 'IsActive',
+    //   dataIndex: 'Expiration_Date',
+    //   key: 'IsActive',
+    //   render: (text: string) => {
+    //     const expirationDate = new Date(text)
+    //     if (!isNaN(expirationDate.getTime())) {
+    //       const currentDate = new Date()
+    //       if (currentDate <= expirationDate) {
+    //         return 'Active'
+    //       } else {
+    //         return 'InActive'
+    //       }
+    //     } else {
+    //       return 'Invalid Date'
+    //     }
+    //   }
+    // },
+{
+  title: 'Description',
+  dataIndex: 'Description',
+  key: 'Description',
+},
     {
       title: 'Actions',
       key: 'actions',
