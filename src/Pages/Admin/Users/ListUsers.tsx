@@ -1,14 +1,42 @@
-import { Popconfirm, Table } from "antd";
-import React, { useEffect, useState } from "react";
-import { IProduct } from "../../../interfaces/product";
-import { deleteproduct, getProduct } from "../../../api/product";
+import { Popconfirm, Table,Input  } from "antd";
+import React, { useEffect, useState,useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { deleteUser, getUser } from "../../../api/auth";
-
+import { IUser } from "../../../interfaces/cart";
 type Props = {};
-
+const { Search } = Input;  
 const User = (props: Props) => {
+ 
+  const [users, setUsers] = useState<IUser[]>([]);
+  const [searchKeyword, setSearchKeyword] = useState('')
+
+  useEffect(() => {
+    async function fetchUsers() {
+      const { data } = await getUser();
+      setUsers(data);
+    }
+    fetchUsers();
+  }, []);
+
+  const handleDeleteUser = async (id: any) => {
+    try {
+      if (id) {
+        await deleteUser(id);
+        setUsers((prevUsers) =>
+          prevUsers.filter((user) => user._id !== id)
+        );
+        toast.success('Delete Successfully!', { autoClose: 2000 });
+      }
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      toast.error('Error Deleting User!');
+    }
+  };
+  const handleSearch = (value: string) => {
+    setSearchKeyword(value);
+};
+
   const columns = [
     {
       title: "User Name",
@@ -24,12 +52,6 @@ const User = (props: Props) => {
       key: "email",
     },
     {
-      title: "Password",
-      dataIndex: "password",
-      key: "password",
-      with:"20%"
-    },
-    {
       title: "Trạng thái",
       dataIndex: "role",
       with:"20%",
@@ -39,7 +61,7 @@ const User = (props: Props) => {
       title: "Action",
       dataIndex: "status",
       key: "status",
-      render:(status: any, record: IProduct)=>(
+      render: (status: any, record: IUser) =>(
         <div className="inline-flex rounded-lg border  border-gray-100 bg-gray-100 p-1">
                    <Link to={`update/${record._id}`}>
                    <button 
@@ -94,44 +116,29 @@ const User = (props: Props) => {
       )
     },
   ];
-
-  const [products, setproducts] = useState<IProduct[]>([])
-  console.log(products);
-  useEffect(() => {
-    async function fetchProduct() {
-      
-      const { data } = await getUser();
-      setproducts(data);
-      console.log(data);
-    }
-    fetchProduct()
-  }, [])
-
-
-  const handleDeleteUser = async (id: any) => {
-    try {
-      if (id) {
-        await deleteUser(id)
-        setproducts((prevUser) =>
-          prevUser.filter((product) => product._id !== id)
-        )
-        toast.success('Delete Susscessfully !', { autoClose: 2000 })
-      }
-    } catch (error) {
-      console.log('Error deleting comment:', error);
-      toast.error('Error Delete Product !');
-    }
-  }
+  const filteredUsers = useMemo(() => {
+    return users.filter(user =>
+        user.email.toLowerCase().includes(searchKeyword.toLowerCase())
+    );
+}, [users, searchKeyword]);
   return (
-    <div className="ml-4  mr-4 mt-4">
-         <ToastContainer />
-      <div className="text-center pb-7 flex justify-between items-center ">
-          <div>
-            <h1 className="text-2xl font-semibold">QUẢN LÝ TÀI KHOẢN</h1>
-          </div>
-        </div>
-      <Table  dataSource={products} columns={columns} />
+    <div className="ml-4 mr-4 mt-4">
+    <ToastContainer />
+    <div className="flex justify-between items-center mb-4">
+    <div className="text-center pb-7 flex justify-between items-center">
+      <h1 className="text-2xl font-semibold">Quản Lý Tài Khoản</h1>
     </div>
+      <div>
+        <Search
+          placeholder="Tìm kiếm theo email"
+          allowClear
+          onSearch={handleSearch}
+          style={{ width: 200, marginBottom: 16 }}
+        />
+      </div>
+    </div>
+    <Table dataSource={filteredUsers} columns={columns} />
+  </div>
   );
 };
 

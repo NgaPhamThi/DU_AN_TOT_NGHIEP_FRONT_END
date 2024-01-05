@@ -3,12 +3,13 @@ import { ICategories } from '../../../interfaces/categories';
 import { deletecategory, getCategory } from '../../../api/categories';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Popconfirm, Table } from 'antd';
+import { Popconfirm, Table, Input } from 'antd';
 import { Link } from 'react-router-dom';
 
-
+const { Search } = Input;
 const ListCategories = () => {
   const [categories, setcategories] = useState<ICategories[]>([])
+  const [searchKeyword, setSearchKeyword] = useState('');
   console.log(categories);
   useEffect(() => {
     async function fetchProduct() {
@@ -17,7 +18,7 @@ const ListCategories = () => {
       console.log(data);
 
     }
-    fetchProduct()
+    fetchProduct();
   }, [])
   const handleDeleteComment = async (categoryId: any) => {
     try {
@@ -33,19 +34,15 @@ const ListCategories = () => {
       toast.error('Xóa danh mục thất bại');
     }
   }
- 
+  const handleSearch = (value: string) => {
+    setSearchKeyword(value);
+  };
   
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'index',
-      width: "5%",
-      key: 'index',
-    },
-    {
       title: 'Images',
       dataIndex: 'img',
-      width: "30%",
+      width: "10%",
       key: 'img',
       render: (imgArray: { url: string }[]) => (
         <div style={{ display: 'flex' }}>
@@ -121,28 +118,54 @@ const ListCategories = () => {
       )
     },
   ];
+  const filteredCategories = useMemo(() => {
+    return categories.filter((category) =>
+      category.name.toLowerCase().includes(searchKeyword.toLowerCase())
+    );
+  }, [categories, searchKeyword]);
   return (
-   
-    
-   <div>
-     <ToastContainer />
-     <div className="text-center pb-7 flex justify-between items-center ">
-          <div>
-             <h1 className="text-2xl font-semibold">Quản Lý Danh Mục</h1>
-          </div>
-         <div className=''>
-            <Link to={"add"}>
-           <button className="bg-blue-500 flex items-center gap-2  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Thêm Danh Mục  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-           <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+    <div className='ml-4 mr-4 mt-4'>
+    <ToastContainer />
+    <div className="flex justify-between items-center mb-4"> 
+    <div className="text-center flex justify-between items-center">
+      <h1 className="text-2xl font-semibold">Quản Lý Danh Mục</h1>
+    </div>
+    <div>
+      <Search
+          placeholder="Tìm kiếm theo name"
+          allowClear
+          onSearch={handleSearch}
+          style={{ width: 200, marginBottom: 16 }}
+        />
+      </div>
+    </div>
+    <div className="flex justify-between items-center mb-4"> 
+    <div></div>
+      <div>
+        <Link to={'add'}>
+          
+          <button className="bg-blue-500 flex items-center gap-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
+            Thêm Danh Mục{' '}
+          
           </button>
-           </Link>
-          </div>
-        </div>
-     <Table dataSource={categories.map((category,index)=>({...category,index:index+1}))} columns={columns} />
-   </div>
-  )
-}
+        </Link>
+      </div>
+    
+    </div>
+    <Table dataSource={filteredCategories} columns={columns} />
 
-export default ListCategories
+  </div>
+  );
+};
+
+export default ListCategories;

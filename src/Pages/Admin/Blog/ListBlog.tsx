@@ -1,14 +1,48 @@
-import { Popconfirm, Table } from "antd";
-import React, { useEffect, useState } from "react";
+import { Popconfirm, Table ,Input } from "antd";
+import React, { useEffect,useMemo, useState } from "react";
 import { deleteBlog, getAllBlog } from "../../../api/blog";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { IBlog } from "../../../interfaces/blog";
 
 type Props = {};
-
+const { Search } = Input;
 
 const ListBlog = (props: Props) => {
+const [blogs, setBlogs] = useState<IBlog[]>([]);
+const [searchKeyword, setSearchKeyword] = useState('');
+
+  useEffect(() => {
+    async function fetchBlogs() {
+      try {
+        const { data } = await getAllBlog();
+        console.log(data);
+        setBlogs(data);
+      } catch (error) {
+        console.log("Error fetching blogs:", error);
+        toast.error("Error fetching blogs!");
+      }
+    }
+    fetchBlogs();
+  }, []);
+
+  const handleDeleteBlog = async (id: string) => {
+    try {
+      if (id) {
+        await deleteBlog(id);
+        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog._id !== id));
+        toast.success("Delete Successfully!", { autoClose: 2000 });
+      }
+    } catch (error) {
+      console.log("Error deleting blog:", error);
+      toast.error("Error Delete Blog!");
+    }
+  };
+  const handleSearch = (value: string) => {
+    setSearchKeyword(value);
+  };
+
+  
   const columns = [
     {
       title: "Image",
@@ -86,53 +120,55 @@ const ListBlog = (props: Props) => {
         )
       },
   ];
-
-  const [blogs, setBlogs] = useState<IBlog[]>([]);
-
-  useEffect(() => {
-    async function fetchBlogs() {
-      try {
-        const { data } = await getAllBlog();
-        console.log(data);
-        setBlogs(data);
-      } catch (error) {
-        console.log("Error fetching blogs:", error);
-        toast.error("Error fetching blogs!");
-      }
-    }
-    fetchBlogs();
-  }, []);
-
-  const handleDeleteBlog = async (id: string) => {
-    try {
-      if (id) {
-        await deleteBlog(id);
-        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog._id !== id));
-        toast.success("Delete Successfully!", { autoClose: 2000 });
-      }
-    } catch (error) {
-      console.log("Error deleting blog:", error);
-      toast.error("Error Delete Blog!");
-    }
-  };
-
+  const filteredBlogs = useMemo(() => {
+    return blogs.filter((blog) =>
+      blog.title.toLowerCase().includes(searchKeyword.toLowerCase())
+    );
+  }, [blogs, searchKeyword]);
   return (
-    <div className="ml-4 mr-4 mt-4">
-      <ToastContainer />
-      <div className="text-center pb-7 flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-semibold">BLOG MANAGEMENT</h1>
-        </div>
-        <div className=''>
-          <Link to={"addBlog"}><button type="button" className="btn bg-blue-500 flex items-center gap-2 btn-primary">Thêm BLog <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+    <div className='ml-4 mr-4 mt-4'>
+    <ToastContainer />
+    <div className="flex justify-between items-center mb-4"> 
+    <div className="text-center flex justify-between items-center">
+      <h1 className="text-2xl font-semibold">Quản Lý Blog</h1>
+    </div>
+    <div>
+      <Search
+          placeholder="Tìm kiếm theo title"
+          allowClear
+          onSearch={handleSearch}
+          style={{ width: 200, marginBottom: 16 }}
+        />
+      </div>
+    </div>
+    <div className="flex justify-between items-center mb-4"> 
+    <div></div>
+      <div>
+        <Link to={'add'}>
+          
+          <button className="bg-blue-500 flex items-center gap-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            </button></Link>
-          </div>
+            Thêm BLog{' '}
+          
+          </button>
+        </Link>
       </div>
-      <Table dataSource={blogs} columns={columns} />
+    
     </div>
+    <Table dataSource={filteredBlogs} columns={columns} />
+
+  </div>
   );
+
 };
 
 export default ListBlog;
