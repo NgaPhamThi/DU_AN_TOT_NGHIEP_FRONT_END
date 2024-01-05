@@ -1,10 +1,11 @@
-import { Space, Table, Tag } from 'antd';
-import React, { useEffect, useState } from 'react'
+import { Space, Table, Tag,Input  } from 'antd';
+import React, { useEffect, useMemo,useState } from 'react'
 import { IOrders } from '../../../interfaces/Orders';
 import { getAllOrder } from '../../../api/orders';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 type Props = {}
+const { Search } = Input;   
 const statusOptions = [
     { value: 'PENDING', label: 'chờ duyệt' },
     { value: 'PROCESSING', label: 'lấy hàng' },
@@ -14,6 +15,7 @@ const statusOptions = [
   ];
 const ListOrders = (props: Props) => {
     const [Orders, setOrders] = useState<IOrders[]>([])
+    const [searchKeyword, setSearchKeyword] = useState('');
     const fetchOrder = async () => {
         try {
             const { data } = await getAllOrder()
@@ -29,12 +31,17 @@ const ListOrders = (props: Props) => {
         fetchOrder()
     }, [])
    
-
+    const handleSearch = (value: string) => {
+        setSearchKeyword(value);
+      };
+    
     const columns = [
         {
-            title: 'Mã Đơn Hàng',
-            dataIndex: '_id',
-            key: '_id',
+            title: 'Email',
+            dataIndex: 'email',
+            width: "15%",    
+
+            key: 'email',
         },
         {
             title: 'Ngày Đặt Hàng',
@@ -106,11 +113,31 @@ const ListOrders = (props: Props) => {
             ))
         },
     ];
-    return (
-        <div>
-            <Table dataSource={Orders} columns={columns} />
+    const filteredOrders = useMemo(() => {
+        return Orders.filter((order) =>
+          order.email.toLowerCase().includes(searchKeyword.toLowerCase())
+        );
+      }, [Orders, searchKeyword]);
+    
+      return (
+        <div className="ml-4 mr-4 mt-4">
+
+        <div className="flex justify-between items-center mb-4">
+        <div className="text-center pb-7 flex justify-between items-center">
+          <h1 className="text-2xl font-semibold">Quản Lý Đơn Hàng</h1>
         </div>
-    )
+          <div>
+            <Search
+              placeholder="Tìm kiếm theo email"
+              allowClear
+              onSearch={handleSearch}
+              style={{ width: 200, marginBottom: 16 }}
+            />
+          </div>
+        </div>
+        <Table dataSource={filteredOrders} columns={columns} />
+      </div>
+      );
 }
 
 export default ListOrders

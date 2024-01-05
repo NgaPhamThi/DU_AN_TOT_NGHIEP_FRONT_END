@@ -22,26 +22,19 @@ const CommentManagement = () => {
     }, [])
     const columns = [
         {
-            title: 'ID',
-            dataIndex: 'index',
-            width: "5%",
-            key: 'index',
+            title: 'Images',
+            dataIndex: 'img',
+            width: "10%",
+            key: 'img',
+            render: (img: string[]) => (
+                <img src={img[0]} alt="product" style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
+              ),
         },
-
         {
             title: 'Name',
             dataIndex: 'name',
             width: "30%",
             key: 'name',
-        },
-        {
-            title: 'Images',
-            dataIndex: 'img',
-            width: "30%",
-            key: 'img',
-            render: (img: string[]) => (
-                <img src={img[0]} alt="product" style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
-              ),
         },
         {
             title: "Status",
@@ -83,9 +76,15 @@ const CommentManagement = () => {
         },
     ];
     return (
-        <div>
-            <Table dataSource={products.map((product,index)=>({...product,index:index+1}))} columns={columns} />
+        <div className="ml-4 mr-4 mt-4">
+        <div className="text-center pb-7 flex justify-between items-center ">
+            <div>
+                <h1 className="text-2xl font-semibold">Quản Lý Bình Luận</h1>
+            </div>
         </div>
+            <Table dataSource={products.map((product,index)=>({...product,index:index+1}))} columns={columns} />
+            </div>
+
         //     <body classNameName="bg-gray-100 mx-auto w-full">
 
         //     <div classNameName="container   p-4 bg-white rounded shadow-xl">

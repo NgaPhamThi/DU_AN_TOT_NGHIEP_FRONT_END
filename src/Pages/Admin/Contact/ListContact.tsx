@@ -1,11 +1,44 @@
-import { Popconfirm, Table, Select } from "antd";
-import React, { useEffect, useState } from "react";
+import { Popconfirm, Table, Select,Input  } from "antd";
+import React, { useEffect, useMemo,useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { IContact } from "../../../interfaces/contact";
 import { deleteContact, getAllContact } from "../../../api/contact";
 import { Link } from "react-router-dom";
-
+const { Search } = Input;  
 const ListContact = () => {
+   
+
+    const [contacts, setContacts] = useState<IContact[]>([]);
+    const [searchKeyword, setSearchKeyword] = useState('')
+    useEffect(() => {
+        async function fetchContacts() {
+            const { data } = await getAllContact();
+            setContacts(data);
+        }
+        fetchContacts();
+    }, []);
+
+    const handleDeleteContact = async (id: any) => {
+        try {
+            if (id) {
+                await deleteContact(id);
+                setContacts(prevContacts => prevContacts.filter(contact => contact._id !== id));
+                toast.success('Delete Successfully!', { autoClose: 2000 });
+            }
+        } catch (error) {
+            console.error('Error deleting contact:', error);
+            toast.error('Error Deleting Contact!');
+        }
+    };
+
+    const handleEditContact = (id: any) => {
+        // Handle edit logic here
+        console.log(`Editing contact with ID: ${id}`);
+    };
+    const handleSearch = (value: string) => {
+        setSearchKeyword(value);
+    };
+
     const columns = [
         {
             title: "Name",
@@ -92,45 +125,29 @@ const ListContact = () => {
             )
         },
     ];
-
-    const [contacts, setContacts] = useState<IContact[]>([]);
-
-    useEffect(() => {
-        async function fetchContacts() {
-            const { data } = await getAllContact();
-            setContacts(data);
-        }
-        fetchContacts();
-    }, []);
-
-    const handleDeleteContact = async (id: any) => {
-        try {
-            if (id) {
-                await deleteContact(id);
-                setContacts(prevContacts => prevContacts.filter(contact => contact._id !== id));
-                toast.success('Delete Successfully!', { autoClose: 2000 });
-            }
-        } catch (error) {
-            console.error('Error deleting contact:', error);
-            toast.error('Error Deleting Contact!');
-        }
-    };
-
-    const handleEditContact = (id: any) => {
-        // Handle edit logic here
-        console.log(`Editing contact with ID: ${id}`);
-    };
-
+    const filteredContacts = useMemo(() => {
+        return contacts.filter(contact =>
+            contact.email.toLowerCase().includes(searchKeyword.toLowerCase())
+        );
+    }, [contacts, searchKeyword]);
     return (
         <div className="ml-4 mr-4 mt-4">
-            <ToastContainer />
-            <div className="text-center pb-7 flex justify-between items-center ">
-                <div>
-                    <h1 className="text-2xl font-semibold">QUẢN LÝ LIÊN HỆ</h1>
-                </div>
-            </div>
-            <Table dataSource={contacts} columns={columns} />
+        <ToastContainer />
+        <div className="flex justify-between items-center mb-4">
+        <div className="text-center pb-7 flex justify-between items-center">
+          <h1 className="text-2xl font-semibold">Quản Lý Liên Hệ</h1>
         </div>
+          <div>
+            <Search
+              placeholder="Tìm kiếm theo email"
+              allowClear
+              onSearch={handleSearch}
+              style={{ width: 200, marginBottom: 16 }}
+            />
+          </div>
+        </div>
+        <Table dataSource={filteredContacts} columns={columns} />
+      </div>
     );
 };
 

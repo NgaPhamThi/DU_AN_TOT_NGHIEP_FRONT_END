@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect,useMemo, useState } from 'react'
 import { IVouchers } from '../../../interfaces/vouchers'
 import { getVoucher, deleteVoucher } from '../../../api/vouchers'
 import { Link } from 'react-router-dom'
-import { Table, Button, Modal, Popconfirm } from 'antd'
+import { Table, Button, Modal, Popconfirm,Input  } from 'antd'
 import { ToastContainer, toast } from 'react-toastify'
-
+const { Search } = Input;
 const ListVouchers = () => {
   const [vouchers, setVouchers] = useState<IVouchers[]>([])
   const [voucherToDelete, setVoucherToDelete] = useState<string | number | null>(null)
   const [visible, setVisible] = useState(false)
-
+  const [searchKeyword, setSearchKeyword] = useState('');
   useEffect(() => {
     getVoucher()
       .then((response) => {
@@ -44,10 +44,13 @@ const ListVouchers = () => {
     setVoucherToDelete(null)
     setVisible(false)
   }
+  const handleSearch = (value: string) => {
+    setSearchKeyword(value);
+  };
 
   const columns = [
     {
-      title: 'Voucher Code',
+      title: 'Voucher_Code',
       dataIndex: 'Voucher_Code',
       key: 'Voucher_Code'
     },
@@ -160,24 +163,56 @@ const ListVouchers = () => {
       )
     }
   ]
+  const filteredvouchers = useMemo(() => {
+    return vouchers.filter((voucher) =>
+    voucher.Voucher_Code.toLowerCase().includes(searchKeyword.toLowerCase())
+    );
+  }, [vouchers, searchKeyword]);
 
   return (
+    <div className='ml-4 mr-4 mt-4'>
+    <ToastContainer />
+    <div className="flex justify-between items-center mb-4"> 
+    <div className="text-center flex justify-between items-center">
+      <h1 className="text-2xl font-semibold">Quản Lý Voucher</h1>
+    </div>
     <div>
-      <div className='p-4'>
-        <ToastContainer />
-        <h1 className='text-3xl font-semibold mb-4'>Quản Lý Vouchers</h1>
-        <Link to={'add'}>
-          <Button className='bg-blue-500 flex items-center gap-2  hover:bg-white text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline max-w-[190px]'>
-            Thêm Vouchers
-          </Button>
-        </Link>
-
-        <Table dataSource={vouchers} columns={columns} />
-        <Modal title='Confirm Delete' visible={visible} onOk={handleConfirmDelete} onCancel={() => setVisible(false)}>
-          <p>Xóa?</p>
-        </Modal>
+      <Search
+          placeholder="Tìm kiếm theo name"
+          allowClear
+          onSearch={handleSearch}
+          style={{ width: 200, marginBottom: 16 }}
+        />
       </div>
     </div>
+    <div className="flex justify-between items-center mb-4"> 
+    <div></div>
+      <div>
+        <Link to={'add'}>
+          
+          <button className="bg-blue-500 flex items-center gap-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Thêm Voucher{' '}
+          
+          </button>
+        </Link>
+      </div>
+    
+    </div>
+    <Table dataSource={filteredvouchers} columns={columns} />
+    <Modal title='Confirm Delete' visible={visible} onOk={handleConfirmDelete} onCancel={() => setVisible(false)}>
+          <p>Xóa?</p>
+        </Modal>
+  </div>
   )
 }
 
