@@ -25,42 +25,23 @@ const HomePage = () => {
             <Category />
             <div className='max-w-[1440px] mx-auto'>
                 <h2 className="font-bold text-[27px] text-center pt-8 pb-8">Sản Phẩm Mới</h2>
-                {/* <div className='flex justify-between items-center'>
-                    <div>
-                        <div className="mb-4">
-                            <label className="text-lg font-semibold mb-2">Lọc theo giá:</label>
-                            <div className="flex space-x-2">
-                                <input
-                                    type="number"
-                                    placeholder="Từ"
-                                    className="border rounded px-2 py-1"
-                                />
-                                <span className="mx-2">-</span>
-                                <input
-                                    type="number"
-                                    placeholder="Đến"
-                                    className="border rounded px-2 py-1"
-                                />
-                                <button
-                                    className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-                                >
-                                    Lọc
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <a href="">Xem tất cả</a>
-                    </div>
-                </div> */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {products.map((item) => <Product key={item._id} data={item} />)}
-                </div>
+                <section id="Projects"
+                    className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-10 mt-10 mb-5">
+
+                    {products.slice(0, 8).map((item) => <Product key={item._id} data={item} />)}
+                </section>
+
+
             </div>
             {/* ListProduct1 */}
             <div className='max-w-[1440px] mx-auto mb-10'>
                 <h2 className="font-bold text-[27px] text-center pt-8 pb-8">Áo Blazer Cao Cấp</h2>
-                <ListCategories/>
+                <section id="Projects"
+                    className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-10 mt-10 mb-5">
+
+                    <ListCategories />
+                </section>
+
             </div>
             <div className='border-b-2'>
                 <img className='w-full' src="slide_1.png" alt="" />

@@ -176,9 +176,9 @@ const OrderDetails = (props: Props) => {
                                         </div>
                                     </div>
                                     <div className="flex justify-between space-x-8 items-start w-full">
-                                        <p className="text-base dark:text-white xl:text-lg leading-6">{orderDetail.productInfo.price_sale}Vnđ <span className="text-red-300 line-through">{orderDetail.productInfo.price}Vnđ</span></p>
+                                        <p className="text-base dark:text-white xl:text-lg leading-6">{orderDetail.productInfo.price_sale.toLocaleString()}Vnđ <span className="text-red-300 line-through">{orderDetail.productInfo.price.toLocaleString()}Vnđ</span></p>
                                         <p className="text-base dark:text-white xl:text-lg leading-6 text-gray-800">{orderDetail.quantity}</p>
-                                        <p className="text-base dark:text-white xl:text-lg font-semibold leading-6 text-gray-800">{orderDetail.productInfo.price * orderDetail.quantity}Vnđ</p>
+                                        <p className="text-base dark:text-white xl:text-lg font-semibold leading-6 text-gray-800">{(orderDetail.productInfo.price * orderDetail.quantity).toLocaleString()}đ</p>
                                     </div>
                                 </div>
                             </div>
@@ -193,7 +193,7 @@ const OrderDetails = (props: Props) => {
                             <div className="flex justify-center items-center w-full space-y-4 flex-col border-gray-200 border-b pb-4">
                                 <div className="flex justify-between w-full">
                                     <p className="text-base dark:text-white leading-4 text-gray-800">Tổng Tiền Hàng</p>
-                                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">{subtotal}Vnđ</p>
+                                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">{subtotal.toLocaleString()}Vnđ</p>
                                 </div>
                                 <div className="flex justify-between items-center w-full">
                                     <p className="text-base dark:text-white leading-4 text-gray-800">Voucher <span className="bg-gray-200 p-1 text-xs font-medium dark:bg-white dark:text-gray-800 leading-3 text-gray-800">STUDENT</span></p>
@@ -206,7 +206,7 @@ const OrderDetails = (props: Props) => {
                             </div>
                             <div className="flex justify-between items-center w-full">
                                 <p className="text-base dark:text-white font-semibold leading-4 text-gray-800">Thành Tiền</p>
-                                <p className="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">{orderInfo?.orderTotal}Vnđ</p>
+                                <p className="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">{orderInfo?.orderTotal.toLocaleString()}Vnđ</p>
                             </div>
                         </div>
                         <div className="flex flex-col justify-center px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 dark:bg-gray-800 space-y-6">

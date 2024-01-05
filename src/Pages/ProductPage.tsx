@@ -276,7 +276,7 @@ const ProductPage = () => {
                   <Link to={`/product/${product._id}`}>
                     <img
                       src={product.img[0]}
-                      className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl"
+                      className="w-full h-auto object-cover mb-4 transition-transform transform hover:scale-105 rounded-xl "
                       alt=""
                     />
                   </Link>

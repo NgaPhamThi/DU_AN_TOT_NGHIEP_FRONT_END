@@ -5,7 +5,7 @@ export interface IProduct {
     price: number
     price_sale: number
     img: string[]
-    category : ICategories
+    categoryId : string
     description: string
     
 }
