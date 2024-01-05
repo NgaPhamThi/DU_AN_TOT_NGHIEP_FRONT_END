@@ -9,7 +9,7 @@ export interface IOrders {
   phonenumber: string
   address: string
   orderTotal: number
-  // orderDate:Date;
+  orderDate:Date;
   orderDetails: IOrderDetail[]
 }
 

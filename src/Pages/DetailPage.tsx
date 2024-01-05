@@ -14,6 +14,9 @@ import { jwtDecode } from "jwt-decode"
 import { toast } from "react-toastify"
 import axios from "axios"
 import { getComment } from "../api/comment"
+import { Avatar, Button, Input, Progress, Rate, Space } from "antd"
+import { getCategory } from "../api/categories"
+import { ICategories } from "../interfaces/categories"
 interface TokenPayload {
     id: string;
     // Bạn cần thêm các trường khác từ payload token nếu cần
@@ -32,8 +35,9 @@ const DetailPage = () => {
     const [comment, setComment] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
+    const [categories, setCategories] = useState<ICategories[]>([]);
     console.log("log id", productId);
+    
     const getUserIdFromToken = (): string | null => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -50,6 +54,7 @@ const DetailPage = () => {
             return null;
         }
     };
+    const getUser = getUserIdFromToken()
     const handleSubmitComment = async () => {
         if (!comment.trim()) return;
 
@@ -121,8 +126,17 @@ const DetailPage = () => {
         // console.log(data);
         setProducts(data)
     }
+    const fetchCategory = async ()=>{
+        const categoryResponse = await getCategory()
+        setCategories(categoryResponse.data);
+    }
+    const getCategoryName = (categoryId:String) => {
+        const category = categories.find(cat => cat._id === categoryId);
+        return category ? category.name : 'Unknown';
+    };
     useEffect(() => {
         fetProducts()
+        fetchCategory()
     }, [])
 
     const fetColor = async () => {
@@ -186,114 +200,129 @@ const DetailPage = () => {
 
     return (
 
-        <div className='mx-[100px] mt-[50px]'>
-            <div className="product_detail_row_1 flex mb-[80px]">
-                <div className=" basis-3/6">
-                    <div className="image_detail_big">
-                        <img className="w-[600px] h-[450px]" src={selectedImage || (product.img && product.img[0])} alt="" />
-                    </div>
-                    <div className="image_detail_small mt-[10px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-[10px]">
-                        {product.img && product.img.map((image, index) => (
-                            // <img
-                            //     key={index}
-                            //     className="w-[110px] h-[100px] mb-[20px]"
-                            //     src={image}
-                            //     alt={`Product ${product.name} - Image ${index + 1}`}
-                            //     onClick={() => setSelectedImage(image)}
-                            // />
-                            <img className="w-[110px] h-[100px] mb-[20px]" src={image} alt={`Product ${product.name} - Image ${index + 1}`} onClick={() => setSelectedImage(image)} />
+        <section className="py-20 overflow-hidden bg-white font-poppins dark:bg-gray-800">
+        <div className="max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
+            <div className="flex flex-wrap -mx-4">
+                <div className="w-full px-4 md:w-1/2 ">
+                    <div className="sticky top-0 z-50 overflow-hidden ">
+                        <div className="relative mb-6 lg:mb-10" style={{height:"450px"}}>
+                            <img src={selectedImage || (product.img && product.img[0])}
+                                alt="" className="object-contain w-full h-full "/>
+                        </div>
+                        <div className="flex-wrap hidden md:flex ">
+                        {product.img && product.img.slice(0, 4).map((image, index) => (
+                            <div className="w-1/2 p-2 sm:w-1/4">
+                            <div
+                                className="block border border-blue-100 dark:border-gray-700 dark:hover:border-gray-600 hover:border-blue-300 ">
+                                <img src={image}
+                                    alt="" className="object-cover w-full lg:h-32"
+                                    onClick={() => setSelectedImage(image)}/>
+                            </div>
+                        </div>
                         ))}
-                        {/* <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" />
-                        <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" />
-                        <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" />
-                        <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" />
-                        <img className="w-[110px] h-[100px] mb-[20px]" src={product.img} alt="" /> */}
-
+                            
+                            
+                           
+                          
+                        </div>
                     </div>
-
                 </div>
-                <div className=" basis-3/6 pl-[100px]">
-                    <h2 className="text-[20px] font-bold mb-[20px]">{product.name}</h2>
-                    <div className="">
-                        <span>Thương hiệu:</span>
-                        <span>NEM</span>
-                    </div>
-                    <div className="">
-                        <span>Mã SP:</span>
-                        <span>{product._id}</span>
-                    </div>
-                    <h3 className="my-[10px] text-[24px] font-bold">{product.price}</h3>
-                    <div className="size mb-[20px]">
-                        <span className="text-[17px] mb-[10px]">Kích thước</span>
-                        <ul className="flex gap-[20px] mt-[10px]">
-                            {sizes.map((sizeItem, index) => {
-                                return (
-                                    <li onClick={() => setSize(sizeItem._id as string)} key={index} className={`${size === sizeItem._id ? 'border-orange-500' : ''}   w-[60px] text-center border px-[10px] py-[5px] `}>{sizeItem.name}</li>
-                                )
-                            })}
-
-                        </ul>
-                    </div>
-                    <div className="color flex gap-[20px] mb-[20px]">
-                        {colors.map((colorItem, index) => {
-                            return (
-                                <div className=" " >
-                                    <span key={index} onClick={() => setColor(colorItem._id as string)} className={`${color == colorItem._id ? 'border-orange-500' : ''} px-[30px] py-[7px] border`} style={{ background: colorItem.name }}></span>
+                <div className="w-full px-4 md:w-1/2 ">
+                    <div className="lg:pl-20">
+                        <div className="pb-6 mb-8 border-b border-gray-200 dark:border-gray-700">
+                        <span className="text-lg font-medium text-rose-500 dark:text-rose-200">Mã SP : <span className="text-black text-base">{product._id}</span></span>
+                            <h2 className="max-w-xl mt-2 mb-6 text-xl font-bold dark:text-gray-300 md:text-4xl">
+                                {product.name}
+                            </h2>
+                            
+                            <br />
+                            <span className="text-lg font-medium text-rose-500 dark:text-rose-200">Loại : <span className="text-black text-base">{getCategoryName(product.categoryId)}</span></span>
+                            
+                           
+                            < br  />
+                            <div className="mb-8 mt-3 border-b border-gray-200 dark:border-gray-700"></div>
+                            <p className="inline-block text-2xl font-semibold text-gray-700 dark:text-gray-400 ">
+                                <span>{product.price_sale}đ</span>
+                                <span
+                                    className="text-base font-normal text-gray-500 line-through dark:text-gray-400">{product.price}đ</span>
+                            </p>
+                        </div>
+                        <div className="mb-8">
+                            <h2 className="mb-2 text-xl font-bold dark:text-gray-400">
+                                Color</h2>
+                            <div className="flex flex-wrap gap-4 -mb-2">
+                            {colors.map((colorItem, index) =>(
+                                <div className="p-1 mb-2 mr-2    hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400  " >
+                                <span key={index} onClick={() => setColor(colorItem._id as string)} className={`${color == colorItem._id ? 'border-orange-500' : ''} px-[30px] py-[7px] w-10 h-10 bg-red-600 rounded-xl border`} style={{ background: colorItem.name }}></span>
+                            </div>
+                            ))}
+                               
+                                
+                                
+                            </div>
+                        </div>
+                        <div className="pb-6 mb-8 border-b border-gray-300 dark:border-gray-700">
+                            <h2 className="mb-2 text-xl font-bold dark:text-gray-400">
+                                Size</h2>
+                            <div className="flex flex-wrap -mb-2">
+                            {sizes.map((sizeItem, index) =>(
+                                 <button onClick={() => setSize(sizeItem._id as string)} key={index}
+                                 className={`${size === sizeItem._id ? 'border-blue-500' : ''}py-1 mb-2 mr-1 border w-11 hover:border-blue-400 hover:text-blue-600 dark:border-gray-400 dark:hover:border-gray-300 dark:text-gray-400`}>{sizeItem.name}
+                             </button>
+                            ))}
+                              
+                                
+                               
+                            </div>
+                        </div>
+                        <div className="flex flex-wrap items-center ">
+                            <div className="mb-4 mr-4 lg:mb-0">
+                                <div className="w-28">
+                                    <div className="relative flex flex-row w-full h-10 bg-transparent rounded-lg">
+                                        <button onClick={addQuantity.bind(this, 'minus')}
+                                            className="w-20 h-full text-gray-600 bg-gray-100 border-r rounded-l outline-none cursor-pointer dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-300">
+                                            <span className="m-auto text-2xl font-thin">-</span>
+                                        </button>
+                                        <input type="number"
+                                            className="flex items-center w-full font-semibold text-center text-gray-700 placeholder-gray-700 bg-gray-100 outline-none dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black"
+                                            placeholder="1"
+                                            value={quantity}/>
+                                        <button onClick={addQuantity.bind(this, 'plus')}
+                                            className="w-20 h-full text-gray-600 bg-gray-100 border-l rounded-r outline-none cursor-pointer dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-400 dark:bg-gray-900 hover:text-gray-700 hover:bg-gray-300">
+                                            <span className="m-auto text-2xl font-thin">+</span>
+                                        </button>
+                                    </div>
                                 </div>
-                            )
-                        })}
-                    </div>
-                    <div className="mb-[30px]">
-                        <h3><a href="">HƯỚNG DẪN CHỌN SIZE</a></h3>
-                    </div>
-                    <div className="quantity flex gap-[50px]">
-                        <span>Số lượng</span>
-                        <div className=" flex items-center border border-2 border-gray-300 px-[20px] py-[5px] gap-[20px] products-center">
-                            <button onClick={addQuantity.bind(this, 'minus')}>
-                                -
-                            </button>
-                            <span>{quantity}</span>
-                            <button onClick={addQuantity.bind(this, 'plus')}>
-                                +
-                            </button>
-
+                            </div>
+                            <div className="mb-4 mr-4 lg:mb-0">
+                                <button onClick={() => addCart(product, 'ADD_CART')}
+                                    className="w-full h-10 p-2 mr-4 bg-blue-500 dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500">
+                                    Mua Ngay</button>
+                            </div>
+                            <div className="mb-4 mr-4 lg:mb-0">
+                                <button onClick={() => addCart(product, 'ADD_CART')}
+                                    className="flex items-center justify-center w-full h-10 p-2 text-gray-700 border border-gray-300 lg:w-11 hover:text-gray-50 dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 dark:hover:border-blue-500 dark:hover:text-gray-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        className="bi bi-cart" viewBox="0 0 16 16">
+                                        <path
+                                            d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div className="mb-4 lg:mb-0">
+                                <button
+                                    className="flex items-center justify-center w-full h-10 p-2 text-gray-700 border border-gray-300 lg:w-11 hover:text-gray-50 dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 dark:hover:border-blue-500 dark:hover:text-gray-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        className=" bi bi-heart" viewBox="0 0 16 16">
+                                        <path
+                                            d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div className="shopping_cart my-[20px]">
-                        <div className="mb-[20px]">
-                            <button onClick={() => addCart(product, 'ADD_CART')} className="border border-gray-800 px-[100px] py-[10px]">THÊM VÀO GIỎ</button>
-                        </div>
-                        <div className="">
-                            <button onClick={() => addCart(product, 'TO_CART')} className="border px-[118px] py-[10px] bg-black text-white">MUA NGAY</button>
-                        </div>
-                    </div>
-                    <div className="describe">
-                        <div className="">
-                            <span className="text-[16px] font-bold">Chất liệu:</span>
-                            <span>vải thô</span>
-                        </div>
-                        <div className="">
-                            <span className="text-[16px] font-bold">Kiểu dáng:</span>
-                            <span>áo vest thiết kế chiết eo, cổ bẻ 2 ve, tone màu xanh trơn</span>
-                        </div>
-                        <div className="">
-                            <span className="text-[16px] font-bold">Sản phẩm thuộc dòng sản phẩm :</span>
-                            <span>NEM NEW</span>
-                        </div>
-                        <div className="">
-                            <span className="text-[16px] font-bold">Thông tin người mẫu:</span>
-                            <span>mặc sản phẩm size 2</span>
-                        </div>
-                        <div className="">
-                            <span className="text-[16px] font-bold">Sản phẩm kết hợp:</span>
-                            <span>quần Q06402</span>
-                        </div>
-                    </div>
-
-
                 </div>
             </div>
-            <hr />
             <div className="product_detail_row_2 mt-[50px]">
                 <div className="describe_product pr-[20px] mt-[5px]">
 
@@ -301,7 +330,7 @@ const DetailPage = () => {
                         <div className="w-full bg-white rounded-lg border p-2 my-4 mx-6">
 
                             <h3 className="font-bold">Bình Luận</h3>
-
+                              
 
                             {comments.map((comment) => (
                                 <div className="flex flex-col" key={comment._id}>
@@ -342,49 +371,57 @@ const DetailPage = () => {
 
                                 </div>
                             ))}
+                            {getUser? (
+                                 <form >
 
-                            <form >
-
-                                <div>
-                                    <div className="w-full px-3 my-2">
-                                        <textarea
-                                            className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
-                                            value={comment}
-                                            onChange={(e) => setComment(e.target.value)}
-                                            disabled={isSubmitting}
-                                        ></textarea>
-                                    </div>
-
-                                    <div className="w-full flex justify-end px-3">
-
-                                        {/* <input type='submit' className="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500" value='Post Comment' /> */}
-                                        <button onClick={handleSubmitComment} disabled={isSubmitting || comment.trim() === ''}>
-                                            {isSubmitting ? 'Đang gửi...' : 'Gửi Bình Luận'}
-                                        </button>
-
-                                    </div>
-                                </div>
-
-
-
-
-                            </form>
+                                 <div>
+                                     <div className="w-full px-3 my-2">
+                                         <textarea
+                                             className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                                             value={comment}
+                                             onChange={(e) => setComment(e.target.value)}
+                                             disabled={isSubmitting}
+                                         ></textarea>
+                                     </div>
+ 
+                                     <div className="w-full flex justify-end px-3">
+ 
+                                         {/* <input type='submit' className="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500" value='Post Comment' /> */}
+                                         <button onClick={handleSubmitComment} disabled={isSubmitting || comment.trim() === ''}>
+                                             {isSubmitting ? 'Đang gửi...' : 'Gửi Bình Luận'}
+                                         </button>
+ 
+                                     </div>
+                                 </div>
+ 
+ 
+ 
+ 
+                             </form>
+                            ):(
+                                <p className="text-center">
+                                bạn phải là thành viên mới được bình luận hãy
+                                <a href="signup" className="text-[red] px-1">
+                                  Đăng ký
+                                </a>
+                                hoặc
+                                <a href="signin" className="text-[red] px-1">
+                                  Đăng nhập
+                                </a>
+                              </p>
+                            )}
+                           
 
 
 
                         </div>
                     </div>
-                    <hr />
+                    
                 </div>
 
             </div>
-            <div className=" text-center m-[50px]">
-                <h2 className="text-[24px] font-bold">SẢN PHẨM TƯƠNG TỰ</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {products.map((product) => <Product key={product._id} data={product} />)}
-            </div>
         </div>
+        </section>
     )
 
 
