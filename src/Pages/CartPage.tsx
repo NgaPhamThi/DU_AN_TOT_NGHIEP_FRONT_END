@@ -112,7 +112,7 @@ const CartPage = () => {
     const isVoucherValid = startDate <= currentDate && expiryDate > currentDate;
   
     // Kiểm tra điều kiện của voucher để quyết định nó có hiển thị hay không
-    if (isVoucherValid) {
+    if (isVoucherValid && voucher.Quantity !== 0) {
       if (
         (totalPrice >= 100000 && totalPrice < 200000 && voucher.Discount_Type <= 20000) ||
         (totalPrice >= 200000 && voucher.Discount_Type <= 65000) ||
@@ -257,19 +257,19 @@ const CartPage = () => {
             </div>
             <hr className="bg-gray-200 h-0.5"/>
             <div className="flex flex-row justify-between">
-                <p className="text-gray-600">Freight</p>
+                <p className="text-gray-600">Voucher</p>
                 <div>
                 <p className="text-end font-bold">{discountPercentage}</p>
                 </div>
             </div>
             <hr className="bg-gray-200 h-0.5"/>
-            <div className="flex flex-row justify-between">
+            {/* <div className="flex flex-row justify-between">
                 <p className="text-gray-600">Discount Coupon</p>
                 <p className="text-gray-500 text-base underline">{((totalPrice - discountPercentage)).toLocaleString()}</p>
-            </div>
+            </div> */}
             <hr className="bg-gray-200 h-0.5"/>
             <div className="flex flex-row justify-between">
-                <p className="text-gray-600">Total</p>
+                <p className="text-gray-600">Tổng tiền sau giảm giá</p>
                 <div>
                 <p className="text-end font-bold">{(totalPrice - discountPercentage).toLocaleString()}đ</p>
                 </div>
@@ -281,7 +281,7 @@ const CartPage = () => {
               </button>
               </Link>
                 
-                <Link className="transition-colors text-sm text-center bg-white border border-gray-600 p-2 rounded-sm w-full text-gray-700 text-hover shadow-md" to={`/`}>
+                <Link to={'/product'} className="transition-colors text-sm text-center bg-white border border-gray-600 p-2 rounded-sm w-full text-gray-700 text-hover shadow-md" >
                 <button >
                         Mua Sắm Thêm
                 </button>

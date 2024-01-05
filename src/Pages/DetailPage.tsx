@@ -295,7 +295,7 @@ const DetailPage = () => {
                                 </div>
                             </div>
                             <div className="mb-4 mr-4 lg:mb-0">
-                                <button onClick={() => addCart(product, 'ADD_CART')}
+                                <button onClick={() => addCart(product, 'TO_CART')}
                                     className="w-full h-10 p-2 mr-4 bg-blue-500 dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500">
                                     Mua Ngay</button>
                             </div>
