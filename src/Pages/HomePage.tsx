@@ -54,7 +54,7 @@ const HomePage = () => {
                     </div>
                 </div> */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {products.map((item) => <Product key={item._id} data={item} />)}
+                    {products.slice(0,8).map((item) => <Product key={item._id} data={item} />)}
                 </div>
             </div>
             {/* ListProduct1 */}

@@ -11,6 +11,7 @@ interface TokenPayload {
   id: string;
   // Bạn cần thêm các trường khác từ payload token nếu cần
 }
+
 const PayPage = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [sizes, setSizes] = useState<ISize[]>([]); // Add your size data
