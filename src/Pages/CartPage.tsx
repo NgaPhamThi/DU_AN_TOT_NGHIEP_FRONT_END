@@ -52,6 +52,12 @@ const CartPage = () => {
           localStorage.setItem('Quantity', Quantity)
           localStorage.setItem('id', _id)
           toast.success('Áp dụng voucher thành công', { autoClose: 2000 })
+        } else if (totalPrice > 5000000 && Discount_Type <= 500000) {
+          setDiscountPercentage(Discount_Type)
+          localStorage.setItem('Discount_Type', Discount_Type)
+          localStorage.setItem('Quantity', Quantity)
+          localStorage.setItem('id', _id)
+          toast.success('Áp dụng voucher thành công', { autoClose: 2000 })
         } else {
           console.log('Không áp dụng được voucher này cho đơn hàng của bạn!')
           toast.error('Không áp dụng được voucher này cho đơn hàng của bạn hãy chọn mã giảm giá khác!', {
@@ -100,11 +106,27 @@ const CartPage = () => {
     return <p>Đang tải vouchers...</p> // Thêm một thông báo hoặc chỉ báo đang tải
   }
   const validVouchers = vouchers.data.vouchers.filter((voucher) => {
-    const currentDate = new Date()
-    const startDate = new Date(voucher.Start_Date)
-    const expiryDate = new Date(voucher.Expiration_Date)
-    return startDate <= currentDate && expiryDate > currentDate
-  })
+    const currentDate = new Date();
+    const startDate = new Date(voucher.Start_Date);
+    const expiryDate = new Date(voucher.Expiration_Date);
+    const isVoucherValid = startDate <= currentDate && expiryDate > currentDate;
+  
+    // Kiểm tra điều kiện của voucher để quyết định nó có hiển thị hay không
+    if (isVoucherValid) {
+      if (
+        (totalPrice >= 100000 && totalPrice < 200000 && voucher.Discount_Type <= 20000) ||
+        (totalPrice >= 200000 && voucher.Discount_Type <= 65000) ||
+        (totalPrice > 500000 && voucher.Discount_Type <= 100000) ||
+        (totalPrice > 1000000 && voucher.Discount_Type <= 200000)||
+        (totalPrice > 5000000 && voucher.Discount_Type <= 500000)
+
+      ) {
+        return true;
+      }
+    }
+  
+    return false;
+  });
   if (cartItem.length === 0) {
     return <h2 className=' text-center py-[150px] font-bold text-[30px]'>Không có sản phẩm nào</h2>
   } else {

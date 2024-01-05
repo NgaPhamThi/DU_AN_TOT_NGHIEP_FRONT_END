@@ -13,13 +13,13 @@ type cartItemProps = {
 const CartItem = ({ _id, name, price,sizeId,colorId, quantity, img }: cartItemProps) => {
     const { increaseQty, decreaseQty, removeCartItem } = useShoppingContext()
     if(colorId === '6567184222b9ae3620657026'){
-        var color = 'xám'
+        var color = 'grey'
     }
     if(colorId === '6567186022b9ae362065702e'){
-       var color = "trắng"
+       var color = "white"
     }
     if(colorId === '6567187222b9ae3620657030'){
-        var color ="đen"
+        var color ="black"
     }
     if(sizeId === '656717da22b9ae362065700a'){
         var size = 'M'
