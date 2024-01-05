@@ -176,11 +176,11 @@ const handleStatusChange = async (newStatus: string) => {
                                 <p className="text-sm leading-none dark:text-gray-300 text-gray-600">Size: <span className="text-gray-800 dark:text-white"> {orderDetail.sizeId !== null ? getSizeName(orderDetail.sizeId) : 'N/A'}</span></p>
                                 </div>
                                 <p className="text-sm leading-none dark:text-gray-300 text-gray-600">Quantity: <span className="text-gray-800 dark:text-white"> {orderDetail.quantity}</span></p>
-                                <p className="text-base dark:text-white xl:text-lg leading-6">{orderDetail.productInfo.price_sale}Vnđ </p>
+                                <p className="text-base dark:text-white xl:text-lg leading-6">{orderDetail.productInfo.price}Vnđ </p>
                             </div>
                         </div>
                         <div className="flex mt-4 md:mt-0 md:justify-end items-center w-full">
-                            <p className="text-xl dark:text-white lg:text-2xl font-semibold leading-5 lg:leading-6 text-gray-800">{orderDetail.productInfo.price_sale * orderDetail.quantity}Vnđ</p>
+                            <p className="text-xl dark:text-white lg:text-2xl font-semibold leading-5 lg:leading-6 text-gray-800">{orderDetail.productInfo.price * orderDetail.quantity}Vnđ</p>
                         </div>
                     </div>
                 </div>
@@ -228,9 +228,7 @@ const handleStatusChange = async (newStatus: string) => {
                         <p className="text-base dark:text-white font-semibold leading-4 text-gray-800">Thành Tiền</p>
                         <p className="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">{orderInfo.orderTotal}Vnđ</p>
                     </div>
-                    <div className="flex w-full justify-center items-center pt-1 md:pt-4 xl:pt-8 space-y-6 md:space-y-8 flex-col">
-                        <button className="py-5 dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 w-full text-base font-medium leading-4 text-white bg-gray-800 hover:bg-black">Track Your Order</button>
-                    </div>
+                   
                 </div>
             </div>
         </div>

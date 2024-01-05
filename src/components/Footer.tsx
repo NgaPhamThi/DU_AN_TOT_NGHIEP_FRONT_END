@@ -78,7 +78,7 @@ const Footer = () => {
                             <a className="text-[#0000ff] font-bold" href="">1900 636940</a>
                         </div>
                         <div className="text-[15px] pt-7">
-                            <a className="text-[#0097ba]" href=""><span>tndtndsalesonline@gmail.com</span></a>
+                            <a className="text-[#0097ba]" href=""><span>shoptnd@gmail.com</span></a>
                         </div>
 
                     </div>
