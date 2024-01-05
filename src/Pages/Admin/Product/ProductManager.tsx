@@ -53,18 +53,13 @@ const ProductManager = (props: Props) => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      width: "40%",
+      width: "50%",
     },
    
     {
       title: 'Price',
       dataIndex: 'price',
       key: 'price',
-    },
-    {
-      title: 'Price_Sale',
-      dataIndex: 'price_sale',
-      key: 'price_sale',
     },
     {
       title: 'Action',

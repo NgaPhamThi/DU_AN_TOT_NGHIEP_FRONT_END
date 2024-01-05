@@ -91,22 +91,6 @@ const AddProduct = () => {
         </div>
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="categoryImage"
-          >
-            Giá_Sale
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Nhập Giá Sale"
-            id="categoryImage"
-            type="number"
-            {...register("price_sale")}
-          />
-          {errors.price_sale && <span>this field is required</span>}
-        </div>
-        <div className="mb-4">
-          <label
             htmlFor="HeadlineAct"
             className="block text-gray-700 text-sm font-bold mb-2"
           >

@@ -80,14 +80,14 @@ const ProductPage = () => {
 
     switch (sortOption) {
       case 'low':
-        sortedProducts.sort((a, b) => a.price_sale - b.price_sale);
+        sortedProducts.sort((a, b) => a.price - b.price);
         break;
       case 'high':
-        sortedProducts.sort((a, b) => b.price_sale - a.price_sale);
+        sortedProducts.sort((a, b) => b.price - a.price);
         break;
       default:
         // Mặc định sắp xếp theo giá thấp đến cao
-        sortedProducts.sort((a, b) => a.price_sale - b.price_sale);
+        sortedProducts.sort((a, b) => a.price - b.price);
         break;
     }
 
@@ -212,10 +212,10 @@ const ProductPage = () => {
         >
           <div className="flex items-center">
           {value.img && value.img.length > 0 ? (
-             <img
-             src={value.img[0]}
+             <img 
+             src={value.img[0] }
              alt={value.name}
-             className="w-8 h-8 object-cover mr-2"
+             className="w-8 h-8 object-cover mr-2 "
            />
           ):(
             <div className="w-8 h-8 bg-gray-300 mr-2 rounded-md">{/* Hiển thị một phần nào đó khi không có ảnh */}</div>
@@ -223,9 +223,9 @@ const ProductPage = () => {
            
             <div>
               <div>{value.name}</div>
-              <span className="text-sm font-bold">
-                <del className="mr-2 text-red-500">{`${value.price}đ`}</del>
-                {`${value.price_sale}đ`}
+              <span className="text-sm font-bold mr-2 text-red-500">
+             {`${value.price}đ`}
+         
               </span>
             </div>
           </div>
@@ -289,9 +289,9 @@ const ProductPage = () => {
                         {product.name}
                       </Link>
                     </div>
-                    <span className="text-sm font-bold">
-                      <del className="mr-2 text-red-500">{`${product.price}đ`}</del>
-                      {`${product.price_sale}đ`}
+                    <span className="text-sm font-bold mr-2 text-red-500">
+                        {`${product.price}đ`}
+                     
                     </span>
                   </div>
                 </div>

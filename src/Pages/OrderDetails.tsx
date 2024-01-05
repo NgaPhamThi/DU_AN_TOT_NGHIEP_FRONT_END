@@ -176,7 +176,7 @@ const OrderDetails = (props: Props) => {
                                         </div>
                                     </div>
                                     <div className="flex justify-between space-x-8 items-start w-full">
-                                        <p className="text-base dark:text-white xl:text-lg leading-6">{orderDetail.productInfo.price_sale.toLocaleString()}Vnđ <span className="text-red-300 line-through">{orderDetail.productInfo.price.toLocaleString()}Vnđ</span></p>
+                                        <p className="text-base dark:text-white xl:text-lg leading-6 text-red-300">{orderDetail.productInfo.price.toLocaleString()}Vnđ</p>
                                         <p className="text-base dark:text-white xl:text-lg leading-6 text-gray-800">{orderDetail.quantity}</p>
                                         <p className="text-base dark:text-white xl:text-lg font-semibold leading-6 text-gray-800">{(orderDetail.productInfo.price * orderDetail.quantity).toLocaleString()}đ</p>
                                     </div>

@@ -103,7 +103,7 @@ const CartPage = () => {
     fetchVouchers()
   }, [])
   if (!vouchers.data) {
-    return <p>Đang tải vouchers...</p> // Thêm một thông báo hoặc chỉ báo đang tải
+    return <p>Đang tải ...</p> // Thêm một thông báo hoặc chỉ báo đang tải
   }
   const validVouchers = vouchers.data.vouchers.filter((voucher) => {
     const currentDate = new Date();
@@ -114,8 +114,8 @@ const CartPage = () => {
     // Kiểm tra điều kiện của voucher để quyết định nó có hiển thị hay không
     if (isVoucherValid && voucher.Quantity !== 0) {
       if (
-        (totalPrice >= 100000 && totalPrice < 200000 && voucher.Discount_Type <= 20000) ||
-        (totalPrice >= 200000 && voucher.Discount_Type <= 65000) ||
+        (totalPrice >= 100000 && voucher.Discount_Type <= 20000) ||
+        (totalPrice >= 200000 && voucher.Discount_Type <= 50000) ||
         (totalPrice >= 500000 && voucher.Discount_Type <= 100000) ||
         (totalPrice >= 1000000 && voucher.Discount_Type <= 200000)||
         (totalPrice >= 5000000 && voucher.Discount_Type <= 500000)
@@ -211,7 +211,7 @@ const CartPage = () => {
 
    
     <div className="w-full flex flex-col h-fit gap-4 p-4 ">
-        <p className="text-blue-900 text-xl font-extrabold">My cart</p>
+        <p className="text-blue-900 text-xl font-extrabold">Đơn Hàng Của Bạn</p>
         <div>
         {cartItem.map((item) => {
               console.log('item', item)
@@ -226,7 +226,7 @@ const CartPage = () => {
 
     
     <div className="flex flex-col w-full md:w-2/3 h-fit gap-4 p-4">
-        <p className="text-blue-900 text-xl font-extrabold">Purchase Resume</p>
+        <p className="text-blue-900 text-xl font-extrabold">Voucher Của Shop</p>
         <div>
         
             <p className='font-semibold'>Mã giảm giá</p>
