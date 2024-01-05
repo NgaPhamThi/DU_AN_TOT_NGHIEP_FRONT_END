@@ -242,9 +242,9 @@ const DetailPage = () => {
                             < br  />
                             <div className="mb-8 mt-3 border-b border-gray-200 dark:border-gray-700"></div>
                             <p className="inline-block text-2xl font-semibold text-gray-700 dark:text-gray-400 ">
-                                <span>{product.price_sale}đ</span>
+                                <span> {product.price_sale ? product.price_sale.toLocaleString() + 'đ' : ''}</span>
                                 <span
-                                    className="text-base font-normal text-gray-500 line-through dark:text-gray-400">{product.price}đ</span>
+                                    className="text-base font-normal text-gray-500 line-through dark:text-gray-400"> {product.price ? product.price.toLocaleString() + 'đ' : ''}</span>
                             </p>
                         </div>
                         <div className="mb-8">

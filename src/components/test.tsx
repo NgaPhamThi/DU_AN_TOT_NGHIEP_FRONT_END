@@ -4,160 +4,105 @@ type Props = {}
 
 const test = (props: Props) => {
   return (
-    <section id="Projects"
-    className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+    <div className="flex flex-col md:flex-row w-screen h-full px-14 py-7">
+
+   
+    <div className="w-full flex flex-col h-fit gap-4 p-4 ">
+        <p className="text-blue-900 text-xl font-extrabold">My cart</p>
+
+       
+        <div className="flex flex-col p-4 text-lg font-semibold shadow-md border rounded-sm">
+            <div className="flex flex-col md:flex-row gap-3 justify-between">
+              
+                <div className="flex flex-row gap-6 items-center">
+                    <div className="w-28 h-28">
+                        <img className="w-full h-full" src="https://static.netshoes.com.br/produtos/tenis-adidas-coreracer-masculino/09/NQQ-4635-309/NQQ-4635-309_zoom1.jpg?ts=1675445414&ims=544x"/>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                        <p className="text-lg text-gray-800 font-semibold">Adidas Coreracer Men's Shoes</p>
+                        <p className="text-xs text-gray-600 font-semibold">Color: <span className="font-normal">Black + Zinc</span></p>
+                        <p className="text-xs text-gray-600 font-semibold">Size: <span className="font-normal">42</span></p>
+                    </div>
+                </div>
+           
+                <div className="self-center text-center">
+                    <p className="text-gray-600 font-normal text-sm line-through">$99.99
+                        <span className="text-emerald-500 ml-2">(-50% OFF)</span>
+                    </p>
+                    <p className="text-gray-800 font-normal text-xl">$49.99</p>
+                </div>
+               
+                <div className="self-center">
+                    <button className="">
+                        <svg className="" height="24px" width="24px" id="Layer_1" version="1.1" viewBox="0 0 512 512"  xmlSpace='preserve' xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+                        <g>
+                            <path d="M400,113.3h-80v-20c0-16.2-13.1-29.3-29.3-29.3h-69.5C205.1,64,192,77.1,192,93.3v20h-80V128h21.1l23.6,290.7   c0,16.2,13.1,29.3,29.3,29.3h141c16.2,0,29.3-13.1,29.3-29.3L379.6,128H400V113.3z M206.6,93.3c0-8.1,6.6-14.7,14.6-14.7h69.5   c8.1,0,14.6,6.6,14.6,14.7v20h-98.7V93.3z M341.6,417.9l0,0.4v0.4c0,8.1-6.6,14.7-14.6,14.7H186c-8.1,0-14.6-6.6-14.6-14.7v-0.4   l0-0.4L147.7,128h217.2L341.6,417.9z"/>
+                            <g>
+                            <rect height="241" width="14" x="249" y="160"/>
+                            <polygon points="320,160 305.4,160 294.7,401 309.3,401"/>
+                            <polygon points="206.5,160 192,160 202.7,401 217.3,401"/>
+                            </g>
+                        </g>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div className="flex flex-row self-center gap-1">
+                <button className="w-5 h-5 self-center rounded-full border border-gray-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14" />
+                    </svg>
+                </button>
+                <input type="text" value="1" className="w-8 h-8 text-center text-gray-900 text-sm outline-none border border-gray-300 rounded-sm"/>
+                <button className="w-5 h-5 self-center rounded-full border border-gray-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14M5 12h14" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
 
     
-    <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-        <a href="#">
-            <img src="https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                    alt="Product" className="h-80 w-72 object-cover rounded-t-xl" />
-            <div className="px-4 py-3 w-72">
-                <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
-                <p className="text-lg font-bold text-black truncate block capitalize">Product Name</p>
-                <div className="flex items-center">
-                    <p className="text-lg font-semibold text-black cursor-auto my-3">$149</p>
-                    <del>
-                        <p className="text-sm text-gray-600 cursor-auto ml-2">$199</p>
-                    </del>
-                    <div className="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            fill="currentColor" className="bi bi-bag-plus" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                            <path
-                                d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                        </svg></div>
+    <div className="flex flex-col w-full md:w-2/3 h-fit gap-4 p-4">
+        <p className="text-blue-900 text-xl font-extrabold">Purchase Resume</p>
+        <div className="flex flex-col p-4 gap-4 text-lg font-semibold shadow-md border rounded-sm">
+            <div className="flex flex-row justify-between">
+                <p className="text-gray-600">Subtotal (2 Items)</p>
+                <p className="text-end font-bold">$99.98</p>
+            </div>
+            <hr className="bg-gray-200 h-0.5"/>
+            <div className="flex flex-row justify-between">
+                <p className="text-gray-600">Freight</p>
+                <div>
+                <p className="text-end font-bold">$3.90</p>
+                <p className="text-gray-600 text-sm font-normal">Arrives on Jul 16</p>
                 </div>
             </div>
-        </a>
-    </div>
-  
-    <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-        <a href="#">
-            <img src="https://images.unsplash.com/photo-1651950519238-15835722f8bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mjh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                    alt="Product" className="h-80 w-72 object-cover rounded-t-xl" />
-            <div className="px-4 py-3 w-72">
-                <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
-                <p className="text-lg font-bold text-black truncate block capitalize">Product Name</p>
-                <div className="flex items-center">
-                    <p className="text-lg font-semibold text-black cursor-auto my-3">$149</p>
-                    <del>
-                        <p className="text-sm text-gray-600 cursor-auto ml-2">$199</p>
-                    </del>
-                    <div className="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            fill="currentColor" className="bi bi-bag-plus" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                            <path
-                                d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                        </svg></div>
+            <hr className="bg-gray-200 h-0.5"/>
+            <div className="flex flex-row justify-between">
+                <p className="text-gray-600">Discount Coupon</p>
+                <a className="text-gray-500 text-base underline" href="#">Add</a>
+            </div>
+            <hr className="bg-gray-200 h-0.5"/>
+            <div className="flex flex-row justify-between">
+                <p className="text-gray-600">Total</p>
+                <div>
+                <p className="text-end font-bold">$103.88</p>
                 </div>
             </div>
-        </a>
-    </div>
-   
-    <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-        <a href="#">
-            <img src="https://images.unsplash.com/photo-1651950537598-373e4358d320?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8MjV8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                    alt="Product" className="h-80 w-72 object-cover rounded-t-xl" />
-            <div className="px-4 py-3 w-72">
-                <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
-                <p className="text-lg font-bold text-black truncate block capitalize">Product Name</p>
-                <div className="flex items-center">
-                    <p className="text-lg font-semibold text-black cursor-auto my-3">$149</p>
-                    <del>
-                        <p className="text-sm text-gray-600 cursor-auto ml-2">$199</p>
-                    </del>
-                    <div className="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            fill="currentColor" className="bi bi-bag-plus" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                            <path
-                                d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                        </svg></div>
-                </div>
+            <div className="flex gap-2">
+                <button className="transition-colors text-sm bg-blue-600 hover:bg-blue-700 p-2 rounded-sm w-full text-white text-hover shadow-md">
+                        FINISH  
+                </button>
+                <button className="transition-colors text-sm bg-white border border-gray-600 p-2 rounded-sm w-full text-gray-700 text-hover shadow-md">
+                        ADD MORE PRODUCTS
+                </button>
             </div>
-        </a>
+        </div>
     </div>
-   
-
-   
-    <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-        <a href="#">
-            <img src="https://images.unsplash.com/photo-1651950540805-b7c71869e689?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mjl8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                    alt="Product" className="h-80 w-72 object-cover rounded-t-xl" />
-            <div className="px-4 py-3 w-72">
-                <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
-                <p className="text-lg font-bold text-black truncate block capitalize">Product Name</p>
-                <div className="flex items-center">
-                    <p className="text-lg font-semibold text-black cursor-auto my-3">$149</p>
-                    <del>
-                        <p className="text-sm text-gray-600 cursor-auto ml-2">$199</p>
-                    </del>
-                    <div className="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            fill="currentColor" className="bi bi-bag-plus" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                            <path
-                                d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                        </svg></div>
-                </div>
-            </div>
-        </a>
-    </div>
-   
-    <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-        <a href="#">
-            <img src="https://images.unsplash.com/photo-1649261191624-ca9f79ca3fc6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NDd8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                    alt="Product" className="h-80 w-72 object-cover rounded-t-xl" />
-            <div className="px-4 py-3 w-72">
-                <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
-                <p className="text-lg font-bold text-black truncate block capitalize">Product Name</p>
-                <div className="flex items-center">
-                    <p className="text-lg font-semibold text-black cursor-auto my-3">$149</p>
-                    <del>
-                        <p className="text-sm text-gray-600 cursor-auto ml-2">$199</p>
-                    </del>
-                    <div className="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            fill="currentColor" className="bi bi-bag-plus" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                            <path
-                                d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                        </svg></div>
-                </div>
-            </div>
-        </a>
-    </div>
-   
-
-   
-    <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-        <a href="#">
-            <img src="https://images.unsplash.com/photo-1649261191606-cb2496e97eee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                    alt="Product" className="h-80 w-72 object-cover rounded-t-xl" />
-            <div className="px-4 py-3 w-72">
-                <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
-                <p className="text-lg font-bold text-black truncate block capitalize">Product Name</p>
-                <div className="flex items-center">
-                    <p className="text-lg font-semibold text-black cursor-auto my-3">$149</p>
-                    <del>
-                        <p className="text-sm text-gray-600 cursor-auto ml-2">$199</p>
-                    </del>
-                    <div className="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            fill="currentColor" className="bi bi-bag-plus" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                            <path
-                                d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                        </svg></div>
-                </div>
-            </div>
-        </a>
-    </div>
-    
-
-</section>
+</div>
   )
 }
 
