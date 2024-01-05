@@ -48,7 +48,7 @@ const Signin = () => {
       }
 
     } catch (error) {
-      toast.success('Đăng nhập không thành công vui lòng kiểm tra email hoặc mật khẩu', { autoClose: 2000 })
+      toast.error('Đăng nhập không thành công vui lòng kiểm tra email hoặc mật khẩu', { autoClose: 2000 })
       console.error('Error registering user', error);
     }
     

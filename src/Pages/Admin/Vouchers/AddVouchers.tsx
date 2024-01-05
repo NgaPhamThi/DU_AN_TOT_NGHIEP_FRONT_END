@@ -17,27 +17,41 @@ const AddVouchers = () => {
 
   const onSubmit = async (data: any) => {
     if (!data.Voucher_Code) {
-      setValue('Voucher_Code', randomCode)
+      data.Voucher_Code = randomCode;
     }
-    setValue('Voucher_Code', randomCode)
-    const quantity = parseInt(data.Quantity)
-    if (isNaN(quantity) || quantity < 1) {
-      toast.error('Số lượng voucher không hợp lệ')
-      return
+    const discountType = parseInt(data.Discount_Type);
+
+    // Kiểm tra ngày bắt đầu và kết thúc
+    const startDate = new Date(data.Start_Date);
+    const endDate = new Date(data.Expiration_Date);
+
+    if (startDate >= endDate) {
+      toast.error('Ngày bắt đầu phải nhỏ hơn ngày kết thúc.');
+      return;
     }
+
+    // Kiểm tra Discount_Type
+    if (isNaN(discountType) || discountType <= 0) {
+      toast.error('Loại giảm giá phải lớn hơn 0.');
+      return;
+    }
+
     try {
       const response = await addVoucher(data)
       if (response.status === 201) {
         console.log('Thêm phiếu voucher thành công:', response.data)
+        setTimeout(() => {
+          navigate('/admin/vouchers');
+        }, 3000);
         toast.success('Thêm phiếu voucher thành công', { autoClose: 2000 })
 
-        navigate('/admin/vouchers')
       } else {
         console.error('Có lỗi khi thêm phiếu voucher:', response.data.message)
       }
     } catch (error) {
       if (error instanceof Error && 'message' in error) {
         console.error('Có lỗi:', error.message)
+      
       } else {
         console.error('Có lỗi không xác định')
       }

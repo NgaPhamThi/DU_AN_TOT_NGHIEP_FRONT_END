@@ -45,7 +45,9 @@ const UpdateVouchers = () => {
       const response = await updateVoucher(data, id)
       if (response.status === 200) {
         console.log('Cập nhật phiếu voucher thành công:', response.data)
-        navigate('/admin/vouchers')
+        setTimeout(() => {
+          navigate('/admin/vouchers');
+        }, 3000);
         toast.success('Cập nhật phiếu voucher thành công', { autoClose: 2000 })
       } else {
         console.error('Có lỗi khi cập nhật phiếu voucher:', response.data.message)
