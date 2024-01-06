@@ -6,15 +6,35 @@ import { getProduct } from '../api/product'
 import { IProduct } from '../interfaces/product'
 import Product from '../components/product'
 import ListCategories from '../components/ListCategories'
+import { IBlog } from '../interfaces/blog'
+import { getAllBlog } from '../api/blog'
+import { Link } from 'react-router-dom'
 
 const HomePage = () => {
     const [products, setProducts] = useState<IProduct[]>([])
+    const [sortedBlogs, setSortedBlogs] = useState<IBlog[]>([]);
     const fetProducts = async () => {
         const { data } = await getProduct()
         // console.log(data);
         setProducts(data)
 
     }
+    useEffect(() => {
+        const fetchBlogs = async () => {
+          try {
+            const response = await getAllBlog();
+            const sortedBlogs = response.data.sort((a:any, b:any) => {
+              // Sắp xếp theo thời gian mới nhất đến cũ nhất
+              return new Date(b.date).getTime() - new Date(a.date).getTime();
+            });
+            setSortedBlogs(sortedBlogs);
+          } catch (error) {
+            console.error("Error fetching blogs:", error);
+          }
+        };
+      
+        fetchBlogs();
+      }, []);
     useEffect(() => {
         fetProducts()
     }, [])
@@ -23,7 +43,7 @@ const HomePage = () => {
     return (
         <div>
             <Category />
-            <div className='max-w-[1440px] mx-auto'>
+            <div className='max-w-[1440px] mx-auto px-8'>
                 <h2 className="font-bold text-[27px] text-center pt-8 pb-8">Sản Phẩm Mới</h2>
                 <section id="Projects"
                     className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-10 mt-10 mb-5">
@@ -34,7 +54,7 @@ const HomePage = () => {
 
             </div>
             {/* ListProduct1 */}
-            <div className='max-w-[1440px] mx-auto mb-10'>
+            <div className='max-w-[1440px] mx-auto mb-10 px-8'>
                 <h2 className="font-bold text-[27px] text-center pt-8 pb-8">Áo Blazer Cao Cấp</h2>
                 <section id="Projects"
                     className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-10 mt-10 mb-5">
@@ -53,40 +73,28 @@ const HomePage = () => {
                     </div>
 
                     <div className="grid grid-cols-1 mb-10 md:grid-cols-2 lg:grid-cols-3 gap-8 p-8">
+                    {sortedBlogs.slice(0,3).map((blog) => (
+                        <div key={blog._id} className="bg-white p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105">
+                            <img src={blog.img} alt="Image 1" className="w-full h-48 object-cover rounded-t-lg transition-transform transform hover:scale-110" />
 
+                            <div className="mt-4">
+                                <p className="font-semibold">{blog.title}</p>
+                                <p className="text-gray-600 mt-2 overflow-hidden overflow-ellipsis  whitespace-nowrap ">{blog.description}</p>
+                                <p className="text-gray-500 mt-4">Ngày đăng :{blog.date}</p>
+                                <Link to={`/blog/${blog._id}`}>
+                                <button className="mt-4 bg-gray-800 text-white px-4 py-2 rounded-full">XEM THÊM</button>
+                                </Link>
+                            </div>
+                        </div>
+                    ))}
                         {/* Card 1 */}
-                        <div className="bg-white p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105">
-                            <img src="new1.png" alt="Image 1" className="w-full h-48 object-cover rounded-t-lg transition-transform transform hover:scale-110" />
+                        
 
-                            <div className="mt-4">
-                                <p className="font-semibold">THE GMEN RA MẮT BỘ SƯU TẬP DÀNH CHO CÁC ‘TÍN ĐỒ’ LINEN</p>
-                                <p className="text-gray-600 mt-2">Thương hiệu thời trang nam THE GMEN đã lựa chọn linen - chất liệu đáp ứng mong muốn về những trang phục tự do và thoải mái - cho bộ sưu tập hè 2023.</p>
-                                <p className="text-gray-500 mt-4">ĐĂNG BỞI THỦY HÀNG</p>
-                                <button className="mt-4 bg-gray-800 text-white px-4 py-2 rounded-full">XEM THÊM</button>
-                            </div>
-                        </div>
+                      
+                        
 
-                        {/* Card 2 */}
-                        <div className="bg-white p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105">
-                            <img src="new2.png" alt="Image 2" className="w-full h-48 object-cover rounded-t-lg transition-transform transform hover:scale-110" />
-                            <div className="mt-4">
-                                <p className="font-semibold">THE GMEN: THÍCH, CHỌN VÀ TRẢI NGHIỆM</p>
-                                <p className="text-gray-600 mt-2">Khi người Việt bắt đầu làm thời trang Việt, đó thực sự là một thử thách bởi việc bắt đầu, phát triển và nỗ lực khẳng định mình hoàn toàn từ con số 0.</p>
-                                <p className="text-gray-500 mt-4">ĐĂNG BỞI THỦY HÀNG</p>
-                                <button className="mt-4 bg-gray-800 text-white px-4 py-2 rounded-full">XEM THÊM</button>
-                            </div>
-                        </div>
-
-                        {/* Card 3 */}
-                        <div className="bg-white p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105">
-                            <img src="new3.png" alt="Image 3" className="w-full h-48 object-cover rounded-t-lg transition-transform transform hover:scale-110" />
-                            <div className="mt-4">
-                                <p className="font-semibold">"THE GMEN" - THƯƠNG HIỆU THỜI TRANG NỘI ĐỊA VÀ HÀNH TRÌNH 6 NĂM MANG TỚI SẢN PHẨM CHẤT LƯỢNG CHO KHÁCH HÀNG VIỆT</p>
-                                <p className="text-gray-600 mt-2">“Không dừng lại ở việc mang đến cho khách hàng những sản phẩm chất lượng và dịch vụ chuyên nghiệp. THE GMEN còn muốn truyền cảm hứng và khích lệ khách hàng trở thành phiên bản tốt nhất của chính mình. Đó chính là các giá trị cốt lõi mà THE GMEN đã mang trong mình kể từ khi thành lập.”</p>
-                                <p className="text-gray-500 mt-4">ĐĂNG BỞI THỦY HÀNG</p>
-                                <button className="mt-4 bg-gray-800 text-white px-4 py-2 rounded-full">XEM THÊM</button>
-                            </div>
-                        </div>
+                      
+                        
 
                     </div>
 

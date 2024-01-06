@@ -34,7 +34,12 @@ const ListOrders = (props: Props) => {
     const handleSearch = (value: string) => {
         setSearchKeyword(value);
       };
-    
+      const formatCurrency = (value:any) => {
+        return new Intl.NumberFormat('vi-VN', {
+          style: 'currency',
+          currency: 'VND',
+        }).format(value);
+      };
     const columns = [
         {
             title: 'Email',
@@ -82,6 +87,7 @@ const ListOrders = (props: Props) => {
             title: 'Tổng Tiền',
             dataIndex: 'orderTotal',
             key: 'orderTotal',
+            render: (orderTotal:any) => formatCurrency(orderTotal),
         },
         {
             title: 'Hoạt Động',
