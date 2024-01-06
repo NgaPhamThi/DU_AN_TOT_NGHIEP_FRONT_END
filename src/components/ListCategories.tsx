@@ -3,14 +3,10 @@ import { IProduct } from '../interfaces/product';
 import { Link } from 'react-router-dom';
 import { useShoppingContext } from '../context/ShoppingCartContext'
 
-type Props = {
-    data: IProduct
 
-}
-const ListCategories = ({ data }: Props) => {
+const ListCategories = () => {
     const [products, setProducts] = useState<IProduct[]>([]);
-    const { addCartItem } = useShoppingContext()
-    const newData = { ...data, quantity: 1 }
+   
     useEffect(() => {
         // Thực hiện cuộc gọi API để lấy danh sách sản phẩm từ trang chủ
         fetch(`http://localhost:8080/api/categories/655ce0ff36e2059ae8c497cc`) // Thay thế bằng API endpoint thực tế

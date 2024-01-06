@@ -230,9 +230,9 @@ const CartPage = () => {
         <div>
         
             <p className='font-semibold'>Mã giảm giá</p>
-            <div className='w-full'>
+            <div className='w-full '>
              <select
-                 className='border w-8/12 py-3 px-2 mt-1'
+                 className='border lg:w-8/12 py-3 px-2 mt-1 md:w-full'
                 value={selectedVoucher}
                  onChange={(e) => setSelectedVoucher(e.target.value)}
              >
@@ -245,7 +245,7 @@ const CartPage = () => {
                   </option>
                 ))}
               </select>
-              <button className='border w-3/12 py-3 px-2 mt-1  bg-black text-white' onClick={handleApplyVoucher}>
+              <button className='border lg:w-3/12 py-3 px-2 mt-1 lg:ml-4 md:w-full  bg-black text-white  ' onClick={handleApplyVoucher}>
                 Áp dụng
               </button>
         </div>
@@ -253,13 +253,13 @@ const CartPage = () => {
         <div className="flex flex-col p-4 gap-4 text-lg font-semibold shadow-md border rounded-sm">
             <div className="flex flex-row justify-between">
                 <p className="text-gray-600">Tổng Tiền({cartQty} Items)</p>
-                <p className="text-end font-bold">{totalPrice.toLocaleString()}</p>
+                <p className="text-end font-bold">{totalPrice.toLocaleString()}đ</p>
             </div>
             <hr className="bg-gray-200 h-0.5"/>
             <div className="flex flex-row justify-between">
                 <p className="text-gray-600">Voucher</p>
                 <div>
-                <p className="text-end font-bold">{discountPercentage}</p>
+                <p className="text-end font-bold">{discountPercentage.toLocaleString()}đ</p>
                 </div>
             </div>
             <hr className="bg-gray-200 h-0.5"/>
@@ -269,7 +269,7 @@ const CartPage = () => {
             </div> */}
             {/* <hr className="bg-gray-200 h-0.5"/> */}
             <div className="flex flex-row justify-between">
-                <p className="text-gray-600">Tổng Tiền Sau Giảm Giá</p>
+                <p className="text-gray-600">Tổng thanh toán</p>
                 <div>
                 <p className="text-end font-bold">{(totalPrice - discountPercentage).toLocaleString()}đ</p>
                 </div>

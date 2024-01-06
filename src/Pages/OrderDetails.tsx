@@ -147,129 +147,159 @@ const OrderDetails = (props: Props) => {
 
         fetchVoucherName();
       }, [orderInfo]);
+      const formattedCurrentDateTime = orderInfo ? new Date(orderInfo.orderDate).toLocaleDateString('vi-VN', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+      }):'';
     return (
+        <div>
+            <section className="flex items-center py-16 -mt-[79px]  md:py-20 font-poppins dark:bg-gray-800 ">
+            <div className="justify-center flex-1 max-w-full px-4 py-4 mx-auto bg-white border rounded-md dark:border-gray-900 dark:bg-gray-900 md:py-10 md:px-10">
+                <div>
+                    
+                    <div className="flex border-b border-gray-200 dark:border-gray-700  items-stretch justify-start w-full h-full px-4 mb-8 md:flex-row xl:flex-col md:space-x-6 lg:space-x-8 xl:space-x-0">
+                        <div className="flex items-start justify-start flex-shrink-0">
+                            <div className="flex items-center justify-center w-full pb-6 space-x-4 md:justify-start">
+                                <img src="https://i.postimg.cc/RhQYkKYk/pexels-italo-melo-2379005.jpg" className="object-cover w-16 h-16 rounded-md" alt="avatar"/>
+                                    <div className="flex flex-col items-start justify-start space-y-2">
+                                        <p className="text-lg font-semibold leading-4 text-left text-gray-800 dark:text-gray-400">
+                                        {orderInfo?.fullname}</p>
+                                        <p className="text-sm leading-4 cursor-pointer dark:text-gray-400">{orderInfo?.email}</p>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
 
-        <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
-             <ToastContainer />
-            <div className="flex justify-start item-start space-y-2 flex-col">
-                <h1 className="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Order #13432</h1>
-                <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">21st Mart 2021 at 10:34 PM</p>
-            </div>
-            <div className="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
-                <div className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
-                    <div className="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full">
-                        <p className="text-sm md:text-xl dark:text-white  leading-6 xl:leading-5 text-gray-800">MÃ ĐƠN HÀNG.{orderInfo?._id}</p>
-
-
-                        {orderDetails.map((orderDetail) => (
-                            <div key={orderDetail._id} className="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
-                                <div className="pb-4 md:pb-8 w-full md:w-40">
-                                    <img className="w-full hidden md:block" src={orderDetail.productInfo.img[0]} alt="dress" />
-                                    <img className="w-full md:hidden" src="https://i.ibb.co/L039qbN/Rectangle-10.png" alt="dress" />
+                    <div className="flex flex-wrap items-center pb-4 mb-10 border-b border-gray-200 dark:border-gray-700">
+                        <div className="w-full px-4 mb-4 md:w-1/4">
+                            <p className="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
+                                Số điện thoại: </p>
+                            <p className="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
+                            {orderInfo?.phonenumber}</p>
+                        </div>
+                        <div className="w-full px-4 mb-4 md:w-1/4">
+                            <p className="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
+                                Ngày đặt: </p>
+                            <p className="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
+                                {formattedCurrentDateTime}</p>
+                        </div>
+                        <div className="w-full px-4 mb-4 md:w-1/4">
+                            <p className="mb-2 text-sm font-medium leading-5 text-gray-800 dark:text-gray-400 ">
+                                Tổng: </p>
+                            <p className="text-base font-semibold leading-4 text-blue-600 dark:text-gray-400">
+                            {orderInfo?.orderTotal.toLocaleString()}</p>
+                        </div>
+                        <div className="w-full px-4 mb-4 md:w-1/4">
+                            <p className="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
+                                Địa chỉ : </p>
+                            <p className="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400 ">
+                            {orderInfo?.address} </p>
+                        </div>
+                    </div>
+                    {orderDetails.map((orderDetail)=>(
+                        <div
+                        className="flex flex-col items-start justify-start w-full mt-4 mb-4 border-b border-gray-200 dark:border-gray-700 md:mt-6 md:flex-row md:items-center md:space-x-6 xl:space-x-8">
+                        <div className="w-full pb-4 md:pb-6 md:w-40">
+                            <img className="hidden w-full h-[150px] object-cover md:block"
+                                src={orderDetail.productInfo.img[0]} alt="dress"/>
+                                <img className="object-cover w-full  h-[450px] md:hidden"
+                                    src="https://i.postimg.cc/wBrssYjn/pexels-timothy-paule-ii-2002717.jpg " alt="dress"/>
                                 </div>
-                                <div className="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
-                                    <div className="w-full flex flex-col justify-start items-start space-y-8">
-                                        <h3 className="text-sm dark:text-white xl:text-2xl  leading-6 text-gray-800">{orderDetail.productInfo.name}</h3>
-                                        <div className="flex justify-start items-start flex-col space-y-2">
-                                            <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Size: </span> {orderDetail.sizeId !== null ? getSizeName(orderDetail.sizeId) : 'N/A'}</p>
-                                            <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Color: </span> {getColorName(orderDetail.colorId)}</p>
+                                <div className="flex flex-col items-start justify-between w-full pb-6 space-y-2 md:flex-row md:space-y-0">
+                                    <div className="flex flex-col items-start justify-start w-full space-y-4">
+                                        <h2 className="text-xl font-semibold leading-6 text-gray-800 dark:text-gray-400 xl:text-2xl overflow-hidden overflow-ellipsis  whitespace-nowrap max-w-[500px]">
+                                        {orderDetail.productInfo.name}</h2>
+                                        <div className="flex flex-col items-start justify-start space-y-3">
+                                            
+                                            <p className="text-sm leading-none text-gray-800 dark:text-gray-400">
+                                                <span className="text-gray-400 dark:text-gray-400">Size: </span> {orderDetail.sizeId !== null ? getSizeName(orderDetail.sizeId) : 'N/A'}
+                                            </p>
+                                            <p className="text-sm leading-none text-gray-800 dark:text-gray-400"><span
+                                                className="text-gray-400 dark:text-gray-400">Color: </span>{getColorName(orderDetail.colorId)}</p>
                                         </div>
                                     </div>
-                                    <div className="flex justify-between space-x-8 items-start w-full">
-                                        <p className="text-base dark:text-white xl:text-lg leading-6 text-red-300">{orderDetail.productInfo.price.toLocaleString()}Vnđ</p>
-                                        <p className="text-base dark:text-white xl:text-lg leading-6 text-gray-800">{orderDetail.quantity}</p>
-                                        <p className="text-base dark:text-white xl:text-lg font-semibold leading-6 text-gray-800">{(orderDetail.productInfo.price * orderDetail.quantity).toLocaleString()}đ</p>
+                                    <div className="flex items-start justify-between w-full space-x-8">
+                                        <p className="text-base leading-6 dark:text-gray-400 xl:text-lg">{orderDetail.productInfo.price.toLocaleString()}đ <span
+                                            className="text-blue-300 line-through hidden"> $45.00</span></p>
+                                        <p className="text-base leading-6 text-gray-800 dark:text-gray-400 xl:text-lg">{orderDetail.quantity}</p>
+                                        <p className="text-base font-semibold leading-6 text-gray-800 dark:text-gray-400 xl:text-lg">
+                                        {(orderDetail.productInfo.price * orderDetail.quantity).toLocaleString()}đ</p>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
-
-
-
-                    </div>
-                    <div className="flex justify-center flex-col md:flex-row flex-col items-stretch w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
-                        <div className="flex flex-col px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 dark:bg-gray-800 space-y-6">
-                            <h3 className="text-xl dark:text-white font-semibold leading-5 text-gray-800">Summary</h3>
-                            <div className="flex justify-center items-center w-full space-y-4 flex-col border-gray-200 border-b pb-4">
-                                <div className="flex justify-between w-full">
-                                    <p className="text-base dark:text-white leading-4 text-gray-800">Tổng Tiền Hàng</p>
-                                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">{subtotal.toLocaleString()}Vnđ</p>
-                                </div>
-                                <div className="flex justify-between items-center w-full">
-                                    <p className="text-base dark:text-white leading-4 text-gray-800">Voucher <span className="bg-gray-200 p-1 text-xs font-medium dark:bg-white dark:text-gray-800 leading-3 text-gray-800">STUDENT</span></p>
-                                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">{voucherName}Vnđ</p>
-                                </div>
-                                <div className="flex justify-between items-center w-full">
-                                    <p className="text-base dark:text-white leading-4 text-gray-800">Phí Vận Chuyển</p>
-                                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">100Vnđ</p>
-                                </div>
-                            </div>
-                            <div className="flex justify-between items-center w-full">
-                                <p className="text-base dark:text-white font-semibold leading-4 text-gray-800">Thành Tiền</p>
-                                <p className="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">{orderInfo?.orderTotal.toLocaleString()}Vnđ</p>
-                            </div>
                         </div>
-                        <div className="flex flex-col justify-center px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 dark:bg-gray-800 space-y-6">
-                            <h3 className="text-xl dark:text-white font-semibold leading-5 text-gray-800">Vận Chuyển</h3>
-                            <div className="flex justify-between items-start w-full">
-                                <div className="flex justify-center items-center space-x-4">
-                                    <div className="w-8 h-8">
-                                        <img className="w-full h-full" alt="logo" src="https://i.ibb.co/L8KSdNQ/image-3.png" />
+                    ))}
+                    
+
+
+                    
+
+
+
+                    <div className="px-4 mb-10">
+                        <div className="flex flex-col items-stretch justify-center w-full space-y-4 md:flex-row md:space-y-0 md:space-x-8">
+                            <div className="flex flex-col w-full space-y-6 ">
+                                <h2 className="mb-2 text-xl font-semibold text-gray-700 dark:text-gray-400">Tổng</h2>
+                                <div className="flex flex-col items-center justify-center w-full pb-4 space-y-4 border-b border-gray-200 dark:border-gray-700">
+                                    <div className="flex justify-between w-full">
+                                        <p className="text-base leading-4 text-gray-800 dark:text-gray-400">Tổng tiền hàng</p>
+                                        <p className="text-base leading-4 text-gray-600 dark:text-gray-400">{subtotal.toLocaleString()}đ</p>
                                     </div>
-                                    <div className="flex flex-col justify-start items-center">
-                                        {/* <p className="text-lg leading-6 dark:text-white font-semibold text-gray-800">Trạng Thái Đơn Hàng<br /><span className="font-normal">{orderInfo?.status}</span></p> */}
-                                        <p className="text-lg leading-6 dark:text-white font-semibold text-gray-800">
-                                    Trạng Thái Đơn Hàng<br />
-                                    <span className="font-normal">{getStatusLabel(orderInfo?.status)}</span>
+                                    <div className="flex items-center justify-between w-full">
+                                        <p className="text-base leading-4 text-gray-800 dark:text-gray-400">Discount
                                         </p>
+                                        <p className="text-base leading-4 text-gray-600 dark:text-gray-400">{voucherName ? parseFloat(voucherName).toLocaleString() + 'đ' : ''}</p>
                                     </div>
+                 
                                 </div>
-
+                                <div className="flex items-center justify-between w-full">
+                                    <p className="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">Tổng tiền</p>
+                                    <p className="text-base font-semibold leading-4 text-gray-600 dark:text-gray-400">{orderInfo?.orderTotal.toLocaleString()}đ</p>
+                                </div>
                             </div>
-                            <div className="w-full flex justify-center items-center">
-                                <button className="hidden hover:bg-black dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white">View Carrier Details</button>
+                            <div className="flex flex-col w-full px-2 space-y-4 md:px-8 ">
+                                <h2 className="mb-2 text-xl font-semibold text-gray-700 dark:text-gray-400">Trạng thái</h2>
+                                <div className="flex items-start justify-between w-full">
+                                    <div className="flex items-center justify-center space-x-2">
+                                        <div className="w-8 h-8">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="w-6 h-6 text-blue-600 dark:text-blue-400 bi bi-truck" viewBox="0 0 16 16">
+                                                <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                        <div className="flex flex-col items-center justify-start">
+                                            <p className="text-lg font-semibold leading-6 text-gray-800 dark:text-gray-400">
+                                            {getStatusLabel(orderInfo?.status)}<br/><span className="text-sm font-normal">Giao hàng trong 24 giờ</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="bg-gray-50 dark:bg-gray-800 w-full xl:w-96 flex justify-between items-center md:items-start px-4 py-6 md:p-6 xl:p-8 flex-col">
-                    <h3 className="text-xl dark:text-white font-semibold leading-5 text-gray-800">Customer</h3>
-                    <div className="flex flex-col md:flex-row xl:flex-col justify-start items-stretch h-full w-full md:space-x-6 lg:space-x-8 xl:space-x-0">
-                        <div className="flex flex-col justify-start items-start flex-shrink-0">
-                            <div className="flex justify-center w-full md:justify-start items-center space-x-4 py-8 border-b border-gray-200">
-                                <img src="https://i.ibb.co/5TSg7f6/Rectangle-18.png" alt="avatar" />
-                                <div className="flex justify-start items-start flex-col space-y-2">
-                                    <p className="text-base dark:text-white font-semibold leading-4 text-left text-gray-800">{orderInfo?.fullname}</p>
-                                    <p className="text-sm dark:text-gray-300 leading-5 text-gray-600">{orderInfo?.phonenumber}</p>
-                                </div>
-                            </div>
 
-                            <div className="flex justify-center text-gray-800 dark:text-white md:justify-start items-center space-x-4 py-4 border-b border-gray-200 w-full">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M3 7L12 13L21 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <p className="cursor-pointer text-sm leading-5 ">{orderInfo?.email}</p>
-                            </div>
-                        </div>
-                        <div className="flex justify-between xl:h-full items-stretch w-full flex-col mt-6 md:mt-0">
-                            <div className="flex justify-center md:justify-start xl:flex-col flex-col md:space-x-6 lg:space-x-8 xl:space-x-0 space-y-4 xl:space-y-12 md:space-y-0 md:flex-row items-center md:items-start">
-                                <div className="flex justify-center md:justify-start items-center md:items-start flex-col space-y-4 xl:mt-8">
-                                    <p className="text-base dark:text-white font-semibold leading-4 text-center md:text-left text-gray-800">Địa chỉ nhận hàng</p>
-                                    <p className="w-48 lg:w-full dark:text-gray-300 xl:w-48 text-center md:text-left text-sm leading-5 text-gray-600">{orderInfo?.address}</p>
-                                </div>
-                            </div>
 
-                            <div className="flex w-full justify-center items-center md:justify-start md:items-start">
-                               { orderInfo?.status === 'PENDING' ?  <button onClick={toggleCancelModal} className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800">Hủy Đơn Hàng</button>:<div></div>}
-                            </div>
-                            {isCancelModalVisible && <CancelModal />}
-
-                        </div>
+                    <div className="flex flex-wrap items-center justify-start gap-4 px-4 mt-6 ">
+                        <a href="/">
+                        <button className="w-full px-4 py-2 text-blue-500 border border-blue-500 rounded-md md:w-auto hover:text-gray-100 hover:bg-blue-600 dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-300">
+                            Tiếp tục mua sắm
+                        </button>
+                        </a>
+                        { orderInfo?.status === 'PENDING' ? 
+                        <button className="w-full px-4 py-2 bg-blue-500 rounded-md text-gray-50 md:w-auto dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-gray-700 dark:bg-gray-800">
+                            Hủy đơn hàng
+                        </button> : <div></div>}
                     </div>
                 </div>
             </div>
+        </section>
         </div>
+        
     )
 }
 

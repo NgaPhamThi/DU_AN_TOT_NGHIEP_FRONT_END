@@ -88,7 +88,7 @@ const CartItem = ({ _id, name, price,sizeId,colorId, quantity, img }: cartItemPr
                         <img className="w-full h-36" src={img.length > 0 ? img[0] : ''}/>
                     </div>
                     <div className="flex flex-col gap-1">
-                        <p className="text-lg text-gray-800 font-semibold ">{name}</p>
+                        <p className="text-lg text-gray-800 font-semibold  overflow-hidden overflow-ellipsis max-w-[350px] whitespace-nowrap break-words">{name}</p>
                         <p className="text-xs text-gray-600 font-semibold">Color: <span className="font-normal">{color}</span></p>
                         <p className="text-xs text-gray-600 font-semibold">Size: <span className="font-normal">{size}</span></p>
                     </div>
