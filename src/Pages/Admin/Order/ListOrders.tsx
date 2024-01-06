@@ -47,6 +47,7 @@ const ListOrders = (props: Props) => {
             title: 'Ngày Đặt Hàng',
             dataIndex: 'orderDate',
             key: 'orderDate',
+            sorter: (a: IOrders, b: IOrders) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime(),
             render: (text: string) => moment(text).format('DD/MM/YYYY'),
         },
         {

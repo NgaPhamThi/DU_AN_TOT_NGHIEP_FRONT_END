@@ -69,6 +69,7 @@ const Message = () => {
       title: 'Ngày gửi',
       dataIndex: 'createdAt',
       key: 'createdAt',
+      sorter: (a: Comments, b: Comments) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
       render: (createdAt: any) =>
         createdAt ? new Date(createdAt).toLocaleDateString() : 'Không rõ',
     },
@@ -108,19 +109,17 @@ const Message = () => {
 
   const filteredComments = useMemo(() => {
     return comments.filter((comment) =>
-      comment.userId && typeof comment.userId === 'object' && 'username' in comment.userId
-        ? (comment.userId as { username?: string }).username.toLowerCase().includes(searchTerm.toLowerCase())
-        : false
+      comment.content.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [comments, searchTerm]);
 
   return (
-    <body className="bg-gray-100">
+    <div className="ml-4 mr-4 mt-4">
       <ToastContainer />
       <div className="container mx-auto mt-10 p-4 bg-white rounded shadow-xl">
       <div className="text-center flex justify-between items-center">
-        
         <div>
+        <h1 className="text-2xl font-semibold">Quản Lý Bình Luận</h1>
         </div>
         <div><Search
           placeholder="Tìm kiếm theo tên người gửi"
@@ -131,12 +130,11 @@ const Message = () => {
         <Table
           dataSource={filteredComments.map((comment, index) => ({ ...comment, index }))}
           columns={columns}
-          pagination={false}
         />
 
    
       </div>
-    </body>
+      </div>
   );
 };
 
