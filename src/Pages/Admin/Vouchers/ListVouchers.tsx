@@ -138,7 +138,7 @@ const ListVouchers = () => {
               Edit
             </button>
           </Link>
-          <Popconfirm
+          {/* <Popconfirm
             title='Bạn có chắc chắn muốn xóa sản phẩm này?'
             onConfirm={() => handleDeleteClick(record._id)}
             okText={<button className='text-red-500 hover:text-black'>Xóa</button>}
@@ -162,7 +162,7 @@ const ListVouchers = () => {
               </svg>
               Delete
             </button>
-          </Popconfirm>
+          </Popconfirm> */}
         </div>
       )
     }
@@ -213,9 +213,9 @@ const ListVouchers = () => {
     
     </div>
     <Table dataSource={filteredvouchers} columns={columns} />
-    <Modal title='Confirm Delete' visible={visible} onOk={handleConfirmDelete} onCancel={() => setVisible(false)}>
+    {/* <Modal title='Confirm Delete' visible={visible} onOk={handleConfirmDelete} onCancel={() => setVisible(false)}>
           <p>Xóa?</p>
-        </Modal>
+        </Modal> */}
   </div>
   )
 }

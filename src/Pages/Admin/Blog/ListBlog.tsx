@@ -16,8 +16,10 @@ const [searchKeyword, setSearchKeyword] = useState('');
     async function fetchBlogs() {
       try {
         const { data } = await getAllBlog();
+        
         console.log(data);
         setBlogs(data);
+        
       } catch (error) {
         console.log("Error fetching blogs:", error);
         toast.error("Error fetching blogs!");
@@ -53,6 +55,7 @@ const [searchKeyword, setSearchKeyword] = useState('');
     {
       title: "Date",
       dataIndex: "date",
+      sorter: (a: IBlog, b: IBlog) => new Date(b.date).getTime() - new Date(a.date).getTime(),
       key: {render: () => new Date().toLocaleDateString()},
     },
     
