@@ -31,6 +31,7 @@ const Signin = () => {
       const user = res.data.user
       localStorage.setItem('token', token);
       localStorage.setItem('username', user.username);
+      localStorage.setItem('avatar', user.avatar);
       localStorage.setItem('role', user.role);
 
       toast.success('Đăng nhập thành công ', { autoClose: 2000 })

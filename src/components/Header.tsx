@@ -27,8 +27,12 @@ const Header: React.FC = () => {
         try {
         // Xóa token username khi đăng xuất
         localStorage.removeItem('token'); 
+        localStorage.removeItem('avatar'); 
         localStorage.removeItem('username');
         localStorage.removeItem('role');
+        localStorage.removeItem('Discount_Type')
+        localStorage.removeItem('Quantity')
+        localStorage.removeItem('id')
 
         setTimeout(() => {
             navigate('/');
@@ -101,7 +105,7 @@ const Header: React.FC = () => {
         <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
           {isAuthenticated ? (
             <>
-              <p className="block px-4 py-2 text-sm text-gray-700">Xin chào {username} </p>
+              <a href="/information"><p className="block px-4 py-2 text-sm text-gray-700">Xin chào {username} </p></a>
               <a href="/purchase" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                 Đơn hàng đã đặt
               </a>

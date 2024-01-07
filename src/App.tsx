@@ -40,6 +40,7 @@ import EditBlog from "./Pages/Admin/Blog/EditBlog";
 import DetailBlogPage from "./Pages/DetailBlog";
 import EditContact from "./Pages/Admin/Contact/EditContact";
 import Successful from "./components/Successful";
+import Information from "./components/Information";
 
 function App() {
   
@@ -72,6 +73,7 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/successful" element={<Successful />} />
+          <Route path="/information" element={<Information />} />
         </Route>
         <Route path="/admin" element={<Admin />}>
           <Route index element={<Dashboard />} />

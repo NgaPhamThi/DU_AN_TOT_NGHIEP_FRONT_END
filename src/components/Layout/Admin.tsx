@@ -5,6 +5,12 @@ import withAuthorization from '../../path/to/withAuthorization'
 type Props = {}
 
 const Admin = (props: Props) => {
+  const username = localStorage.getItem('username')
+  const role = localStorage.getItem('role')
+  const avatar = localStorage.getItem('avatar')
+
+  console.log(username);
+  
   return (
     <div className='font-poppins  antialiased'>
       <div id='view' className='h-full w-screen flex flex-row' x-data='{ sidenav: true }'>
@@ -31,18 +37,18 @@ const Admin = (props: Props) => {
             <h1 className='font-bold text-4xl text-center md:hidden'>
               D<span className='text-teal-600'>.</span>
             </h1>
-            <h1 className='hidden md:block font-bold text-sm md:text-xl text-center'>
-              Dashwind<span className='text-teal-600'>.</span>
+            <h1 className='hidden  md:block font-bold text-sm md:text-xl text-center '>
+            <img className='mx-auto' src="image-removebg-preview 1.png" alt="" />
             </h1>
             <div id='profile' className='space-y-3'>
               <img
-                src='https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
+                src={avatar}
                 alt='Avatar user'
                 className='w-10 md:w-16 rounded-full mx-auto'
               />
               <div>
-                <h2 className='font-medium text-xs md:text-sm text-center text-teal-500'>Eduard Pantazi</h2>
-                <p className='text-xs text-gray-500 text-center'>Administrator</p>
+                <h2 className='font-medium text-xs md:text-sm text-center text-teal-500'>{username}</h2>
+                <p className='text-xs text-gray-500 text-center'>{role}</p>
               </div>
             </div>
             <div className='flex border-2 border-gray-200 rounded-md focus-within:ring-2 ring-teal-500'>
