@@ -73,7 +73,7 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/successful" element={<Successful />} />
-          <Route path="/information" element={<Information />} />
+          <Route path="/information/:id" element={<Information />} />
         </Route>
         <Route path="/admin" element={<Admin />}>
           <Route index element={<Dashboard />} />
