@@ -9,8 +9,11 @@ import { IColor } from "../interfaces/color";
 import { ISize } from "../interfaces/size";
 interface TokenPayload {
   id: string;
+  username:string;
+  email:string
   // Bạn cần thêm các trường khác từ payload token nếu cần
 }
+
 const PayPage = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [sizes, setSizes] = useState<ISize[]>([]); // Add your size data
@@ -18,6 +21,7 @@ const PayPage = () => {
   const [discount, setDiscount] = useState(0);
   const navigate = useNavigate();
   const [paymentMethod, setPaymentMethod] = useState<string>("cashOnDelivery");
+  const isLoggedIn = !!localStorage.getItem("token");
   const [formData, setFormData] = useState({
     fullname: "",
     phonenumber: "",
@@ -48,6 +52,21 @@ const PayPage = () => {
       const discountValue: number = parseFloat(storedDiscount);
       setDiscount(discountValue);
     }
+    const token = localStorage.getItem("token");
+    if(token){
+      try {
+        const decoded = jwtDecode<TokenPayload>(token);
+        const { username, email } = decoded;
+        setFormData({
+          ...formData,
+          fullname: username || "",
+          email: email || "",
+        });
+      } catch (error) {
+        
+      }
+    }
+    
   }, []);
   const voucherId = localStorage.getItem("id");
   console.log("voucher:", voucherId);
@@ -73,7 +92,7 @@ const PayPage = () => {
 
     try {
       const decoded = jwtDecode<TokenPayload>(token);
-      console.log(decoded); // Kiểm tra xem decoded token có đúng không
+      console.log("id",decoded); // Kiểm tra xem decoded token có đúng không
       return decoded.id;
     } catch (error) {
       console.error("Error decoding token:", error);
@@ -83,14 +102,39 @@ const PayPage = () => {
   const id = getUserIdFromToken();
   console.log(id);
 
+  
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
       const userId = getUserIdFromToken() || ""
       if (!userId) {
+        const dataFormNoId = {
+          fullname: formData.fullname,
+          phonenumber: formData.phonenumber,
+          email: formData.email,
+          address: formData.address,
+  
+          orderTotal: totalPrice - discount,
+          orderDetails: cartItems.map((item) => ({
+            productId: item._id,
+            quantity: item.quantity,
+            price: item.price,
+            sizeId: item.sizeId,
+            colorId: item.colorId,
+            voucherId: voucherId,
+          })),
+        };
+        const createOrder = await axios.post(
+          "http://localhost:8080/api/orderNoId",
+          dataFormNoId
+        )
+        localStorage.removeItem('Discount_Type')
+        localStorage.removeItem('Quantity')
+        localStorage.removeItem('id')
+        localStorage.removeItem('shopping_cart')
         toast.success("Đặt hàng thành công", { autoClose: 2000 });
-        // Nếu userId không tồn tại, hiển thị thông báo lỗi và không thực hiện navigate
+       
         setTimeout(() => {
           navigate("/");
         }, 3000);
@@ -118,6 +162,10 @@ const PayPage = () => {
           "http://localhost:8080/api/order",
           dataForm
         )
+        localStorage.removeItem('Discount_Type')
+        localStorage.removeItem('Quantity')
+        localStorage.removeItem('id')
+        localStorage.removeItem('shopping_cart')
         setTimeout(() => {
           navigate("/purchase");
         }, 3000);
@@ -181,8 +229,11 @@ const PayPage = () => {
                 </div>
               </label>
             </div>
-            <div className="relative">
-              <input className="peer hidden" id="radio_2" type="radio" name="radio"  value="vnpay" checked={paymentMethod === "vnpay"}  onChange={() => setPaymentMethod("vnpay")} />
+            
+              <div className={`relative ${isLoggedIn ? '' : 'opacity-50 pointer-events-none'}`}>
+              <input className="peer hidden" id="radio_2" type="radio" name="radio"  value="vnpay" checked={paymentMethod === "vnpay"}  
+                    onChange={() => setPaymentMethod("vnpay")}
+                    disabled={!isLoggedIn} />
               <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
               <label className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" htmlFor="radio_2">
                 <img className="w-14 object-contain" src="/vnpay-seeklogo.com.svg" alt="" />
@@ -191,6 +242,12 @@ const PayPage = () => {
                 </div>
               </label>
             </div>
+             {!isLoggedIn && (
+                <p className="text-sm text-gray-500 mt-2">
+                 <span className="text-sky-500 underline"> <a href="/signin">Đăng nhập</a></span> để sử dụng thanh toán bằng VnPay
+                </p>
+              )}
+            
           </form>
         </div>
         <form onSubmit={handleFormSubmit}>
@@ -200,7 +257,8 @@ const PayPage = () => {
         <label htmlFor="fullname" className="mt-4 mb-2 block text-sm font-medium">Họ Và Tên</label>
           <div className="">
             <input onChange={(e) => setFormData({ ...formData, fullname: e.target.value })}
-             value={formData.fullname} 
+             value={formData.fullname}
+             disabled={!!localStorage.getItem("token")} 
             type="text" id="fullname" name="fullname" className="w-full rounded-md border border-gray-200 px-4 py-3 pl-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Họ Và Tên" />
            
           </div>
@@ -208,6 +266,7 @@ const PayPage = () => {
           <div className="">
             <input onChange={(e) => setFormData({ ...formData, email: e.target.value })} 
             value={formData.email}
+            disabled={!!localStorage.getItem("token")}
             type="text" id="email" name="email" className="w-full rounded-md border border-gray-200 px-4 py-3 pl-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="your.email@gmail.com" />
           </div>
           <label htmlFor="phonenumber" className="mt-4 mb-2 block text-sm font-medium">Số Điện Thoại</label>

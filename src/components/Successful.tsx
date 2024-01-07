@@ -51,6 +51,8 @@ const Successful = (props: Props) => {
               return toast.error('Xin lỗi đã có vấn đề về đặt hàng của bạn' + error)
             })
           localStorage.removeItem('Discount_Type')
+          localStorage.removeItem('Quantity')
+          localStorage.removeItem('id')
           localStorage.removeItem('shopping_cart')
         }
       }
