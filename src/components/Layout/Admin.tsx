@@ -1,21 +1,23 @@
 import { Outlet } from 'react-router-dom'
 import withAuthorization from '../../path/to/withAuthorization'
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,useParams} from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { IUser } from '../../interfaces/auth';
+import { jwtDecode } from "jwt-decode";
+import { getUserById } from '../../api/auth';
+interface TokenPayload {
+  id: string;
+  // Bạn cần thêm các trường khác từ payload token nếu cần
+}
 type Props = {}
 
 const Admin = (props: Props) => {
-  const username = localStorage.getItem('username')
-  const role = localStorage.getItem('role')
-  const avatar = localStorage.getItem('avatar')
+  const [data, setData] = useState<IUser>({} as IUser);
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
-
   const navigate = useNavigate();
-  console.log(username);
   const handleLogout = () => {
     try {
     // Xóa token username khi đăng xuất
@@ -37,6 +39,34 @@ const Admin = (props: Props) => {
     console.error('Error during logout', error);
     }
 };
+const getUserIdFromToken = () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.log("Token not found in localStorage.");
+    return null;
+  }
+
+  try {
+    const decoded = jwtDecode<TokenPayload>(token);
+    console.log("id", decoded); // Kiểm tra xem decoded token có đúng không
+    return decoded.id;
+  } catch (error) {
+    console.error("Error decoding token:", error);
+    return null;
+  }
+};
+const id = getUserIdFromToken();
+useEffect(() => {
+  const fetchData = async () => {
+  if(id){
+    const {data} = await getUserById(id)
+    setData(data)
+    console.log(data);
+
+  }
+}
+fetchData()
+},[])
   return (
     <div className='font-poppins  antialiased'>
       <div id='view' className='h-full w-screen flex flex-row' x-data='{ sidenav: true }'>
@@ -107,14 +137,16 @@ const Admin = (props: Props) => {
   </div>
 )}
             <div id='profile' className='space-y-3'>
+              <div className='relative '>
               <img
-                src={avatar}
+                src={data.avatar}
                 alt='Avatar user'
-                className='w-10 md:w-16 rounded-full mx-auto'
+                className='w-32 h-32 rounded-full overflow-hidden object-cover mx-auto'
               />
+              </div>
               <div>
-                <h2 className='font-medium text-xs md:text-sm text-center text-teal-500'>{username}</h2>
-                <p className='text-xs text-gray-500 text-center'>{role}</p>
+                <h2 className='font-medium text-xs md:text-sm text-center text-teal-500'>{data.username}</h2>
+                <p className='text-xs text-gray-500 text-center'>{data.role}</p>
               </div>
             </div>
           
