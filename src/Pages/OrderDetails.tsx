@@ -285,7 +285,7 @@ const OrderDetails = (props: Props) => {
 
 
                     <div className="flex flex-wrap items-center justify-start gap-4 px-4 mt-6 ">
-                        <a href="/">
+                        <a href="/product">
                         <button className="w-full px-4 py-2 text-blue-500 border border-blue-500 rounded-md md:w-auto hover:text-gray-100 hover:bg-blue-600 dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-300">
                             Tiếp tục mua sắm
                         </button>
