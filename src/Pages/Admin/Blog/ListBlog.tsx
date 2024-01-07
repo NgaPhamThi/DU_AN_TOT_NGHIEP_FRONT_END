@@ -10,6 +10,7 @@ const { Search } = Input;
 
 const ListBlog = (props: Props) => {
 const [blogs, setBlogs] = useState<IBlog[]>([]);
+const sorte = blogs.reverse()
 const [searchKeyword, setSearchKeyword] = useState('');
 
   useEffect(() => {
@@ -125,10 +126,10 @@ const [searchKeyword, setSearchKeyword] = useState('');
       },
   ];
   const filteredBlogs = useMemo(() => {
-    return blogs.filter((blog) =>
+    return sorte.filter((blog) =>
       blog.title.toLowerCase().includes(searchKeyword.toLowerCase())
     );
-  }, [blogs, searchKeyword]);
+  }, [sorte, searchKeyword]);
   return (
     <div className='ml-4 mr-4 mt-4'>
     <ToastContainer />

@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify'
 const { Search } = Input;
 const ListVouchers = () => {
   const [vouchers, setVouchers] = useState<IVouchers[]>([])
+  const sorte = vouchers.reverse()
   const [voucherToDelete, setVoucherToDelete] = useState<string | number | null>(null)
   const [visible, setVisible] = useState(false)
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -168,10 +169,10 @@ const ListVouchers = () => {
     }
   ]
   const filteredvouchers = useMemo(() => {
-    return vouchers.filter((voucher) =>
+    return sorte.filter((voucher) =>
     voucher.Voucher_Code.toLowerCase().includes(searchKeyword.toLowerCase())
     );
-  }, [vouchers, searchKeyword]);
+  }, [sorte, searchKeyword]);
 
   return (
     <div className='ml-4 mr-4 mt-4'>

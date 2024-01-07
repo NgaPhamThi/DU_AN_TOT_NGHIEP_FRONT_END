@@ -10,6 +10,7 @@ const { Search } = Input;
 
 const Message = () => {
   const [comments, setComments] = useState<Comments[]>([]);
+  const sorte = comments.reverse()
   const [searchTerm, setSearchTerm] = useState('');
 
   const { productId } = useParams();
@@ -108,10 +109,10 @@ const Message = () => {
   ];
 
   const filteredComments = useMemo(() => {
-    return comments.filter((comment) =>
+    return sorte.filter((comment) =>
       comment.content.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }, [comments, searchTerm]);
+  }, [sorte, searchTerm]);
 
   return (
     <div className="ml-4 mr-4 mt-4">

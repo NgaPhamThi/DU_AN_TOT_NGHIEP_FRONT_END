@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 const { Search } = Input;
 const ListCategories = () => {
   const [categories, setcategories] = useState<ICategories[]>([])
+  const sorte = categories.reverse()
   const [searchKeyword, setSearchKeyword] = useState('');
   console.log(categories);
   useEffect(() => {
@@ -119,10 +120,10 @@ const ListCategories = () => {
     },
   ];
   const filteredCategories = useMemo(() => {
-    return categories.filter((category) =>
+    return sorte.filter((category) =>
       category.name.toLowerCase().includes(searchKeyword.toLowerCase())
     );
-  }, [categories, searchKeyword]);
+  }, [sorte, searchKeyword]);
   return (
     <div className='ml-4 mr-4 mt-4'>
     <ToastContainer />

@@ -9,12 +9,15 @@ const { Search } = Input;
 const User = (props: Props) => {
  
   const [users, setUsers] = useState<IUser[]>([]);
+  const sorte = users.reverse()
   const [searchKeyword, setSearchKeyword] = useState('')
 
   useEffect(() => {
     async function fetchUsers() {
       const { data } = await getUser();
+      console.log(data);
       setUsers(data);
+      
     }
     fetchUsers();
   }, []);
@@ -44,6 +47,12 @@ const User = (props: Props) => {
       width: "15%",
       key: "username",
     },
+    // {
+    //   title: "avatar",
+    //   dataIndex: "avatar",
+    //   width: "15%",
+    //   key: "avatar",
+    // },
    
     {
       title: "Email",
@@ -116,10 +125,10 @@ const User = (props: Props) => {
     },
   ];
   const filteredUsers = useMemo(() => {
-    return users.filter(user =>
+    return sorte.filter(user =>
         user.email.toLowerCase().includes(searchKeyword.toLowerCase())
     );
-}, [users, searchKeyword]);
+}, [sorte, searchKeyword]);
   return (
     <div className="ml-4 mr-4 mt-4">
     <ToastContainer />
