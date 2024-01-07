@@ -11,6 +11,7 @@ interface TokenPayload {
   id: string
   // Bạn cần thêm các trường khác từ payload token nếu cần
 }
+const itemsPerPage = 7;
 const statusOptions = [
   { value: 'PENDING', label: 'chờ duyệt' },
   { value: 'PROCESSING', label: 'lấy hàng' },
@@ -21,6 +22,7 @@ const statusOptions = [
 const OrderHistory = () => {
   const [OderDetail, setOderDetail] = useState<IOrders[]>([])
   const [currentDateTime, setCurrentDateTime] = useState(new Date())
+  const [currentPage, setCurrentPage] = useState(1);
   //them
   const username = localStorage.getItem('username')
   const getStatusLabel = (status: string) => {
@@ -83,7 +85,12 @@ const OrderHistory = () => {
     
   }, [])
 
- 
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = OderDetail.slice(indexOfFirstItem, indexOfLastItem);
 
   
   return (
@@ -100,7 +107,7 @@ const OrderHistory = () => {
    
       <section>
         <ul className="divide-y divide-gray-300">
-         {OderDetail.map((item)=>(
+         {currentItems.map((item)=>(
            <li className="flex justify-between items-center py-4">
             <div className="flex items-center">
               <div>
@@ -127,6 +134,19 @@ const OrderHistory = () => {
           
         </ul>
       </section>
+      <div className="flex justify-center mt-4">
+          {Array.from({ length: Math.ceil(OderDetail.length / itemsPerPage) }, (_, i) => (
+            <button
+              key={i}
+              className={`mx-2 px-4 py-2 ${
+                i + 1 === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-300'
+              }`}
+              onClick={() => handlePageChange(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
   
     </div>
   

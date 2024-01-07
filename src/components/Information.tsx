@@ -40,6 +40,7 @@ const Information = (props: Props) => {
                   const avatarUrl = response.data.secure_url;
                   await updateUser( avatarUrl,id);
                   setData((prevData) => ({ ...prevData, avatar: avatarUrl }));
+                  toast.success('Tải ảnh thành công ', { autoClose: 2000 })
                }
             } catch (error) {
                 console.error('Error uploading image to Cloudinary:', error);
@@ -74,6 +75,7 @@ const Information = (props: Props) => {
       };
     return (
         <section className="py-16 bg-gray-100 dark:bg-gray-800">
+            <ToastContainer />
             <div className="max-w-6xl px-4 mx-auto">
                 <div className="p-6 bg-white border border-gray-100 rounded-lg shadow dark:bg-gray-900 dark:border-gray-900">
                     <div className="pb-6 border-b border-gray-100 dark:border-gray-700 text-center">
