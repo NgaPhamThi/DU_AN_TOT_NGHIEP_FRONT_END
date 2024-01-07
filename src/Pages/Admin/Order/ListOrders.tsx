@@ -15,6 +15,7 @@ const statusOptions = [
   ];
 const ListOrders = (props: Props) => {
     const [Orders, setOrders] = useState<IOrders[]>([])
+    const sorte = Orders.reverse()
     const [searchKeyword, setSearchKeyword] = useState('');
     const fetchOrder = async () => {
         try {
@@ -121,10 +122,10 @@ const ListOrders = (props: Props) => {
         },
     ];
     const filteredOrders = useMemo(() => {
-        return Orders.filter((order) =>
+        return sorte.filter((order) =>
           order.email.toLowerCase().includes(searchKeyword.toLowerCase())
         );
-      }, [Orders, searchKeyword]);
+      }, [sorte, searchKeyword]);
     
       return (
         <div className="ml-4 mr-4 mt-4">

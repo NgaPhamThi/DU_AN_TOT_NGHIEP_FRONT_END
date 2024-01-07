@@ -134,7 +134,7 @@ console.log(user);
               </div> */}
 
               <div id="verified_policy" className="clearfix large_form">
-                <input type="checkbox" /> Tôi đồng ý với các <a href="">điều khoản</a> của TND
+                {/* <input type="checkbox" /> Tôi đồng ý với các <a href="">điều khoản</a> của TND */}
               </div>
 
               {error && <p className="error">{error}</p>}

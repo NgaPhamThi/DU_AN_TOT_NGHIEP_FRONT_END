@@ -9,6 +9,7 @@ const ListContact = () => {
    
 
     const [contacts, setContacts] = useState<IContact[]>([]);
+    const sorte = contacts.reverse()
     const [searchKeyword, setSearchKeyword] = useState('')
     useEffect(() => {
         async function fetchContacts() {
@@ -127,10 +128,10 @@ const ListContact = () => {
         },
     ];
     const filteredContacts = useMemo(() => {
-        return contacts.filter(contact =>
+        return sorte.filter(contact =>
             contact.email.toLowerCase().includes(searchKeyword.toLowerCase())
         );
-    }, [contacts, searchKeyword]);
+    }, [sorte, searchKeyword]);
     return (
         <div className="ml-4 mr-4 mt-4">
         <ToastContainer />

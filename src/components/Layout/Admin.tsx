@@ -1,6 +1,9 @@
 import { Outlet } from 'react-router-dom'
-import React from 'react'
 import withAuthorization from '../../path/to/withAuthorization'
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Props = {}
 
@@ -8,12 +11,36 @@ const Admin = (props: Props) => {
   const username = localStorage.getItem('username')
   const role = localStorage.getItem('role')
   const avatar = localStorage.getItem('avatar')
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef(null);
 
+  const navigate = useNavigate();
   console.log(username);
-  
+  const handleLogout = () => {
+    try {
+    // Xóa token username khi đăng xuất
+    localStorage.removeItem('token'); 
+    localStorage.removeItem('avatar'); 
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
+    localStorage.removeItem('Discount_Type')
+    localStorage.removeItem('Quantity')
+    localStorage.removeItem('id')
+
+    setTimeout(() => {
+        navigate('/');
+      }, 3000);
+  toast.success('Đăng xuất thành công ', { autoClose: 2000 })
+
+    } catch (error) {
+    toast.error('Đã xảy ra lỗi khi đăng xuất. Vui lòng thử lại sau.', { autoClose: 2000 });
+    console.error('Error during logout', error);
+    }
+};
   return (
     <div className='font-poppins  antialiased'>
       <div id='view' className='h-full w-screen flex flex-row' x-data='{ sidenav: true }'>
+        
         <button className='p-2 border-2 bg-white rounded-md border-gray-200 shadow-lg text-gray-500 focus:bg-teal-500 focus:outline-none focus:text-white absolute top-0 left-0 sm:hidden'>
           <svg
             className='w-5 h-5 fill-current'
@@ -33,13 +60,52 @@ const Admin = (props: Props) => {
           className='bg-white  md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out'
           x-show='sidenav'
         >
+          
           <div className='space-y-6  md:space-y-10 mt-10'>
+         
             <h1 className='font-bold text-4xl text-center md:hidden'>
               D<span className='text-teal-600'>.</span>
             </h1>
+            
             <h1 className='hidden  md:block font-bold text-sm md:text-xl text-center '>
             <img className='mx-auto' src="image-removebg-preview 1.png" alt="" />
             </h1>
+            <i
+        className="fas fa-user text-gray-600 hover:text-gray-800 cursor-pointer"
+        onClick={() => setShowMenu(!showMenu)}
+      ></i>
+     {showMenu && (
+  <div className={`absolute-left-11 mt-28 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5`} ref={menuRef}>
+    <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+      <a href="/information" className='block px-2 py-2 text-sm text-gray-700'>
+      <svg xmlns="http://www.w3.org/2000/svg"
+       className='w-4 h-4 fill-current inline-block'
+       fill='currentColor'
+       viewBox='0 0 512 512'>
+        
+        
+        <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
+        {/* <p className="block px-4 py-2 text-sm text-gray-700">Thay Đổi Thông Tin</p> */}
+        <span className='px-1'>Thay Đổi Thông Tin</span>
+      </a>
+      <a
+      
+        className="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        onClick={handleLogout}
+      >
+                 <svg 
+                 xmlns="http://www.w3.org/2000/svg"
+                 className='w-4 h-4 fill-current inline-block'
+                 fill='currentColor'
+                 viewBox='0 0 512 512'
+                 >
+                  
+                  <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/></svg>
+                <span className='px-1'>Đăng xuất</span>
+      </a>
+    </div>
+  </div>
+)}
             <div id='profile' className='space-y-3'>
               <img
                 src={avatar}
@@ -51,27 +117,7 @@ const Admin = (props: Props) => {
                 <p className='text-xs text-gray-500 text-center'>{role}</p>
               </div>
             </div>
-            <div className='flex border-2 border-gray-200 rounded-md focus-within:ring-2 ring-teal-500'>
-              <input
-                type='text'
-                className='w-full rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none'
-                placeholder='Search'
-              />
-              <button className='rounded-tr-md rounded-br-md px-2 py-3 hidden md:block'>
-                <svg
-                  className='w-4 h-4 fill-current'
-                  fill='currentColor'
-                  viewBox='0 0 20 20'
-                  xmlns='http://www.w3.org/2000/svg'
-                >
-                  <path
-                    fillRule='evenodd'
-                    d='M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z'
-                    clipRule='evenodd'
-                  ></path>
-                </svg>
-              </button>
-            </div>
+          
             <div id='menu' className='flex flex-col space-y-2'>
               <a
                 href='/admin'

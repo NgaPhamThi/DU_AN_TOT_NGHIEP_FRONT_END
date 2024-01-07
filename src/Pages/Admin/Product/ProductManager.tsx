@@ -10,6 +10,7 @@ const { Search } = Input;
 
 const ProductManager = (props: Props) => {
   const [products, setProducts] = useState<IProduct[]>([]);
+  const sorte = products.reverse()
   const [searchKeyword, setSearchKeyword] = useState('');
 
   useEffect(() => {
@@ -121,10 +122,10 @@ const ProductManager = (props: Props) => {
   ];
 
   const filteredProducts = useMemo(() => {
-    return products.filter((product) =>
+    return sorte.filter((product) =>
       product.name.toLowerCase().includes(searchKeyword.toLowerCase())
     );
-  }, [products, searchKeyword]);
+  }, [sorte, searchKeyword]);
 
   return (
     <div className='ml-4 mr-4 mt-4'>
