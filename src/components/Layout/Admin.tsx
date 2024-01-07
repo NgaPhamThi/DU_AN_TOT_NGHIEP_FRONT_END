@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { IUser } from '../../interfaces/auth';
 import { jwtDecode } from "jwt-decode";
 import { getUserById } from '../../api/auth';
+import { Link } from 'react-router-dom'
+
 interface TokenPayload {
   id: string;
   // Bạn cần thêm các trường khác từ payload token nếu cần
@@ -107,7 +109,7 @@ fetchData()
      {showMenu && (
   <div className={`absolute-left-11 mt-28 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5`} ref={menuRef}>
     <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-      <a href="/information" className='block px-2 py-2 text-sm text-gray-700'>
+    <Link to={`/information/${data._id}`} className='block px-2 py-2 text-sm text-gray-700'>
       <svg xmlns="http://www.w3.org/2000/svg"
        className='w-4 h-4 fill-current inline-block'
        fill='currentColor'
@@ -117,7 +119,7 @@ fetchData()
         <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
         {/* <p className="block px-4 py-2 text-sm text-gray-700">Thay Đổi Thông Tin</p> */}
         <span className='px-1'>Thay Đổi Thông Tin</span>
-      </a>
+      </Link>
       <a
       
         className="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100"

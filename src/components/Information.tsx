@@ -4,7 +4,9 @@ import { getUserById, updateUser } from '../api/auth';
 import { IUser } from '../interfaces/auth';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-
+import { Link } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 type Props = {}
 
 const Information = (props: Props) => {
@@ -55,12 +57,18 @@ const Information = (props: Props) => {
            if(id){
             await updateUser(data, id);
            }
+           setTimeout(() => {
+            navigate('/');
+          }, 3000);
+           toast.success('Thay đổi thông tin thành công ', { autoClose: 2000 })
             
             // Optionally, you can redirect the user after successful submission
              // Change the path to where you want to redirect
 
         } catch (error) {
             console.error('Error updating user:', error);
+            toast.error('Thay đổi thông tin thành công thất bại', { autoClose: 2000 })
+
             // Handle error appropriately, e.g., show an error message to the user
         }
       };
@@ -150,10 +158,10 @@ const Information = (props: Props) => {
                         </div>
                         <div className="flex pt-6 flex-wrap -m-1.5">
                             <div className="w-full md:w-auto p-1.5">
-                                <button
+                            <Link to={`/`}
                                     className="flex flex-wrap justify-center w-full px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-md dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-800 dark:border-gray-700 hover:border-gray-300 ">
                                     <p>Trở Lại</p>
-                                </button>
+                            </Link>
                             </div>
                             <div className="w-full md:w-auto p-1.5">
                                 <button
