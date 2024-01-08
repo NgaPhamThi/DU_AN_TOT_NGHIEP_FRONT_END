@@ -119,7 +119,7 @@ const DetailPage = () => {
     }
     useEffect(() => {
         fetProduct()
-    }, [])
+    }, [productId])
 
     const fetProducts = async () => {
         const { data } = await getProduct()
