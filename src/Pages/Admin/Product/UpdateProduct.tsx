@@ -12,6 +12,7 @@ const UpdateProduct = () => {
   const [categories,setcategories] = useState<ICategories[]>([])
   const [product,setProduct]=useState<IProduct>({} as IProduct)
   const {id} = useParams();
+  const [editedImageIndex, setEditedImageIndex] = useState<number | null>(null);
   const navigate = useNavigate();
   useEffect(()=>{
     async function fetchData() {
@@ -66,7 +67,70 @@ const UpdateProduct = () => {
       categoryId: categoryId,
     }));
   };
+  const handleImageChange = async (e:any) => {
+    const file = e.target.files[0];
 
+    if (file) {
+      try {
+        const imageUrl = await uploadImageToCloudinary(file);
+        const updatedImages = [...product.img]; // Create a copy of the existing images array
+        if (editedImageIndex !== null) {
+          // If we are editing an existing image, replace it in the array
+          updatedImages[editedImageIndex] = imageUrl;
+        } else {
+          // If not editing, add the new image to the array
+          updatedImages.push(imageUrl);
+        }
+        setProduct((prevProduct) => ({
+          ...prevProduct,
+          img: updatedImages,
+        }));
+        setEditedImageIndex(null); // Reset the index after editing
+      } catch (error) {
+        toast.error('Error uploading image. Please try again.');
+      }
+    }
+  };
+  const uploadImageToCloudinary = async (file:any, imageId:any) => {
+    try {
+      const cloudName = 'dfftwrlu2'; // Replace with your Cloudinary cloud name
+      const uploadPreset = 'upload_preset'; // Replace with your Cloudinary upload preset
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', uploadPreset);
+       // Set the Cloudinary public ID with the image identifier
+
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        return data.secure_url;
+      } else {
+        throw new Error(`Error uploading image: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error uploading image to Cloudinary:', error);
+      throw error;
+    }
+  };
+  const editImage = (index) => {
+    // Set the index of the image being edited
+    setEditedImageIndex(index);
+  };
+  const removeImage = (index) => {
+    // Remove the image at the specified index
+    const updatedImages = [...product.img];
+    updatedImages.splice(index, 1);
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      img: updatedImages,
+    }));
+  };
   const handleSubmit = async( e:React.FormEvent)=>{
     e.preventDefault();
     try{
@@ -115,7 +179,7 @@ const UpdateProduct = () => {
             Ảnh
           </label>
           {/* <img src={product.img} alt="" /> */}
-          <input
+          {/* <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Nhập Ảnh"
             id="categoryImage"
@@ -125,6 +189,24 @@ const UpdateProduct = () => {
             onChange={hanldeChage}
 
           />
+           */}
+            <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="mt-1.5 shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+          {product.img && product.img.map((image, index) => (
+    <div key={index} className="mt-2 flex gap-2">
+      <img src={image} alt={`Product Image ${index}`} className="max-w-full h-32" />
+      <button type="button" onClick={() => editImage(index)}>
+        Edit
+      </button>
+      <button type="button" onClick={() => removeImage(index)}>
+        Remove
+      </button>
+    </div>
+  ))}
 
         </div>
         <div className="mb-4">
