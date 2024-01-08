@@ -112,7 +112,7 @@ const AddProduct = () => {
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="uploadedImages">
           
           </label>
-          <div className="flex  gap-2">
+          <div className="flex gap-3 ">
             {images.map((image, index) => (
               <img key={index} src={image} alt={`Uploaded ${index + 1}`} className="rounded-md  h-32" />
             ))}
