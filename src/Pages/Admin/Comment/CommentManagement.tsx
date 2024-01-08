@@ -1,15 +1,18 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { getProduct } from '../../../api/product';
 import { IProduct } from '../../../interfaces/product';
-import { Table } from 'antd';
+import { Table ,Input } from 'antd';
 import { Comments } from '../../../interfaces/comment';
 
 
-
+const { Search } = Input;
 const CommentManagement = () => {
     const [products, setProducts] = useState<IProduct[]>([])
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const sorte = products.reverse()
+    
     console.log(products);
     useEffect(() => {
         async function fetchProduct() {
@@ -20,6 +23,10 @@ const CommentManagement = () => {
         }
         fetchProduct()
     }, [])
+    const handleSearch = (value: string) => {
+        setSearchKeyword(value);
+      };
+    
     const columns = [
         {
             title: 'Images',
@@ -75,14 +82,28 @@ const CommentManagement = () => {
             )
         },
     ];
+    const filteredProducts = useMemo(() => {
+        return sorte.filter((product) =>
+          product.name.toLowerCase().includes(searchKeyword.toLowerCase())
+        );
+      }, [sorte, searchKeyword]);
     return (
         <div className="ml-4 mr-4 mt-4">
-        <div className="text-center pb-7 flex justify-between items-center ">
-            <div>
-                <h1 className="text-2xl font-semibold">Quản Lý Bình Luận</h1>
-            </div>
-        </div>
-            <Table dataSource={products.map((product,index)=>({...product,index:index+1}))} columns={columns} />
+        <div className="flex justify-between items-center mb-4"> 
+    <div className="text-center flex justify-between items-center">
+      <h1 className="text-2xl font-semibold">Quản Lý Bình Luận</h1>
+    </div>
+    <div>
+      <Search
+          placeholder="Tìm kiếm theo name"
+          allowClear
+          onSearch={handleSearch}
+          style={{ width: 200, marginBottom: 16 }}
+        />
+      </div>
+    </div>
+    
+            <Table dataSource={filteredProducts.map((product,index)=>({...product,index:index+1}))} columns={columns} />
             </div>
 
         //     <body classNameName="bg-gray-100 mx-auto w-full">
