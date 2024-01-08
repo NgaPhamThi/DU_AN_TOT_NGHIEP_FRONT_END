@@ -44,11 +44,19 @@ const UpdateProduct = () => {
   
   const hanldeChage = (e: React.ChangeEvent<HTMLInputElement |HTMLTextAreaElement | HTMLSelectElement >)=>{
     const {name, value} = e.target;
-    
-    setProduct((prevProduct)=>({
-      ...prevProduct,
-      [name]: value,
-    }))
+    if(name === 'img'){
+      setProduct((prevProduct)=>({
+        ...prevProduct,
+        img:value.split(',').map((url) => url.trim()),
+      }))
+    }else{
+      setProduct((prevProduct)=>({
+
+        ...prevProduct,
+        [name]: value,
+      }))
+    }
+   
   }
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -106,14 +114,14 @@ const UpdateProduct = () => {
           >
             Ảnh
           </label>
-          <img src={product.img} alt="" />
+          {/* <img src={product.img} alt="" /> */}
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Nhập Ảnh"
             id="categoryImage"
             type="text"
             name='img'
-            value={product.img}
+            value={product.img? product.img.join(',') : ''}
             onChange={hanldeChage}
 
           />
