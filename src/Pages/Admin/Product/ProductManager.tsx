@@ -39,7 +39,12 @@ const ProductManager = (props: Props) => {
   const handleSearch = (value: string) => {
     setSearchKeyword(value);
   };
-
+  const formatCurrency = (value:any) => {
+    return new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+    }).format(value);
+  };
   const columns = [
     {
       title: 'Image',
@@ -61,6 +66,7 @@ const ProductManager = (props: Props) => {
       title: 'Price',
       dataIndex: 'price',
       key: 'price',
+      render: (price:any) => formatCurrency(price),
     },
     {
       title: 'Action',
