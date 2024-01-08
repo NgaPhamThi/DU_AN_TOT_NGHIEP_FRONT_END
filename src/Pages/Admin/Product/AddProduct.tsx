@@ -8,8 +8,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { addproduct } from "../../../api/product";
 
 
+
 const AddProduct = () => {
   const [categories, setcategories] = useState<ICategories[]>([])
+  const [images, setImages] = useState<string[]>([]);
   const navigate = useNavigate();
   console.log(categories);
   useEffect(() => {
@@ -22,10 +24,40 @@ const AddProduct = () => {
     fetchProduct()
   }, [])
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+  
+    if (files) {
+      const uploadPromises = Array.from(files).map((file: File) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "upload_preset");
+  
+        return fetch(`https://api.cloudinary.com/v1_1/dfftwrlu2/image/upload`, {
+          method: "POST",
+          body: formData,
+        })
+          .then(response => response.json())
+          .then(data => data.secure_url)
+          .catch(error => {
+            console.error("Error uploading image to Cloudinary:", error);
+            return null;
+          });
+      });
+  
+      Promise.all(uploadPromises)
+        .then((uploadedImages) => {
+          const filteredImages = uploadedImages.filter((img) => img !== null);
+          setImages((prevImages) => [...prevImages, ...filteredImages]);
+        })
+        .catch(error => {
+          console.error("Error uploading images:", error);
+        });
+    }
+  };
   const onHandleSubmit = async (data: any) => {
     try {
-      data.img = data.img.split(',').map((url: string) => url.trim());
-
+      data.img = images;
       const createProduct = await addproduct(data)
       setTimeout(() => {
         navigate('/admin/products');
@@ -68,10 +100,23 @@ const AddProduct = () => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Nhập Ảnh"
             id="categoryImage"
-            type="text"
-            {...register("img", { required: true })}
+            type="file"
+            accept="image/*"
+            onChange={onImageUpload}
+          
           />
+         
           {errors.img && <span>this field is required</span>}
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="uploadedImages">
+          
+          </label>
+          <div className="flex gap-3 ">
+            {images.map((image, index) => (
+              <img key={index} src={image} alt={`Uploaded ${index + 1}`} className="rounded-md  h-32" />
+            ))}
+          </div>
         </div>
         <div className="mb-4">
           <label
