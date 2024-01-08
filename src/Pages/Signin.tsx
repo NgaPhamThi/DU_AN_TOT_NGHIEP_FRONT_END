@@ -149,9 +149,9 @@ const Signin = () => {
                                     onChange={(e) => setPassword(e.target.value)}
                                   />
                                 <div className="mb-4 text-right ">
-                                    <a href="#"
+                                    {/* <a href="#"
                                         className="text-sm font-semibold text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 hover:underline">
-                                       Quên mật khẩu?</a>
+                                       Quên mật khẩu?</a> */}
                                 </div>
 {/* 
                                 <button
@@ -164,7 +164,7 @@ const Signin = () => {
                 value="Đăng nhập"
               />
                                 <p className="text-sm text-gray-700 dark:text-gray-400"> Cần một tài khoản?
-                                    <a href="#"
+                                    <a href="/signup"
                                         className="text-sm font-semibold text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500">
                                         Tạo một tài khoản</a>
                                 </p>

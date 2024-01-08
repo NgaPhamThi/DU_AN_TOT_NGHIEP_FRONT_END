@@ -292,9 +292,7 @@ console.log(user);
                                     </svg>
                                 </div> */}
                                 <div className="mb-4 text-right ">
-                                    <a href="#"
-                                        className="text-sm font-semibold text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 hover:underline">
-                                       Quên mật khẩu?</a>
+                                   
                                 </div>
 
                                 {/* <button

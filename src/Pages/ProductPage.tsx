@@ -44,10 +44,10 @@ const ProductPage = () => {
   };
 
 
-  const handleSearchChange = (event) => {
-    // Lưu giá trị nhập từ người dùng khi thay đổi ô tìm kiếm
-    setSearchTerm(event.target.value);
-  };
+  // const handleSearchChange = (event) => {
+  //   // Lưu giá trị nhập từ người dùng khi thay đổi ô tìm kiếm
+  //   setSearchTerm(event.target.value);
+  // };
 
 
   const searchProducts = () => {
@@ -61,10 +61,10 @@ const ProductPage = () => {
   };
 
 
-  const handleCategoryClick = (categoryId) => {
-    // Chuyển hướng đến URL `/categories/:categoryId`
-    navigate(`/categories/${categoryId}`);
-  };
+  // const handleCategoryClick = (categoryId) => {
+  //   // Chuyển hướng đến URL `/categories/:categoryId`
+  //   navigate(`/categories/${categoryId}`);
+  // };
 
 
   const handleSortChange = (event) => {
