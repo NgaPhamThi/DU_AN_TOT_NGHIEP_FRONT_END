@@ -97,7 +97,7 @@ const Header: React.FC = () => {
       }
     }
     fetchData()
-  }, [])
+  }, [id])
   return (
     <header className="bg-white shadow-md relative">
       <ToastContainer />
