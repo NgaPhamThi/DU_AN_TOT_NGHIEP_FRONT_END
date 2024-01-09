@@ -108,6 +108,15 @@ const PayPage = () => {
 
     try {
       const userId = getUserIdFromToken() || ""
+            // Kiểm tra trạng thái của người dùng trước khi đặt hàng
+    const userStatusResponse = await axios.get(`http://localhost:8080/api/user/${userId}`);
+    const userStatus = userStatusResponse.data.status;
+
+    if (userStatus === "block") {
+      // Người dùng bị chặn, không thể đặt hàng
+      toast.error("Tài khoản của bạn đã bị chặn và không thể đặt hàng.", { autoClose: 2000 });
+      return;
+    }
       if (!userId) {
         const dataFormNoId = {
           fullname: formData.fullname,

@@ -30,7 +30,7 @@ const UpdateUser = () => {
     const { name, value } = e.target;
   
     // Nếu trường name là 'status', cập nhật giá trị cho 'role'
-    if (name === 'status') {
+    if (name === 'role') {
       setUser((prevUser) => ({
         ...prevUser,
         role: value,
@@ -94,22 +94,37 @@ const UpdateUser = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="status">
-            Trạng thái
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="role">
+          Vai trò
           </label>
           <select
           id="role"
-          name="status"
+          name="role"
           value={user.role}  
           onChange={handleChange}
           className="mt-1.5 shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline sm:text-sm"
           >
-          <option value="" disabled hidden>Chọn trạng thái</option>
+          <option value="" disabled hidden>Chọn Vai trò</option>
           <option value="member">Thành viên</option>
           <option value="admin">Quản trị viên</option>
           </select>
         </div>
-
+        <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="status">
+                     Trạng thái
+                    </label>
+                    <select
+          id="status"
+          name="status"
+          value={user.status}  
+          onChange={handleChange}
+          className="mt-1.5 shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline sm:text-sm"
+          >
+          <option value="" disabled hidden>Chọn trạng thái</option>
+          <option value="on going">on going</option>
+          <option value="block">block</option>
+          </select>
+                </div>
         <div className="flex justify-between items-center">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

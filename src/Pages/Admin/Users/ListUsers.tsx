@@ -9,9 +9,9 @@ const { Search } = Input;
 const User = (props: Props) => {
  
   const [users, setUsers] = useState<IUser[]>([]);
+  console.log(users)
   const sorte = users.reverse()
   const [searchKeyword, setSearchKeyword] = useState('')
-
   useEffect(() => {
     async function fetchUsers() {
       const { data } = await getUser();
@@ -61,14 +61,19 @@ const User = (props: Props) => {
       key: "email",
     },
     {
-      title: "Trạng thái",
+      title: "Vai trò",
       dataIndex: "role",
       key: "role",
     },
     {
-      title: "Action",
+      title: "Trạng thái",
       dataIndex: "status",
       key: "status",
+  },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
       render: (status: any, record: IUser) =>(
         <div className="inline-flex rounded-lg border  border-gray-100 bg-gray-100 p-1">
                    <Link to={`update/${record._id}`}>
