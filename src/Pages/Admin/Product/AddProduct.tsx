@@ -6,12 +6,21 @@ import { ToastContainer, toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import 'react-toastify/dist/ReactToastify.css';
 import { addproduct } from "../../../api/product";
+import { ISize } from "../../../interfaces/size";
+import { IColor } from "../../../interfaces/color";
+import { getSize } from "../../../api/size";
+import { getColor } from "../../../api/color";
 
 
 
 const AddProduct = () => {
   const [categories, setcategories] = useState<ICategories[]>([])
+  const [colors, setcolors] = useState<IColor[]>([])
+  const [sizes, setsizes] = useState<ISize[]>([])
   const [images, setImages] = useState<string[]>([]);
+  const [additionalSizes, setAdditionalSizes] = useState<Array<any>>([]);
+  const [additionalColors, setAdditionalColors] = useState<Array<any>>([]);
+
   const navigate = useNavigate();
   console.log(categories);
   useEffect(() => {
@@ -23,16 +32,34 @@ const AddProduct = () => {
     }
     fetchProduct()
   }, [])
+  useEffect(() => {
+    async function fetchSizes() {
+      const { data } = await getSize();
+      setsizes(data);
+      console.log(data);
+
+    }
+    fetchSizes()
+  }, [])
+  useEffect(() => {
+    async function fetchColors() {
+      const { data } = await getColor();
+      setcolors(data);
+      console.log(data);
+
+    }
+    fetchColors()
+  }, [])
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-  
+
     if (files) {
       const uploadPromises = Array.from(files).map((file: File) => {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("upload_preset", "upload_preset");
-  
+
         return fetch(`https://api.cloudinary.com/v1_1/dfftwrlu2/image/upload`, {
           method: "POST",
           body: formData,
@@ -44,7 +71,7 @@ const AddProduct = () => {
             return null;
           });
       });
-  
+
       Promise.all(uploadPromises)
         .then((uploadedImages) => {
           const filteredImages = uploadedImages.filter((img) => img !== null);
@@ -55,22 +82,31 @@ const AddProduct = () => {
         });
     }
   };
+  
   const onHandleSubmit = async (data: any) => {
     try {
       data.img = images;
+     
       const createProduct = await addproduct(data)
-      setTimeout(() => {
-        navigate('/admin/products');
-      }, 3000);
+      // setTimeout(() => {
+      //   navigate('/admin/products');
+      // }, 3000);
       toast.success('Thêm sản phẩm thành công', { autoClose: 2000 })
     } catch (error) {
-      
+
     }
   }
+  const addSizeRow = () => {
+    setAdditionalSizes((prevSizes) => [...prevSizes, { sizeId: '', quantity: 0 }]);
+  };
+
+  const addColorRow = () => {
+    setAdditionalColors((prevColors) => [...prevColors, { colorId: '', quantity: 0 }]);
+  };
   return (
     // -----
     <div className="flex flex-col items-center mt-10">
-       <ToastContainer />
+      <ToastContainer />
       <h1 className="text-2xl font-bold mb-5">Thêm Sản Phẩm</h1>
       <form className="w-1/3" onSubmit={handleSubmit(onHandleSubmit)}>
         <div className="mb-4">
@@ -103,14 +139,14 @@ const AddProduct = () => {
             type="file"
             accept="image/*"
             onChange={onImageUpload}
-          
+
           />
-         
+
           {errors.img && <span>this field is required</span>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="uploadedImages">
-          
+
           </label>
           <div className="flex gap-3 ">
             {images.map((image, index) => (
@@ -136,6 +172,124 @@ const AddProduct = () => {
         </div>
         <div className="mb-4">
           <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="categoryImage"
+          >
+            Số lượng
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Nhập Số Lượng"
+            id="categoryImage"
+            type="number"
+            {...register("quantity")}
+          />
+          {errors.price && <span>this field is required</span>}
+        </div>
+        {/* sizes */}
+        <div className="mb-4">
+          <label
+            htmlFor="size"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Size
+          </label>
+          {additionalSizes.map((size, index) => (
+            <div key={index} className="flex items-center gap-2 mt-3 mb-3 ">
+              <div className="w-full">
+                <select
+                  id="sizes"
+                  className=" shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline   sm:text-sm"
+                >
+                  <option value="">Nhập Size</option>
+                  {sizes.map((size) => (
+                    <option key={size._id} value={size._id}>{size.name}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="w-full">
+                <input
+                  className="shadow appearance-none border rounded w-full  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder="Nhập Số Lượng"
+                  id="sizes"
+                  type="number"
+                  
+                />
+              </div>
+
+            </div>
+          ))}
+          <div className="w-full mt-3 mb-3">
+            <button className="w-full" onClick={addSizeRow}>
+              <div
+                className="inline-flex w-full items-center justify-center gap-2 rounded border border-indigo-600 bg-indigo-600 px-8 py-3 text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+              >
+                <span className="text-sm font-medium"> Thêm Size </span>
+
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+
+              </div>
+            </button>
+          </div>
+          
+          {errors.sizes && <span>this field is required</span>}
+        </div>
+
+
+        {/* Color */}
+        <div className="mb-4">
+          <label
+            htmlFor="color"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Color
+          </label>
+          {additionalColors.map((color, index) => (
+            <div key={index} className="flex items-center gap-2 mt-3 mb-3 ">
+              <div className="w-full">
+                <select
+                  id="colors"
+                  
+                  className=" shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline   sm:text-sm"
+                >
+                  <option value="">Nhập Color</option>
+                  {colors.map((color) => (
+                    <option key={color._id} value={color._id}>{color.name}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="w-full">
+                <input
+                  className="shadow appearance-none border rounded w-full  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder="Nhập Số Lượng"
+                  id="colors"
+                  type="number"
+                 
+                />
+              </div>
+            </div>
+          ))}
+          <div className="w-full mt-3 mb-3">
+            <button className="w-full" onClick={addColorRow}>
+              <div
+                className="inline-flex w-full items-center justify-center gap-2 rounded border border-indigo-600 bg-indigo-600 px-8 py-3 text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+              >
+                <span className="text-sm font-medium"> Thêm Color </span>
+
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+
+              </div>
+            </button>
+          </div>
+          
+          {errors.colors && <span>this field is required</span>}
+        </div>
+        <div className="mb-4">
+          <label
             htmlFor="HeadlineAct"
             className="block text-gray-700 text-sm font-bold mb-2"
           >
@@ -143,13 +297,13 @@ const AddProduct = () => {
           </label>
 
           <select
-            
+
             id="HeadlineAct"
             {...register("categoryId")}
             className="mt-1.5 shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline   sm:text-sm"
           >
             <option value="">Nhập Loại</option>
-            {categories.map((category)=>(
+            {categories.map((category) => (
               <option key={category._id} value={category._id}>{category.name}</option>
             ))}
           </select>
@@ -162,7 +316,7 @@ const AddProduct = () => {
           >
             Description
           </label>
-          <textarea  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="" {...register("description")}>
+          <textarea className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="" {...register("description")}>
 
           </textarea>
           {errors.description && <span>this field is required</span>}
