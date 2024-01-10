@@ -3,13 +3,14 @@ import { ICategories } from "../../../interfaces/categories";
 import { getCategory } from "../../../api/categories";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import 'react-toastify/dist/ReactToastify.css';
 import { addproduct } from "../../../api/product";
 import { ISize } from "../../../interfaces/size";
 import { IColor } from "../../../interfaces/color";
 import { getSize } from "../../../api/size";
 import { getColor } from "../../../api/color";
+import { IProduct } from "../../../interfaces/product";
 
 
 
@@ -18,8 +19,7 @@ const AddProduct = () => {
   const [colors, setcolors] = useState<IColor[]>([])
   const [sizes, setsizes] = useState<ISize[]>([])
   const [images, setImages] = useState<string[]>([]);
-  const [additionalSizes, setAdditionalSizes] = useState<Array<any>>([]);
-  const [additionalColors, setAdditionalColors] = useState<Array<any>>([]);
+  const [additionalSizes, setAdditionalSizes] = useState<Array<{ sizeId: string;colorId: string; quantity: number }>>([]);
 
   const navigate = useNavigate();
   console.log(categories);
@@ -50,7 +50,8 @@ const AddProduct = () => {
     }
     fetchColors()
   }, [])
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<IProduct>();
+
   const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
 
@@ -83,7 +84,7 @@ const AddProduct = () => {
     }
   };
   
-  const onHandleSubmit = async (data: any) => {
+  const onHandleSubmit:SubmitHandler<IProduct> = async (data: any) => {
     try {
       data.img = images;
      
@@ -97,12 +98,15 @@ const AddProduct = () => {
     }
   }
   const addSizeRow = () => {
-    setAdditionalSizes((prevSizes) => [...prevSizes, { sizeId: '', quantity: 0 }]);
+    setAdditionalSizes((prevSizes) => [...prevSizes, { sizeId: '',colorId:'', quantity: 0 }]);
   };
 
-  const addColorRow = () => {
-    setAdditionalColors((prevColors) => [...prevColors, { colorId: '', quantity: 0 }]);
+  const removeSizeRow = (index: number) => {
+    setAdditionalSizes((prevSizes) => prevSizes.filter((_, i) => i !== index));
   };
+
+  
+
   return (
     // -----
     <div className="flex flex-col items-center mt-10">
@@ -170,22 +174,7 @@ const AddProduct = () => {
           />
           {errors.price && <span>this field is required</span>}
         </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="categoryImage"
-          >
-            Số lượng
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Nhập Số Lượng"
-            id="categoryImage"
-            type="number"
-            {...register("quantity")}
-          />
-          {errors.price && <span>this field is required</span>}
-        </div>
+      
         {/* sizes */}
         <div className="mb-4">
           <label
@@ -195,15 +184,31 @@ const AddProduct = () => {
             Size
           </label>
           {additionalSizes.map((size, index) => (
-            <div key={index} className="flex items-center gap-2 mt-3 mb-3 ">
-              <div className="w-full">
+            <div key={index} className=" mt-3 mb-3 ">
+              <div className="w-full flex gap-2 mb-3">
                 <select
-                  id="sizes"
+                  {...register(`sizeAndcolor.${index}.sizeId` as const)}
+                  value={watch(`sizeAndcolor.${index}.sizeId` as const)}
+                  onChange={(e) => setValue(`sizeAndcolor.${index}.sizeId`, e.target.value)}
+                  id={`sizes-${index}`}
+
                   className=" shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline   sm:text-sm"
                 >
                   <option value="">Nhập Size</option>
                   {sizes.map((size) => (
                     <option key={size._id} value={size._id}>{size.name}</option>
+                  ))}
+                </select>
+                <select
+                  {...register(`sizeAndcolor.${index}.colorId` as const)}
+                  value={watch(`sizeAndcolor.${index}.colorId` as const)}
+                  onChange={(e) => setValue(`sizeAndcolor.${index}.colorId`, e.target.value)}
+                  id={`colors-${index}`}
+                  className=" shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline   sm:text-sm"
+                >
+                  <option value="">Nhập Color</option>
+                  {colors.map((color) => (
+                    <option key={color._id} value={color._id}>{color.name}</option>
                   ))}
                 </select>
               </div>
@@ -212,9 +217,11 @@ const AddProduct = () => {
                   className="shadow appearance-none border rounded w-full  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Nhập Số Lượng"
                   id="sizes"
+                  {...register(`sizeAndcolor.${index}.quantity` as const)}
                   type="number"
                   
                 />
+                
               </div>
 
             </div>
@@ -234,12 +241,12 @@ const AddProduct = () => {
             </button>
           </div>
           
-          {errors.sizes && <span>this field is required</span>}
+          {errors.sizeAndcolor && <span>this field is required</span>}
         </div>
 
 
         {/* Color */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label
             htmlFor="color"
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -250,8 +257,10 @@ const AddProduct = () => {
             <div key={index} className="flex items-center gap-2 mt-3 mb-3 ">
               <div className="w-full">
                 <select
-                  id="colors"
-                  
+                  {...register(`colors.${index}.colorId` as const)}
+                  value={watch(`colors.${index}.colorId` as const)}
+                  onChange={(e) => setValue(`colors.${index}.colorId`, e.target.value)}
+                  id={`colors-${index}`}
                   className=" shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline   sm:text-sm"
                 >
                   <option value="">Nhập Color</option>
@@ -265,6 +274,7 @@ const AddProduct = () => {
                   className="shadow appearance-none border rounded w-full  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Nhập Số Lượng"
                   id="colors"
+                  {...register(`colors.${index}.quantity` as const)}
                   type="number"
                  
                 />
@@ -287,7 +297,7 @@ const AddProduct = () => {
           </div>
           
           {errors.colors && <span>this field is required</span>}
-        </div>
+        </div> */}
         <div className="mb-4">
           <label
             htmlFor="HeadlineAct"
