@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { CardInfo } from './card-info'
 import { CartIcon2 } from '../../../../components'
 import { analyticApi } from '../../../../api/analytic.api'
+import { convertMoney } from './utils/conver-money'
 import { filterOrder } from './hooks/get-order-status'
 
 interface AnalyticStatusCompleteProps {
@@ -17,7 +18,7 @@ interface AnalyticStatusCompleteProps {
 const { RangePicker } = DatePicker
 
 export const AnalyticStatusComplete = ({ isOpen, onClose }: AnalyticStatusCompleteProps) => {
-  const [orderFilterDate, setOrderFilterDate] = useState<IFilterOrder | null>(null)
+  const [orderFilterDate, setOrderFilterDate] = useState<number | null>(null)
   const [data, setData] = useState<IData | null>(null)
 
   const onChange = async (
@@ -37,7 +38,10 @@ export const AnalyticStatusComplete = ({ isOpen, onClose }: AnalyticStatusComple
 
     /* lấy dữ liệu */
     const data = await filterOrder(values)
-    setOrderFilterDate(data)
+    if (data) {
+      const totalMoney = convertMoney(data, 'COMPLETED')
+      setOrderFilterDate(totalMoney)
+    }
   }
 
   useEffect(() => {
@@ -76,7 +80,7 @@ export const AnalyticStatusComplete = ({ isOpen, onClose }: AnalyticStatusComple
   ]
   return (
     <Drawer
-      title='Thông kê đơn hàng lên đơn'
+      title='Thông kê đơn hàng đặt thành công'
       placement='right'
       onClose={onClose}
       open={isOpen}
@@ -89,7 +93,7 @@ export const AnalyticStatusComplete = ({ isOpen, onClose }: AnalyticStatusComple
     >
       {orderFilterDate && (
         <div className='grid grid-cols-4 gap-4 mb-4'>
-          <CardInfo title='Doanh thu tìm kiếm' number={orderFilterDate?.totalMoney} price={true} icon={<CartIcon2 />} />
+          <CardInfo title='Doanh thu tìm kiếm' number={orderFilterDate} price={true} icon={<CartIcon2 />} />
         </div>
       )}
       <div className='grid grid-cols-4 gap-4'>

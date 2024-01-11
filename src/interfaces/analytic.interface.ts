@@ -12,7 +12,7 @@ export interface IAnalyticYear {
 
 export interface IFilterOrder {
   totalMoney: number
-  order: IFilterOrderProduct[]
+  orders: IFilterOrderProduct[]
 }
 
 export interface IAnalyticStatusYear {
@@ -47,4 +47,9 @@ export interface IData {
   week: TimeFrame[]
   month: TimeFrame[]
   year: TimeFrame[]
+}
+
+export interface ICountNumber {
+  title: string
+  value: number
 }

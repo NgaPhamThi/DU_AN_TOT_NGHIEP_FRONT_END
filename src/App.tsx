@@ -48,8 +48,8 @@ import { addSize } from "./api/size";
 import AddColor from "./Pages/Admin/Color/AddColors";
 import AddSize from "./Pages/Admin/Size/AddSizes";
 import UpdateColors from "./Pages/Admin/Color/UpdateColors";
-import UpdateSizes from "./Pages/Admin/Size/Updatesizes";
-
+import UpdateSizes from "./Pages/Admin/Size/UpdateSizes";
+import { AnalyticPage } from './Pages/Admin/Analytics'
 function App() {
   
   const onHandleAddBlog = async (blog: any) => {
@@ -103,6 +103,7 @@ function App() {
         </Route>
         <Route path="/admin" element={<Admin />}>
           <Route index element={<Dashboard />} />
+          <Route path='analytics' element={<AnalyticPage />} />
           <Route path="messages" element={<CommentManagement />} />{" "}
           {/* Thêm đường dẫn mới tại đây */}
           <Route path="messages/comment/:productId" element={<Message />} />

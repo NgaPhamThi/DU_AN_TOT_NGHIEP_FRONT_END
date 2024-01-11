@@ -1,4 +1,4 @@
-import { IAnalyticStatusYear, IAnalyticYear, IData, IFilter, IFilterOrder } from '../interfaces'
+import { IAnalyticStatusYear, IAnalyticYear, ICountNumber, IData, IFilter, IFilterOrder } from '../interfaces'
 
 import instance from './instance'
 
@@ -39,5 +39,10 @@ export const analyticApi = {
   /* analytic cancel */
   analyticCancel: async () => {
     return instance.get<IData>(`/analytic-order-cancelled`)
+  },
+
+  /* get count */
+  getCounts: async () => {
+    return instance.get<ICountNumber[]>('/analytic-numbes')
   }
 }
