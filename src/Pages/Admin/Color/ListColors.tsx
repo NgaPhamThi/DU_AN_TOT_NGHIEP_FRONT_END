@@ -1,25 +1,25 @@
 import { Popconfirm, Table ,Input } from "antd";
 import React, { useEffect,useMemo, useState } from "react";
-import { deleteBlog, getAllBlog } from "../../../api/blog";
+import { getColor,deleteColor } from "../../../api/color"; 
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { IBlog } from "../../../interfaces/blog";
+import { IColor } from "../../../interfaces/color"; 
 
 type Props = {};
 const { Search } = Input;
 
-const ListBlog = (props: Props) => {
-const [blogs, setBlogs] = useState<IBlog[]>([]);
-const sorte = blogs.reverse()
+const ListColors = (props: Props) => {
+const [colors, setColors] = useState<IColor[]>([]);
+const sorte = colors.reverse()
 const [searchKeyword, setSearchKeyword] = useState('');
 
   useEffect(() => {
     async function fetchBlogs() {
       try {
-        const { data } = await getAllBlog();
+        const { data } = await getColor();
         
         console.log(data);
-        setBlogs(data);
+        setColors(data);
         
       } catch (error) {
         console.log("Error fetching blogs:", error);
@@ -29,11 +29,11 @@ const [searchKeyword, setSearchKeyword] = useState('');
     fetchBlogs();
   }, []);
 
-  const handleDeleteBlog = async (id: string) => {
+  const handleDeleteColor = async (id: string) => {
     try {
       if (id) {
-        await deleteBlog(id);
-        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog._id !== id));
+        await deleteColor(id);
+        setColors((prevColors) => prevColors.filter((color) => color._id !== id));
         toast.success("Xóa thành công!", { autoClose: 2000 });
       }
     } catch (error) {
@@ -47,30 +47,18 @@ const [searchKeyword, setSearchKeyword] = useState('');
 
   
   const columns = [
+   
     {
-      title: "Image",
-      dataIndex: "img",
-      key: "img",
-      render: (img: string) => <img src={img} alt="blog" style={{ width: "50px", height: "50px" }} />,
-    },
-    {
-      title: "Date",
-      dataIndex: "date",
-      sorter: (a: IBlog, b: IBlog) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-      key: {render: () => new Date().toLocaleDateString()},
-    },
-    
-    {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
       width: "40%",
     },
     {
         title: "Action",
         dataIndex: "status",
         key: "status",
-        render:(status: any, record: IBlog)=>(
+        render:(status: any, record: IColor)=>(
           <div className="inline-flex rounded-lg border  border-gray-100 bg-gray-100 p-1">
                      <Link to={`update/${record._id}`}>
                      <button 
@@ -96,7 +84,7 @@ const [searchKeyword, setSearchKeyword] = useState('');
                      </Link>
                       <Popconfirm
                         title="Bạn có chắc chắn muốn xóa sản phẩm này?"
-                        onConfirm={() => handleDeleteBlog(record._id)}
+                        onConfirm={() => handleDeleteColor(record._id)}
                         okText={<button className="text-red-500 hover:text-black">Xóa</button>}
                         cancelText="Hủy"
                         placement="topRight"
@@ -125,9 +113,9 @@ const [searchKeyword, setSearchKeyword] = useState('');
         )
       },
   ];
-  const filteredBlogs = useMemo(() => {
-    return sorte.filter((blog) =>
-      blog.title.toLowerCase().includes(searchKeyword.toLowerCase())
+  const filteredColor = useMemo(() => {
+    return sorte.filter((color) =>
+      color.name.toLowerCase().includes(searchKeyword.toLowerCase())
     );
   }, [sorte, searchKeyword]);
   return (
@@ -135,11 +123,11 @@ const [searchKeyword, setSearchKeyword] = useState('');
     <ToastContainer />
     <div className="flex justify-between items-center mb-4"> 
     <div className="text-center flex justify-between items-center">
-      <h1 className="text-2xl font-semibold">Quản Lý Blog</h1>
+      <h1 className="text-2xl font-semibold">Quản Lý Color</h1>
     </div>
     <div>
       <Search
-          placeholder="Tìm kiếm theo title"
+          placeholder="Tìm kiếm theo name"
           allowClear
           onSearch={handleSearch}
           style={{ width: 200, marginBottom: 16 }}
@@ -162,18 +150,18 @@ const [searchKeyword, setSearchKeyword] = useState('');
             >
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            Thêm BLog{' '}
+            Thêm Color{' '}
           
           </button>
         </Link>
       </div>
     
     </div>
-    <Table dataSource={filteredBlogs} columns={columns} />
+    <Table dataSource={filteredColor} columns={columns} />
 
   </div>
   );
 
 };
 
-export default ListBlog;
+export default ListColors;

@@ -24,11 +24,11 @@ const ListContact = () => {
             if (id) {
                 await deleteContact(id);
                 setContacts(prevContacts => prevContacts.filter(contact => contact._id !== id));
-                toast.success('Delete Successfully!', { autoClose: 2000 });
+                toast.success('Xóa thành công!', { autoClose: 2000 });
             }
         } catch (error) {
             console.error('Error deleting contact:', error);
-            toast.error('Error Deleting Contact!');
+            toast.error('Xóa thất bại!');
         }
     };
 

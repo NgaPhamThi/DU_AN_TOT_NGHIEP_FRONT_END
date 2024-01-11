@@ -29,11 +29,11 @@ const User = (props: Props) => {
         setUsers((prevUsers) =>
           prevUsers.filter((user) => user._id !== id)
         );
-        toast.success('Delete Successfully!', { autoClose: 2000 });
+        toast.success('Xóa thành công!', { autoClose: 2000 });
       }
     } catch (error) {
       console.error('Error deleting user:', error);
-      toast.error('Error Deleting User!');
+      toast.error('Xóa thất bại!');
     }
   };
   const handleSearch = (value: string) => {
