@@ -41,12 +41,38 @@ import DetailBlogPage from "./Pages/DetailBlog";
 import EditContact from "./Pages/Admin/Contact/EditContact";
 import Successful from "./components/Successful";
 import Information from "./components/Information";
+import ListColors from "./Pages/Admin/Color/ListColors";
+import ListSizes from "./Pages/Admin/Size/ListSizes";
+import { addColor } from "./api/color";
+import { addSize } from "./api/size";
+import AddColor from "./Pages/Admin/Color/AddColors";
+import AddSize from "./Pages/Admin/Size/AddSizes";
+import UpdateColors from "./Pages/Admin/Color/UpdateColors";
+import UpdateSizes from "./Pages/Admin/Size/Updatesizes";
 
 function App() {
   
   const onHandleAddBlog = async (blog: any) => {
     try {
       const response = await addBlog(blog)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+
+    }
+  }
+  const onHandleAddColor = async (color: any) => {
+    try {
+      const response = await addColor(color)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+
+    }
+  }
+  const onHandleAddSize = async (size: any) => {
+    try {
+      const response = await addSize(size)
       console.log(response)
     } catch (error) {
       console.log(error)
@@ -80,6 +106,14 @@ function App() {
           <Route path="messages" element={<CommentManagement />} />{" "}
           {/* Thêm đường dẫn mới tại đây */}
           <Route path="messages/comment/:productId" element={<Message />} />
+          <Route path="color" element={<ListColors />} />
+          <Route path="color/add" element={<AddColor onAdd={onHandleAddColor} />} />
+          <Route path="color/update/:id" element={<UpdateColors />} />
+
+          <Route path="size" element={<ListSizes />} />
+          <Route path="size/add" element={<AddSize onAdd={onHandleAddSize} />} />
+          <Route path="size/update/:id" element={<UpdateSizes />} />
+
           <Route path="vouchers" element={<ListVouchers />} />
           <Route path="vouchers/add" element={<AddVouchers />} />
           <Route path="vouchers/update/:id" element={<UpdateVouchers />} />
