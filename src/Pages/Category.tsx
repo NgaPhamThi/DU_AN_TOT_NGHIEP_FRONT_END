@@ -45,7 +45,7 @@ const Category = () => {
                     {/* ... Bạn có thể tiếp tục thêm các mục tương tự ... */}
                 </div>
             </div>
-            <div>
+            <div className='max-w-[1800px] mx-auto'>
                 <img className='w-full' src="https://aristino.com/Data/upload/images/BANNER/Banner-Web_1.jpg" alt="" />
             </div>
         </div>

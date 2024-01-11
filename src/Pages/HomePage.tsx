@@ -63,7 +63,7 @@ const HomePage = () => {
                 </section>
 
             </div>
-            <div className='border-b-2'>
+            <div className='border-b-2 max-w-[1800px] mx-auto'>
                 <img className='w-full' src="slide_1.png" alt="" />
                 <div className='max-w-[1440px] mx-auto '>
 
