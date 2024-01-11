@@ -30,7 +30,6 @@ const DetailPage = () => {
     const [size, setSize] = useState<string | null>(null)
     const [quantity, setQuantity] = useState<number>(1)
     const { productId } = useParams()
-    const [productStock, setProductStock] = useState<number>(0);
     const [comments, setComments] = useState<Comments[]>([]);
     const [comment, setComment] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -102,7 +101,7 @@ const DetailPage = () => {
             const { data } = await getById(productId)
             // console.log(data);
             setProduct(data)
-            setProductStock(data.quantity)
+            
 
         }
     }
@@ -161,9 +160,6 @@ const DetailPage = () => {
     const addCart = (product: IProduct, type: string) => {
         if (!size || !color || quantity == 0) {
             return alert('Bạn Cần nhập thông tin size,color,quantity')
-        }
-        if(quantity > productStock){
-            return alert(`Số lượng sản phẩm không đủ (${productStock} sản phẩm còn lại).`);
         }
         const cartItem: CartItem = {
             _id: typeof product._id === 'string' || typeof product._id === 'number' ? product._id : '',
