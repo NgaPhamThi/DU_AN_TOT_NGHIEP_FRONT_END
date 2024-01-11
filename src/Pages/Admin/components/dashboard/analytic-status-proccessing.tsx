@@ -1,12 +1,13 @@
 import { Bar, CartesianGrid, ComposedChart, Legend, Line, Tooltip, XAxis, YAxis } from 'recharts'
 import { DatePicker, Drawer, Space, message } from 'antd'
 import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker'
-import { IData, IFilterOrder } from '../../../../interfaces'
 import { useEffect, useState } from 'react'
 
 import { CardInfo } from './card-info'
 import { CartIcon2 } from '../../../../components'
+import { IData } from '../../../../interfaces'
 import { analyticApi } from '../../../../api/analytic.api'
+import { convertMoney } from './utils/conver-money'
 import { filterOrder } from './hooks/get-order-status'
 
 interface AnalyticStatusProccessingProps {
@@ -15,7 +16,7 @@ interface AnalyticStatusProccessingProps {
 }
 const { RangePicker } = DatePicker
 export const AnalyticStatusProccessing = ({ isOpen, onClose }: AnalyticStatusProccessingProps) => {
-  const [orderFilterDate, setOrderFilterDate] = useState<IFilterOrder | null>(null)
+  const [orderFilterDate, setOrderFilterDate] = useState<number | null>(null)
   const [data, setData] = useState<IData | null>(null)
 
   const onChange = async (
@@ -35,7 +36,10 @@ export const AnalyticStatusProccessing = ({ isOpen, onClose }: AnalyticStatusPro
 
     /* lấy dữ liệu */
     const data = await filterOrder(values)
-    setOrderFilterDate(data)
+    if (data) {
+      const totalMoney = convertMoney(data, 'PROCESSING')
+      setOrderFilterDate(totalMoney)
+    }
   }
 
   useEffect(() => {
@@ -88,7 +92,7 @@ export const AnalyticStatusProccessing = ({ isOpen, onClose }: AnalyticStatusPro
     >
       {orderFilterDate && (
         <div className='grid grid-cols-4 gap-4 mb-4'>
-          <CardInfo title='Doanh thu tìm kiếm' number={orderFilterDate?.totalMoney} price={true} icon={<CartIcon2 />} />
+          <CardInfo title='Doanh thu tìm kiếm' number={orderFilterDate} price={true} icon={<CartIcon2 />} />
         </div>
       )}
       <div className='grid grid-cols-4 gap-4'>

@@ -1,13 +1,14 @@
 import { Bar, CartesianGrid, ComposedChart, Legend, Line, Tooltip, XAxis, YAxis } from 'recharts'
 import { DatePicker, Drawer, Space, message } from 'antd'
 import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker'
-import { IAnalyticYear, IData, IFilterOrder } from '../../../../interfaces'
+import { IAnalyticYear, IData } from '../../../../interfaces'
 import { filterOrder, getOrderStatus } from './hooks/get-order-status'
 import { useEffect, useState } from 'react'
 
 import { CardInfo } from './card-info'
 import { CartIcon2 } from '../../../../components'
 import { analyticApi } from '../../../../api/analytic.api'
+import { convertMoney } from './utils/conver-money'
 
 const { RangePicker } = DatePicker
 
@@ -18,8 +19,7 @@ interface IAnalyticOrderProps {
 
 export const AnalyticOrderPending = ({ isOpen, onClose }: IAnalyticOrderProps) => {
   const [orderStatus, setOrderStatus] = useState<IAnalyticYear[]>([])
-  console.log('🚀 ~ file: analytic-order.tsx:20 ~ AnalyticOrderPending ~ orderStatus:', orderStatus)
-  const [orderFilterDate, setOrderFilterDate] = useState<IFilterOrder | null>(null)
+  const [orderFilterDate, setOrderFilterDate] = useState<number | null>(null)
   const [data, setData] = useState<IData | null>(null)
 
   const onChange = async (
@@ -37,9 +37,16 @@ export const AnalyticOrderPending = ({ isOpen, onClose }: IAnalyticOrderProps) =
       return
     }
 
-    /* lấy dữ liệu */
-    const data = await filterOrder(values)
-    setOrderFilterDate(data)
+    try {
+      /* lấy dữ liệu */
+      const data = await filterOrder(values)
+      if (data) {
+        const totalMoney = convertMoney(data, 'PENDING')
+        setOrderFilterDate(totalMoney)
+      }
+    } catch (error) {
+      message.error('Lỗi lấy dữ liệu')
+    }
   }
 
   useEffect(() => {
@@ -94,7 +101,7 @@ export const AnalyticOrderPending = ({ isOpen, onClose }: IAnalyticOrderProps) =
     >
       {orderFilterDate && (
         <div className='grid grid-cols-4 gap-4 mb-4'>
-          <CardInfo title='Doanh thu tìm kiếm' number={orderFilterDate?.totalMoney} price={true} icon={<CartIcon2 />} />
+          <CardInfo title='Doanh thu tìm kiếm' number={orderFilterDate} price={true} icon={<CartIcon2 />} />
         </div>
       )}
       <div className='grid grid-cols-4 gap-4'>

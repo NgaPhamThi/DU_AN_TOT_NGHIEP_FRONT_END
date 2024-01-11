@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { CardInfo } from './card-info'
 import { CartIcon2 } from '../../../../components'
 import { analyticApi } from '../../../../api/analytic.api'
+import { convertMoney } from './utils/conver-money'
 import { filterOrder } from './hooks/get-order-status'
 
 interface AnalyticStatusCancelledProps {
@@ -17,7 +18,7 @@ interface AnalyticStatusCancelledProps {
 const { RangePicker } = DatePicker
 
 export const AnalyticStatusCancelled = ({ isOpen, onClose }: AnalyticStatusCancelledProps) => {
-  const [orderFilterDate, setOrderFilterDate] = useState<IFilterOrder | null>(null)
+  const [orderFilterDate, setOrderFilterDate] = useState<number | null>(null)
   const [data, setData] = useState<IData | null>(null)
 
   const onChange = async (
@@ -37,7 +38,10 @@ export const AnalyticStatusCancelled = ({ isOpen, onClose }: AnalyticStatusCance
 
     /* lấy dữ liệu */
     const data = await filterOrder(values)
-    setOrderFilterDate(data)
+    if (data) {
+      const totalMoney = convertMoney(data, 'CANCELLED')
+      setOrderFilterDate(totalMoney)
+    }
   }
 
   useEffect(() => {
@@ -90,7 +94,7 @@ export const AnalyticStatusCancelled = ({ isOpen, onClose }: AnalyticStatusCance
     >
       {orderFilterDate && (
         <div className='grid grid-cols-4 gap-4 mb-4'>
-          <CardInfo title='Doanh thu tìm kiếm' number={orderFilterDate?.totalMoney} price={true} icon={<CartIcon2 />} />
+          <CardInfo title='Doanh thu tìm kiếm' number={orderFilterDate} price={true} icon={<CartIcon2 />} />
         </div>
       )}
       <div className='grid grid-cols-4 gap-4'>
