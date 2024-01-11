@@ -33,12 +33,12 @@ const [searchKeyword, setSearchKeyword] = useState('');
     try {
       if (id) {
         await deleteBlog(id);
-        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog._id !== id));
-        toast.success("Xóa thành công!", { autoClose: 2000 });
+        setBlogs((prevBlogs) => prevBlogs.reverse().filter((blog) => blog._id !== id));
+        toast.success("Delete Successfully!", { autoClose: 2000 });
       }
     } catch (error) {
       console.log("Error deleting blog:", error);
-      toast.error("Xóa thất bại!");
+      toast.error("Error Delete Blog!");
     }
   };
   const handleSearch = (value: string) => {

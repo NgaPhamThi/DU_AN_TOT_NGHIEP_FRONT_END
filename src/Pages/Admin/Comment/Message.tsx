@@ -32,7 +32,7 @@ const Message = () => {
       if (commentId !== null) {
         await deleteComment(commentId);
         setComments((prevComments) =>
-          prevComments.filter((comment) => comment._id !== commentId)
+          prevComments.reverse().filter((comment) => comment._id !== commentId)
         );
         toast.success('Xóa bình luận thành công', { autoClose: 2000 });
       }
