@@ -33,7 +33,7 @@ const [searchKeyword, setSearchKeyword] = useState('');
     try {
       if (id) {
         await deleteColor(id);
-        setColors((prevColors) => prevColors.filter((color) => color._id !== id));
+        setColors((prevColors) => prevColors.reverse().filter((color) => color._id !== id));
         toast.success("Xóa thành công!", { autoClose: 2000 });
       }
     } catch (error) {

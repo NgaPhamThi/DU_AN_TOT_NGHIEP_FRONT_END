@@ -21,16 +21,20 @@ interface TokenPayload {
     id: string;
     // Bạn cần thêm các trường khác từ payload token nếu cần
 }
+
 const DetailPage = () => {
     const navigate = useNavigate()
     const [product, setProduct] = useState<IProduct>({} as IProduct)
+    console.log(product.sizeAndcolor)
     const [products, setProducts] = useState<IProduct[]>([])
+
     const [colors, setColors] = useState<IColor[]>([])
     const [sizes, setSizes] = useState<ISize[]>([])
     
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
     const [selectedColor, setSelectedColor] = useState<string | null>(null);
-
+    const [quantities, setQuantities] = useState<Array<{ sizeId: string; colorId: string; quantity: number }>>([]);
+    console.log(quantities);
     // const [color, setColor] = useState<string | null>(null)
     // const [size, setSize] = useState<string | null>(null)
     
@@ -181,37 +185,87 @@ const DetailPage = () => {
 
         setColors(availableColors);
     };
+    useEffect(() => {
+        fetColor();
+    }, [selectedSize]);
 
+    
     const fetSize = async () => {
         const { data } = await getSize();
         setSizes(data);
     };
 
-    useEffect(() => {
-        fetColor();
-    }, [selectedSize]);
-
+    
+    const fetchQuantity = () => {
+        // Lấy quantity từ sizeAndcolor của product
+        console.log(product,"131231")
+        var quantityData = product.sizeAndcolor;
+    console.log(quantityData,"dhbkasdkashdaks")
+        // Cập nhật state với dữ liệu quantity
+        // setQuantities(quantityData);
+    };
+    // console.log(quantityData,"ùhdufhdu")
     useEffect(() => {
         fetSize();
+        fetchQuantity();
     }, []);
     const { addCartItem } = useShoppingContext()
 
     const addQuantity = (type: string) => {
-        console.log('ok');
+        // ...
 
-        if (type == 'plus') {
-            setQuantity(quantity + 1)
+        if (type === 'plus') {
+            const selectedQuantityItem = product.sizeAndcolor.find(
+                (item) => item.sizeId === selectedSize && item.colorId === selectedColor
+            );
+
+            if (selectedQuantityItem && quantity < selectedQuantityItem.quantity) {
+                setQuantity(quantity + 1);
+            } else {
+                toast.error("Số lượng vượt quá giới hạn.", { autoClose: 2000 });
+            }
         } else {
-            if (quantity === 0) return
-            setQuantity(quantity - 1)
+            if (quantity === 1) return;
+            setQuantity(quantity - 1);
         }
     }
-
     const addCart = (product: IProduct, type: string) => {
-        if (!selectedSize || !selectedColor || quantity == 0) {
-            return alert('Bạn Cần nhập thông tin size,color,quantity')
-        }
+        try {
+            if (!selectedSize || !selectedColor || quantity === 0) {
+                // Hiển thị thông báo khi không nhập đủ thông tin
+                toast.error('Bạn cần nhập đủ thông tin size, color và quantity',{ autoClose: 2000 });
+            } else {
+                // Thực hiện kiểm tra kho hàng
+                const selectedQuantityItem = product.sizeAndcolor.find(
+                    (item) => item.sizeId === selectedSize && item.colorId === selectedColor
+                );
+    
+                if (selectedQuantityItem && quantity <= selectedQuantityItem.quantity) {
+                    addCartItem(cartItem);
+                    setQuantity(1);
+    
+                    // Chuyển hướng đến trang giỏ hàng
+                    if (type === 'TO_CART') {
+                        setTimeout(() => {
+                            navigate('/cart');
+                          }, 3000);
+                          toast.success('Thêm thành công ', { autoClose: 2000 })
+                    }
+                   
 
+                } else {
+                    // Hiển thị thông báo khi số lượng vượt quá giới hạn hoặc không có hàng trong kho
+                    toast.error('Số lượng vượt quá giới hạn hoặc không có hàng trong kho',{ autoClose: 2000 });
+                }
+            }
+        } catch (error) {
+            // Xử lý lỗi khi có lỗi xảy ra trong quá trình thêm vào giỏ hàng
+            console.error('Lỗi khi thêm vào giỏ hàng:', error);
+    
+            // Hiển thị thông báo lỗi
+            toast.error('Đã xảy ra lỗi, vui lòng thử lại sau.',{ autoClose: 2000 });
+        }
+    };
         const cartItem: CartItem = {
             _id: typeof product._id === 'string' || typeof product._id === 'number' ? product._id : '',
             name: product.name,
@@ -222,12 +276,7 @@ const DetailPage = () => {
             quantity
         }
 
-        addCartItem(cartItem)
-        if (type == 'TO_CART') {
-            navigate('/cart')
-        }
-    }
-
+     
     return (
 
         <section className="py-20 overflow-hidden bg-white font-poppins dark:bg-gray-800">
@@ -320,20 +369,35 @@ const DetailPage = () => {
                     ))}
                 </div>
             </div>
-            <div className="mb-2 text-xl font-bold dark:text-gray-400">Color</div>
+            {selectedSize && (
+        <div className="mb-2 text-xl font-bold dark:text-gray-400">Color</div>
+    )}
             <div className="flex flex-wrap gap-4 -mb-2">
-                {colors.map((colorItem, index) => (
-                    <div
-                        className={`p-1 mb-2 mr-2 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 ${!colorItem.available ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        key={index}
-                    >
-                        <span
-                            onClick={() => colorItem.available && setSelectedColor(colorItem._id)}
-                            className={`${selectedColor === colorItem._id ? 'border-orange-500' : ''} px-[30px] py-[7px] w-10 h-10 bg-red-600 rounded-xl border`}
-                            style={{ background: colorItem.name }}
-                        ></span>
+            {colors.map((colorItem, index) => (
+            <div
+                className={`p-1 mb-2 mr-2 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 ${!colorItem.available ? 'opacity-50 cursor-not-allowed' : ''}`}
+                key={index}
+            >
+                <span
+                    onClick={() => colorItem.available && setSelectedColor(colorItem._id)}
+                    className={`${selectedColor === colorItem._id ? 'border-orange-500' : ''} px-[30px] py-[7px] w-10 h-10 bg-red-600 rounded-xl border`}
+                    style={{ background: colorItem.name }}
+                ></span>
+                {selectedColor === colorItem._id && (
+                    <div className="mt-2">
+                        {/* Hiển thị danh sách quantity */}
+                            {product.sizeAndcolor && product.sizeAndcolor.map((quantityItem, index) => (
+                                <div key={index}>
+                                    {quantityItem.sizeId === selectedSize &&
+                                        quantityItem.colorId === selectedColor && (
+                                            <p>{`kho: ${quantityItem.quantity}`}</p>
+                                        )}
+                                </div>
+                            ))}
                     </div>
-                ))}
+                )}
+            </div>
+        ))}
             </div>
         
         </div>

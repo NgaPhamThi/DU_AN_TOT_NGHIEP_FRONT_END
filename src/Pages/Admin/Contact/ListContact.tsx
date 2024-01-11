@@ -23,12 +23,12 @@ const ListContact = () => {
         try {
             if (id) {
                 await deleteContact(id);
-                setContacts(prevContacts => prevContacts.filter(contact => contact._id !== id));
-                toast.success('Xóa thành công!', { autoClose: 2000 });
+                setContacts(prevContacts => prevContacts.reverse().filter(contact => contact._id !== id));
+                toast.success('Delete Successfully!', { autoClose: 2000 });
             }
         } catch (error) {
             console.error('Error deleting contact:', error);
-            toast.error('Xóa thất bại!');
+            toast.error('Error Deleting Contact!');
         }
     };
 
@@ -128,10 +128,10 @@ const ListContact = () => {
         },
     ];
     const filteredContacts = useMemo(() => {
-        return sorte.filter(contact =>
+        return contacts.filter(contact =>
             contact.email.toLowerCase().includes(searchKeyword.toLowerCase())
         );
-    }, [sorte, searchKeyword]);
+    }, [contacts, searchKeyword]);
     return (
         <div className="ml-4 mr-4 mt-4">
         <ToastContainer />

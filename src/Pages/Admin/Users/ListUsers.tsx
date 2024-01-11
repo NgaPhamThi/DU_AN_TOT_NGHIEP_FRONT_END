@@ -27,7 +27,7 @@ const User = (props: Props) => {
       if (id) {
         await deleteUser(id);
         setUsers((prevUsers) =>
-          prevUsers.filter((user) => user._id !== id)
+          prevUsers.reverse().filter((user) => user._id !== id)
         );
         toast.success('Xóa thành công!', { autoClose: 2000 });
       }

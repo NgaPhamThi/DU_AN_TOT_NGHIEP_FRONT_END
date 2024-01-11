@@ -26,7 +26,7 @@ const ProductManager = (props: Props) => {
       if (id) {
         await deleteproduct(id);
         setProducts((prevProducts) =>
-          prevProducts.filter((product) => product._id !== id)
+          prevProducts.reverse().filter((product) => product._id !== id)
         );
         toast.success('Xóa sản phẩm thành công', { autoClose: 2000 });
       }

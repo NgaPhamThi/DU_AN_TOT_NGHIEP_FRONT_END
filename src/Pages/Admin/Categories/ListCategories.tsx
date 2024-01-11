@@ -26,7 +26,7 @@ const ListCategories = () => {
       if (categoryId) {
         await deletecategory(categoryId)
         setcategories((prevCategories) =>
-          prevCategories.filter((category) => category._id !== categoryId)
+          prevCategories.reverse().filter((category) => category._id !== categoryId)
         )
         toast.success('Xóa danh mục thành công', { autoClose: 2000 })
       }
