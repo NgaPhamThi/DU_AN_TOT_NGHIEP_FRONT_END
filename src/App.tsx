@@ -50,6 +50,8 @@ import AddSize from "./Pages/Admin/Size/AddSizes";
 import UpdateColors from "./Pages/Admin/Color/UpdateColors";
 import UpdateSizes from "./Pages/Admin/Size/UpdateSizes";
 import { AnalyticPage } from './Pages/Admin/Analytics'
+import ListSizeAndColor from "./Pages/Admin/SizeAndColor/ListSizeAndColor";
+import UpdateSizeAndColor from "./Pages/Admin/SizeAndColor/UpdateSizeAndColor";
 function App() {
   
   const onHandleAddBlog = async (blog: any) => {
@@ -114,6 +116,9 @@ function App() {
           <Route path="size" element={<ListSizes />} />
           <Route path="size/add" element={<AddSize onAdd={onHandleAddSize} />} />
           <Route path="size/update/:id" element={<UpdateSizes />} />
+
+          <Route path="productSize" element={<ListSizeAndColor />} />
+          <Route path="productSize/update/:id" element={<UpdateSizeAndColor />} />
 
           <Route path="vouchers" element={<ListVouchers />} />
           <Route path="vouchers/add" element={<AddVouchers />} />

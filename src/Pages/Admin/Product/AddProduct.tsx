@@ -89,9 +89,9 @@ const AddProduct = () => {
       data.img = images;
      
       const createProduct = await addproduct(data)
-      // setTimeout(() => {
-      //   navigate('/admin/products');
-      // }, 3000);
+      setTimeout(() => {
+        navigate('/admin/products');
+      }, 3000);
       toast.success('Thêm sản phẩm thành công', { autoClose: 2000 })
     } catch (error) {
 
@@ -243,61 +243,6 @@ const AddProduct = () => {
           
           {errors.sizeAndcolor && <span>this field is required</span>}
         </div>
-
-
-        {/* Color */}
-        {/* <div className="mb-4">
-          <label
-            htmlFor="color"
-            className="block text-gray-700 text-sm font-bold mb-2"
-          >
-            Color
-          </label>
-          {additionalColors.map((color, index) => (
-            <div key={index} className="flex items-center gap-2 mt-3 mb-3 ">
-              <div className="w-full">
-                <select
-                  {...register(`colors.${index}.colorId` as const)}
-                  value={watch(`colors.${index}.colorId` as const)}
-                  onChange={(e) => setValue(`colors.${index}.colorId`, e.target.value)}
-                  id={`colors-${index}`}
-                  className=" shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline   sm:text-sm"
-                >
-                  <option value="">Nhập Color</option>
-                  {colors.map((color) => (
-                    <option key={color._id} value={color._id}>{color.name}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="w-full">
-                <input
-                  className="shadow appearance-none border rounded w-full  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  placeholder="Nhập Số Lượng"
-                  id="colors"
-                  {...register(`colors.${index}.quantity` as const)}
-                  type="number"
-                 
-                />
-              </div>
-            </div>
-          ))}
-          <div className="w-full mt-3 mb-3">
-            <button className="w-full" onClick={addColorRow}>
-              <div
-                className="inline-flex w-full items-center justify-center gap-2 rounded border border-indigo-600 bg-indigo-600 px-8 py-3 text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
-              >
-                <span className="text-sm font-medium"> Thêm Color </span>
-
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-
-              </div>
-            </button>
-          </div>
-          
-          {errors.colors && <span>this field is required</span>}
-        </div> */}
         <div className="mb-4">
           <label
             htmlFor="HeadlineAct"
