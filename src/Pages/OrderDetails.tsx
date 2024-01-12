@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getSize } from '../api/size'
 import { getColor } from '../api/color'
 import { getVoucher, getVoucherById } from '../api/vouchers'
+import { getUserById } from '../api/auth'
 type Props = {}
 const statusOptions = [
     { value: 'PENDING', label: 'chờ duyệt' },
@@ -23,9 +24,13 @@ const OrderDetails = (props: Props) => {
     const [orderInfo, setOrderInfo] = useState<IOrders | null>(null);
     const [subtotal, setSubtotal] = useState<number>(0);
     const [isCancelModalVisible, setCancelModalVisible] = useState(false);
+    const [userAvatar, setUserAvatar] = useState<string | null>(null);
+    console.log(userAvatar);
+    
     const [sizes, setSizes] = useState<any[]>([]); // Replace 'any[]' with the actual type of your size objects
     const [colors, setColors] = useState<any[]>([]);
     const [voucherName, setVoucherName] = useState<string | null>(null);
+    const [AvatarName, setAvatar] = useState<string | null>(null);
     //thay thế tiếng anh bằng tiếng việt
     const getStatusLabel = (status:any) => {
         const statusOption = statusOptions.find((option) => option.value === status);
@@ -147,6 +152,19 @@ const OrderDetails = (props: Props) => {
 
         fetchVoucherName();
       }, [orderInfo]);
+      useEffect(() => {
+          const fetchDataAvatar = async () => {
+              try {
+                const userId = orderInfo?.userId ?? "";
+                const response = await getUserById(userId)
+                console.log(response.data);
+                setAvatar(response.data.avatar)
+              } catch (error) {
+                console.error('Error fetching voucher:', error);
+              }
+          }
+          fetchDataAvatar()
+      },[orderInfo])
       const formattedCurrentDateTime = orderInfo ? new Date(orderInfo.orderDate).toLocaleDateString('vi-VN', {
         weekday: 'long',
         day: 'numeric',
@@ -165,7 +183,10 @@ const OrderDetails = (props: Props) => {
                     <div className="flex border-b border-gray-200 dark:border-gray-700  items-stretch justify-start w-full h-full px-4 mb-8 md:flex-row xl:flex-col md:space-x-6 lg:space-x-8 xl:space-x-0">
                         <div className="flex items-start justify-start flex-shrink-0">
                             <div className="flex items-center justify-center w-full pb-6 space-x-4 md:justify-start">
-                                <img src="https://i.postimg.cc/RhQYkKYk/pexels-italo-melo-2379005.jpg" className="object-cover w-16 h-16 rounded-md" alt="avatar"/>
+                               
+                                   <img src={AvatarName || 'default-avatar.png'}  className="object-cover w-16 h-16 rounded-md" alt="avatar"/> 
+                              
+                                
                                     <div className="flex flex-col items-start justify-start space-y-2">
                                         <p className="text-lg font-semibold leading-4 text-left text-gray-800 dark:text-gray-400">
                                         {orderInfo?.fullname}</p>
@@ -192,7 +213,7 @@ const OrderDetails = (props: Props) => {
                             <p className="mb-2 text-sm font-medium leading-5 text-gray-800 dark:text-gray-400 ">
                                 Tổng: </p>
                             <p className="text-base font-semibold leading-4 text-blue-600 dark:text-gray-400">
-                            {orderInfo?.orderTotal.toLocaleString()}</p>
+                            {orderInfo?.orderTotal.toLocaleString()}đ</p>
                         </div>
                         <div className="w-full px-4 mb-4 md:w-1/4">
                             <p className="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
