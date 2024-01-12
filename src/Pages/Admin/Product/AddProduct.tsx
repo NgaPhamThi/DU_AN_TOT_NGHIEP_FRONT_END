@@ -20,7 +20,7 @@ const AddProduct = () => {
   const [sizes, setsizes] = useState<ISize[]>([])
   const [images, setImages] = useState<string[]>([]);
   const [additionalSizes, setAdditionalSizes] = useState<Array<{ sizeId: string;colorId: string; quantity: number }>>([]);
-
+  const [isAddingSize, setIsAddingSize] = useState(false)
   const navigate = useNavigate();
   console.log(categories);
   useEffect(() => {
@@ -84,20 +84,25 @@ const AddProduct = () => {
     }
   };
   
-  const onHandleSubmit:SubmitHandler<IProduct> = async (data: any) => {
+  const onHandleSubmit: SubmitHandler<IProduct> = async (data: any) => {
     try {
       data.img = images;
-     
-      const createProduct = await addproduct(data)
-      setTimeout(() => {
-        navigate('/admin/products');
-      }, 3000);
-      toast.success('Thêm sản phẩm thành công', { autoClose: 2000 })
-    } catch (error) {
 
+      if (!isAddingSize) {
+        const createProduct = await addproduct(data);
+          setTimeout(() => {
+         navigate('/admin/products');
+       }, 3000);
+        toast.success("Thêm sản phẩm thành công", { autoClose: 2000 });
+      }
+
+      setIsAddingSize(false); // Reset the flag after submission
+    } catch (error) {
+      // Handle error
     }
-  }
+  };
   const addSizeRow = () => {
+    setIsAddingSize(true);
     setAdditionalSizes((prevSizes) => [...prevSizes, { sizeId: '',colorId:'', quantity: 0 }]);
   };
 
@@ -127,7 +132,7 @@ const AddProduct = () => {
             type="text"
             {...register("name", { required: true })}
           />
-          {errors.name && <span>this field is required</span>}
+          {/* {errors.name && <span>this field is required</span>} */}
         </div>
         <div className="mb-4">
           <label
