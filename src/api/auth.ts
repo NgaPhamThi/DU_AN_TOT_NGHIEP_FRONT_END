@@ -7,7 +7,7 @@ export const signin = (data: { email: string, password: string }) => {
 export const getUser = () => {
     return instance.get('/user')
 }
-export const getUserById = (id: string)=>{
+export const getUserById = (id: string | number)=>{
     const uri = '/user/'+id
     return instance.get(uri)
 }

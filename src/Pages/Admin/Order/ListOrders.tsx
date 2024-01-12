@@ -42,6 +42,13 @@ const ListOrders = (props: Props) => {
         }).format(value);
       };
     const columns = [
+      {
+        title: 'ID',
+        dataIndex: '_id',
+        width: "15%",    
+
+        key: '_id',
+    },
         {
             title: 'Email',
             dataIndex: 'email',
