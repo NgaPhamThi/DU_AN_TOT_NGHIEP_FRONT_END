@@ -12,7 +12,7 @@ import { getSize } from '../../../api/size';
 import { getColor } from '../../../api/color';
 
 
-const UpdateProduct = () => {
+const UpdateSizeAndColor = () => {
   const [categories, setcategories] = useState<ICategories[]>([])
   const [product, setProduct] = useState<IProduct>({} as IProduct)
   const { id } = useParams();
@@ -185,7 +185,7 @@ const UpdateProduct = () => {
       if (id && product) {
         await updateproduct(product, id)
         setTimeout(() => {
-          navigate('/admin/products');
+          navigate('/admin/productSize');
         }, 3000);
         toast.success('Sửa thành công !', { autoClose: 2000 })
       }
@@ -198,9 +198,9 @@ const UpdateProduct = () => {
   return (
     <div className="flex flex-col items-center mt-10">
       <ToastContainer />
-      <h1 className="text-2xl font-bold mb-5">UPDATE Sản Phẩm</h1>
+      <h1 className="text-2xl font-bold mb-5">UPDATE Size</h1>
       <form className="w-1/3" onSubmit={handleSubmit} >
-        <div className="mb-4">
+        <div className="mb-4 hidden">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="categoryName"
@@ -219,7 +219,7 @@ const UpdateProduct = () => {
           />
 
         </div>
-        <div className="mb-4">
+        <div className="mb-4 hidden">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="categoryImage"
@@ -234,7 +234,7 @@ const UpdateProduct = () => {
           />
 
         </div>
-        <div className="mb-4">
+        <div className="mb-4 hidden">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="uploadedImages">
 
           </label>
@@ -260,7 +260,7 @@ const UpdateProduct = () => {
             ))}
           </div>
         </div>
-        <div className="mb-4">
+        <div className="mb-4 hidden">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="categoryImage"
@@ -278,7 +278,7 @@ const UpdateProduct = () => {
           />
 
         </div>
-        <div className="mb-4 hidden">
+        <div className="mb-4 ">
           <label
             htmlFor="size"
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -343,7 +343,7 @@ const UpdateProduct = () => {
 
 
         </div>
-        <div className="mb-4">
+        <div className="mb-4 hidden">
           <label
             htmlFor="HeadlineAct"
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -367,7 +367,7 @@ const UpdateProduct = () => {
           </select>
 
         </div>
-        <div className="mb-4">
+        <div className="mb-4 hidden">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="categoryImage"
@@ -382,9 +382,9 @@ const UpdateProduct = () => {
 
         <div className="lg:flex lg:justify-between lg:items-center">
     <button className="bg-blue-500 hover:bg-blue-700 text-center text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-        Cập nhật Sản Phẩm
+        Cập nhật Size
     </button>
-    <a href="/admin/products">
+    <a href="/admin/productSize">
         <button className="bg-blue-500 flex gap-2 items-center hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
@@ -398,4 +398,4 @@ const UpdateProduct = () => {
   )
 }
 
-export default UpdateProduct
+export default UpdateSizeAndColor
