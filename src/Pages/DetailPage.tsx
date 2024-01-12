@@ -11,7 +11,9 @@ import { getSize } from "../api/size"
 import { CartItem, useShoppingContext } from "../context/ShoppingCartContext"
 import { Comments } from "../interfaces/comment"
 import { jwtDecode } from "jwt-decode"
-import { toast } from "react-toastify"
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
+
 import axios from "axios"
 import { getComment } from "../api/comment"
 import { Avatar, Button, Input, Progress, Rate, Space } from "antd"
@@ -162,20 +164,11 @@ const DetailPage = () => {
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
     }, [productId])
-
-    // const fetSize = async () => {
-    //     const { data } = await getSize()
-    //     // console.log(data);
-    //     setSizes(data)
-
-    // }
-    // useEffect(() => {
-    //     fetSize()
-    // }, [])
+    
     const fetColor = async () => {
         const { data } = await getColor();
         const selectedSizeColors = product.sizeAndcolor
-            .filter(sc => sc.sizeId === selectedSize)
+            .filter(sc => sc.sizeId === selectedSize && sc.quantity > 0)
             .map(sc => sc.colorId);
 
         const availableColors = data.map(colorItem => ({
@@ -209,7 +202,7 @@ const DetailPage = () => {
         fetSize();
         fetchQuantity();
     }, []);
-    const { addCartItem } = useShoppingContext()
+    const { addCartItem  } = useShoppingContext()
 
     const addQuantity = (type: string) => {
         // ...
@@ -222,7 +215,7 @@ const DetailPage = () => {
             if (selectedQuantityItem && quantity < selectedQuantityItem.quantity) {
                 setQuantity(quantity + 1);
             } else {
-                toast.error("Số lượng vượt quá giới hạn.", { autoClose: 2000 });
+                toast.error("Kho hàng không đủ", { autoClose: 2000 });
             }
         } else {
             if (quantity === 1) return;
@@ -230,33 +223,34 @@ const DetailPage = () => {
         }
     }
     const addCart = (product: IProduct, type: string) => {
+        console.log(product)
         try {
             if (!selectedSize || !selectedColor || quantity === 0) {
                 // Hiển thị thông báo khi không nhập đủ thông tin
-                toast.error('Bạn cần nhập đủ thông tin size, color và quantity',{ autoClose: 2000 });
+                toast.error('Bạn cần nhập đủ thông tin size, color và số lượng!',{ autoClose: 2000 });
             } else {
                 // Thực hiện kiểm tra kho hàng
                 const selectedQuantityItem = product.sizeAndcolor.find(
                     (item) => item.sizeId === selectedSize && item.colorId === selectedColor
-                );
+                  );
     
                 if (selectedQuantityItem && quantity <= selectedQuantityItem.quantity) {
                     addCartItem(cartItem);
+                    console.log(cartItem)
                     setQuantity(1);
-    
+    console.log(type,"hfjkdhfdsik")
                     // Chuyển hướng đến trang giỏ hàng
-                    if (type === 'TO_CART') {
-                        setTimeout(() => {
-                            navigate('/cart');
-                          }, 3000);
-                          toast.success('Thêm thành công ', { autoClose: 2000 })
+                    if (type === 'TO_CART') {    
+                                                     
+                                navigate('/cart'); 
+                                
                     }
-                   
-
+                    if (type === 'ADD_CART') {
+                                  
+                    }
                 } else {
-                    // Hiển thị thông báo khi số lượng vượt quá giới hạn hoặc không có hàng trong kho
-                    toast.error('Số lượng vượt quá giới hạn hoặc không có hàng trong kho',{ autoClose: 2000 });
-                }
+                      toast.error(`Kho hàng không đủ!`, { autoClose: 2000 });
+                } 
             }
         } catch (error) {
             // Xử lý lỗi khi có lỗi xảy ra trong quá trình thêm vào giỏ hàng
@@ -273,7 +267,8 @@ const DetailPage = () => {
             price: product.price,
             colorId: selectedColor,
             sizeId: selectedSize,
-            quantity
+            quantity,
+            warehouse:product.sizeAndcolor,
         }
 
      
@@ -386,20 +381,20 @@ const DetailPage = () => {
                 {selectedColor === colorItem._id && (
                     <div className="mt-2">
                         {/* Hiển thị danh sách quantity */}
-                            {product.sizeAndcolor && product.sizeAndcolor.map((quantityItem, index) => (
-                                <div key={index}>
-                                    {quantityItem.sizeId === selectedSize &&
-                                        quantityItem.colorId === selectedColor && (
-                                            <p>{`kho: ${quantityItem.quantity}`}</p>
-                                        )}
-                                </div>
-                            ))}
+                           
                     </div>
                 )}
             </div>
         ))}
             </div>
-        
+            {product.sizeAndcolor && product.sizeAndcolor.map((quantityItem, index) => (
+                                <div key={index}>
+                                    {quantityItem.sizeId === selectedSize &&
+                                        quantityItem.colorId === selectedColor && (
+                                            <p>{`kho còn: ${quantityItem.quantity}`}</p>
+                                        )}
+                                </div>
+                            ))}
         </div>
                             <div className="flex flex-wrap items-center ">
                                 <div className="mb-4 mr-4 lg:mb-0">
