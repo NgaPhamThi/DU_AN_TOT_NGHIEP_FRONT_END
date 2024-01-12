@@ -224,7 +224,7 @@ const ProductPage = () => {
                             <div>
                               <div>{value.name}</div>
                               <span className="text-sm font-bold mr-2 text-red-500">
-                                {`${value.price}đ`}
+                                {`${value.price.toLocaleString()}đ`}
 
                               </span>
                             </div>
