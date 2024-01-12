@@ -8,6 +8,8 @@ import { searchProduct } from '../api/search';
 import { jwtDecode } from "jwt-decode";
 import { getUserById } from '../api/auth';
 import { IUser } from '../interfaces/auth';
+import { IProduct } from '../interfaces/product';
+
 interface TokenPayload {
   id: string;
   // Bạn cần thêm các trường khác từ payload token nếu cần
@@ -17,18 +19,35 @@ const Header: React.FC = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [showseach, setShowSeach] = useState(false);
+  
   const [data, setData] = useState<IUser>({} as IUser);
+  const [searchData, setSearchData] = useState<IProduct[]>([]);
 
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const username = localStorage.getItem('username');
   const isAuthenticated = !!token && !!username;
-  const isMobile = window.innerWidth <= 768;
 
   if (isAuthenticated) {
     console.log('Authenticated user:', username);
   } else {
     console.log('User not authenticated');
+  }
+  const hanldeSearch = async (e: any) => {
+    const value = e.target.value;
+    setSearchValue(value);
+
+
+    if (value.trim() !== '') {
+      // Thực hiện tìm kiếm chỉ khi có giá trị trong ô tìm kiếm
+      const res = await searchProduct(value);
+      const { data } = res;
+      setSearchData(data);
+    } else {
+      // Nếu giá trị trống, đặt data về mảng rỗng
+      setSearchData([]);
+    }
   }
   const handleLogout = () => {
     try {
@@ -118,8 +137,62 @@ const Header: React.FC = () => {
         </nav>
 
         <div className="flex items-center space-x-4 relative">
-          
-          <a className='sm:hidden lg:block md:block hidden ' href="/cart">
+        <i className="fas fa-search text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => setShowSeach(!showseach)}></i>
+        {showseach && (
+    <div className="absolute top-full right-0 mt-2 w-72 bg-white border rounded-md shadow-lg p-4 z-10 transition-transform transform ">
+        <input
+            type="text"
+            placeholder="Tìm kiếm sản phẩm..."
+            value={searchValue}
+            onChange={(e) =>
+                hanldeSearch(e)
+            }
+
+            onBlur={() => {
+                if (!searchValue.trim()) {
+                  setShowSeach(false);
+                }
+            }}
+            className="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300 transition-all"
+            autoFocus
+        />
+                {searchValue.trim() && searchData.length > 0 && (
+               <div className="absolute z-10 bg-white border border-gray-300 mt-2 mt-auto w-full rounded-md shadow-md right-0 max-h-80 overflow-y-auto">
+                {searchData.map((value) => (
+                <Link
+                key={value._id}
+                to={`/product/${value._id}`}
+                className="block px-4 py-2 hover:bg-gray-100"
+                >
+                <div className="flex items-center">
+                  {value.img && value.img.length > 0 ? (
+                    <img
+                      src={value.img[0]}
+                      alt={value.name}
+                      className="w-8 h-8 object-cover mr-2 "
+                    />
+                  ) : (
+                    <div className="w-8 h-8 bg-gray-300 mr-2 rounded-md"></div>
+                  )}
+
+                  <div>
+                    <div>{value.name}</div>
+                    <span className="text-sm font-bold mr-2 text-red-500">
+                      {`${value.price.toLocaleString()}đ`}
+
+                    </span>
+                  </div>
+                </div>
+                </Link>
+                ))}
+                </div>
+                )}
+                    </div>
+                )}
+
+
+
+          <a href="/cart">
             <div className="relative group">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
@@ -132,16 +205,16 @@ const Header: React.FC = () => {
           </a>
 
           <i
-            className="fas fa-user text-gray-600 hover:text-gray-800 cursor-pointer sm:hidden lg:block md:block hidden"
+            className="fas fa-user text-gray-600 hover:text-gray-800 cursor-pointer"
             onClick={() => setShowMenu(!showMenu)}
           ></i>
           {showMenu && (
-            <div className={`absolute -right-11 mt-28 w-56 rounded-md  shadow-lg bg-white ring-1 ring-black ring-opacity-5`} ref={menuRef}>
+            <div className={`absolute top-full -right-11 mt-2 w-56 rounded-md  shadow-lg bg-white ring-1 ring-black ring-opacity-5`} ref={menuRef}>
               <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                 {isAuthenticated ? (
                   <>
-                    <Link to={`/information/${data._id}`} className='block px-2 py-2 text-sm text-gray-700'>
-                      {/* <a href="/information" > */}
+                    <Link to={`/information/${data._id}`}  className='block px-2 py-2 text-sm text-gray-700'>
+                      {/* <a className='block px-2 py-2 text-sm text-gray-700'> */}
                         <svg xmlns="http://www.w3.org/2000/svg"
                           className='w-4 h-4 fill-current inline-block'
                           fill='currentColor'
@@ -153,7 +226,6 @@ const Header: React.FC = () => {
                         <span className='px-1'>Thay Đổi Thông Tin</span>
                       {/* </a> */}
                     </Link>
-
                     <a href="/purchase" className="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
               <svg xmlns="http://www.w3.org/2000/svg"
                className='w-4 h-4 fill-current inline-block'
@@ -205,88 +277,28 @@ const Header: React.FC = () => {
                   </>
                 )}
               </div>
-             
+              <div className="md:hidden">
+                <i className="fas fa-bars text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => setMenuOpen(true)}></i>
+              </div>
             </div>
 
           )}
- <div className="block md:hidden lg:hidden sm:block ">
-                <i className="fas fa-bars text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => setMenuOpen(true)}></i>
-              </div>
-        </div>
 
+        </div>
       </div>
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 right-0 h-full bg-[#eff6ff] shadow-lg transform transition-transform duration-300 ${menuOpen ? 'translate-x-0 w-64' : 'translate-x-full w-0'} z-50 p-4 overflow-y-auto`}
+        className={`fixed top-0 right-0 h-full bg-white shadow-lg transform transition-transform duration-300 ${menuOpen ? 'translate-x-0 w-64' : 'translate-x-full w-0'} z-50 p-4 overflow-y-auto`}
         ref={menuRef}
       >
-        <div>
-        
-        </div>
-        <div>
-        <a href=""> <img src="image-removebg-preview 1.png" alt="" /></a>
-        </div>
-        <div className=''>
-        <div className="flex items-center space-x-4 relative">
-          
-          <a className='sm:block lg:hidden md:hidden block ' href="/cart">
-            <div className="relative group">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-              </svg>
-
-              <span className="absolute -top-1  -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center group-hover:bg-red-600">
-                {cartQty}
-              </span>
-            </div>
-          </a>
-
-          <i
-            className="fas fa-user text-gray-600 hover:text-gray-800 cursor-pointer sm:block lg:hidden md:hidden block"
-            onClick={() => setShowMenu(!showMenu)}
-          ></i>
-          
- 
-        </div>
-        </div>
-        <div className="relative " >
-  <label htmlFor="Search" className="sr-only "> Search </label>
-
-  <input
-    type="text"
-    id="Search"
-    placeholder="Search for..."
-    className="w-full rounded-md pl-4 mt-10 outline-none  border-gray-700 py-2.5 pe-10 shadow-sm sm:text-sm"
-  />
-
-  <span className="absolute inset-y-10 end-0 grid w-10 place-content-center">
-    <button type="button" className="text-gray-600 hover:text-gray-700">
-      <span className="sr-only">Search</span>
-
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        className="h-4 w-4 mt-10"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-        />
-      </svg>
-    </button>
-  </span>
-</div>
-        <nav className="space-y-4 font-medium mt-5 pl-2">
-          
-          <a href="/" className="block text-gray-600 hover:text-red-400">Trang Chủ</a>
-          <a href="/product" className="block text-gray-600 hover:text-red-400">Cửa Hàng</a>
-          <a href="/blog" className="block text-gray-600 hover:text-red-400">Blog</a>
-          <a href="/contact" className="block text-gray-600 hover:text-red-400">Liên hệ</a>
+        <nav className="space-y-4 font-medium">
+          <a href="#" className="block text-gray-600 hover:text-red-400">Trang Chủ</a>
+          <a href="#" className="block text-gray-600 hover:text-red-400">Sản Phẩm</a>
+          <a href="#" className="block text-gray-600 hover:text-red-400">LookBook</a>
+          <a href="#" className="block text-gray-600 hover:text-red-400">Dịp/Sự Kiện</a>
+          <a href="#" className="block text-gray-600 hover:text-red-400">Blog</a>
+          <a href="#" className="block text-gray-600 hover:text-red-400">Cửa Hàng</a>
         </nav>
         <i className="fas fa-times text-gray-600 hover:text-gray-800 cursor-pointer absolute top-4 right-4" onClick={() => setMenuOpen(false)}></i>
       </div>
