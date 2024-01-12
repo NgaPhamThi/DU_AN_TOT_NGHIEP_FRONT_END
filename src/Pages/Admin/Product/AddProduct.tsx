@@ -89,9 +89,9 @@ const AddProduct = () => {
       data.img = images;
      
       const createProduct = await addproduct(data)
-      // setTimeout(() => {
-      //   navigate('/admin/products');
-      // }, 3000);
+      setTimeout(() => {
+        navigate('/admin/products');
+      }, 3000);
       toast.success('Thêm sản phẩm thành công', { autoClose: 2000 })
     } catch (error) {
 

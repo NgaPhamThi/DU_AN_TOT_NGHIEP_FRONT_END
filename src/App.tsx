@@ -41,6 +41,8 @@ import DetailBlogPage from "./Pages/DetailBlog";
 import EditContact from "./Pages/Admin/Contact/EditContact";
 import Successful from "./components/Successful";
 import Information from "./components/Information";
+import ListSizeAndColor from "./Pages/Admin/SizeAndColor/ListSizeAndColor";
+import UpdateSizeAndColor from "./Pages/Admin/SizeAndColor/UpdateSizeAndColor";
 
 function App() {
   
@@ -92,7 +94,9 @@ function App() {
           <Route path="products" element={<ProductManager />} />
           <Route path="contact" element={<ListContact />} />
           <Route path="contact/update/:id" element={<EditContact />} />
-
+          
+          <Route path="productSize" element={<ListSizeAndColor />} />
+          <Route path="productSize/update/:id" element={<UpdateSizeAndColor />} />
           <Route path="products/add" element={<AddProduct />} />
           <Route path="blog" element={<ListBlog />} />
           <Route path="blog/add" element={<AddBlog onAdd={onHandleAddBlog} />} />
