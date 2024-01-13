@@ -6,7 +6,10 @@ import { deleteContact, getAllContact } from "../../../api/contact";
 import { Link } from "react-router-dom";
 const { Search } = Input;  
 const ListContact = () => {
-   
+    const statusOptions = [
+        { value: 'CHUATUVAN', label: 'chờ tư vẫn' },
+        { value: 'DATUVAN', label: 'đã tư vấn' },
+      ];
 
     const [contacts, setContacts] = useState<IContact[]>([]);
     const sorte = contacts.reverse()
@@ -24,7 +27,7 @@ const ListContact = () => {
             if (id) {
                 await deleteContact(id);
                 setContacts(prevContacts => prevContacts.reverse().filter(contact => contact._id !== id));
-                toast.success('Delete Successfully!', { autoClose: 2000 });
+                toast.success('Xóa liên hệ thành công!', { autoClose: 2000 });
             }
         } catch (error) {
             console.error('Error deleting contact:', error);
@@ -62,11 +65,24 @@ const ListContact = () => {
             dataIndex: "description",
             key: "description",
         },
-        {
-            title: "Status",
-            dataIndex: "status",
-            key: "status",
-        },
+         {
+            title: 'Trạng Thái',
+            dataIndex: 'status',
+            key: 'status',
+            render: (status: string) => {
+              const statusOption = statusOptions.find((option) => option.value === status);
+          
+              if (statusOption) {
+                return (
+                  <span className="text-base font-normal">
+                    <span className="bg-transparent border-none">{statusOption.label}</span>
+                  </span>
+                );
+              }
+          
+              return null;
+            },
+          },
         {
             title: "Action",
             dataIndex: "action",

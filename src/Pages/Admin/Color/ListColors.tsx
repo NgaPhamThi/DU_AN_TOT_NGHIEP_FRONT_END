@@ -23,7 +23,7 @@ const [searchKeyword, setSearchKeyword] = useState('');
         
       } catch (error) {
         console.log("Error fetching blogs:", error);
-        toast.error("Error fetching blogs!");
+        // toast.error("Error fetching blogs!");
       }
     }
     fetchBlogs();
