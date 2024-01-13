@@ -1,8 +1,10 @@
 export interface IContact {
     _id?: string | number
-    name: string
+  userId: string
+  name: string
     email: string
     phonenumber: string
     description: string
     status: string
+    traloi:string
 }
