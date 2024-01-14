@@ -218,9 +218,9 @@ console.log(user);
                                 </span>
                             </div>
                             <h2 className="mb-3 text-2xl font-bold text-center text-gray-800 dark:text-gray-400">
-                            Đăng nhập tài khoản của bạn</h2>
+                            Đăng ký tài khoản mới</h2>
                             <p className="text-base text-center text-gray-500 mb-7 dark:text-gray-400">
-                            Vui lòng điền thông tin xác thực của bạn</p>
+                            Vui lòng điền đầy đủ thông tin yêu cầu</p>
                             {/* <form action="" className=""> */}
                             <form acceptCharset="UTF-8"className="p-0 m-0" id="create_customer" onSubmit={handleSignup}>
                             <input name="form_type" type="hidden" value="create_customer" />

@@ -105,7 +105,7 @@ const ListSizeAndColor = (props: Props) => {
     <ToastContainer />
     <div className="flex justify-between items-center mb-4"> 
     <div className="text-center flex justify-between items-center">
-      <h1 className="text-2xl font-semibold">Quản Lý Size</h1>
+      <h1 className="text-2xl font-semibold">Quản Lý Size và Color</h1>
     </div>
     <div>
       <Search
