@@ -13,7 +13,7 @@ const Successful = (props: Props) => {
 
   useEffect(() => {
     if (!searchParams.get('encode') && !searchParams.get('userId')) {
-      navigate('/purchase')
+      navigate('/successful')
     }
     const date = new Date()
     if (searchParams.get('expire')) {

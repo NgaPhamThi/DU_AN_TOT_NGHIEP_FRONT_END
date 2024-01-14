@@ -134,7 +134,7 @@ const PayPage = () => {
           phonenumber: formData.phonenumber,
           email: formData.email,
           address: formData.address,
-  
+          Discount: discount,
           orderTotal: totalPrice - discount,
           orderDetails: cartItems.map((item) => ({
             productId: item._id,
@@ -158,7 +158,7 @@ const PayPage = () => {
         toast.success("Đặt hàng thành công", { autoClose: 2000 });
        
         setTimeout(() => {
-          navigate("/");
+          navigate("/successful");
         }, 3000);
         return;
       }
@@ -168,7 +168,7 @@ const PayPage = () => {
         phonenumber: formData.phonenumber,
         email: formData.email,
         address: formData.address,
-
+        Discount: discount,
         orderTotal: totalPrice - discount,
         orderDetails: cartItems.map((item) => ({
           name: item.name,
@@ -191,7 +191,7 @@ const PayPage = () => {
         localStorage.removeItem('id')
         localStorage.removeItem('shopping_cart')
         setTimeout(() => {
-          navigate("/purchase");
+          navigate("/successful");
         }, 3000);
         toast.success("Đặt hàng thành công", { autoClose: 2000 });
         
