@@ -97,7 +97,7 @@ function App() {
           <Route path="/purchase/order/:orderId" element={<OrderDetails />} />
           <Route path="/pay" element={<PayPage />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/login" element={<Login />} />
+          {/* <Route path="/login" element={<Login />} /> */}
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/successful" element={<Successful />} />

@@ -21,7 +21,7 @@ const Contact = () => {
         description: "",
     
       });
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, formState: { errors } } = useForm()
     useEffect(() => {
     const token = localStorage.getItem("token");
     if(token){
@@ -94,7 +94,7 @@ const Contact = () => {
             "http://localhost:8080/api/contactNoId",
             dataFormNoId
           )
-          toast.success("Đặt hàng thành công", { autoClose: 2000 });
+          toast.success("Liên hệ thành công", { autoClose: 2000 });
         return;
       }
       const dataForm = {
@@ -139,7 +139,7 @@ const Contact = () => {
                                 <MdOutlineEmail className="w-[35px] h-[35px]  text-gray-500" />
                             </div>
                             <div className="text_contact">
-                                <p className='text-[18px]'>TNDshop@gmail.com</p>
+                                <p className='text-[18px]'>shopthoitrangnamTND@gmail.com</p>
                             </div>
                         </div>
                         <div className="flex gap-[20px] mb-[20px]">
@@ -147,7 +147,7 @@ const Contact = () => {
                                 <FaPhoneAlt className="w-[30px] h-[30px]  text-gray-500" />
                             </div>
                             <div className="text_contact">
-                                <p className='text-[18px]'>1900 252520</p>
+                                <p className='text-[18px]'>0335 830 256</p>
                             </div>
                         </div>
                     </div>
@@ -160,12 +160,12 @@ const Contact = () => {
                                 className="block text-gray-700 text-sm font-bold mb-2"
                                 htmlFor="fullname"
                             >
-                                Name
+                               Tên
                             </label>
                             <input onChange={(e) => setFormData({ ...formData, name: e.target.value })}
              value={formData.name}
              disabled={!!localStorage.getItem("token")} 
-            type="text" id="name" name="name"  className="shadow appearance-none border rounded w-[500px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Họ Và Tên" />
+            type="text" id="name" name="name"  className="shadow appearance-none border rounded w-[500px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Nguyễn Văn A" />
            
                             {errors.name && <span style={{ color: 'red' }}>Bắt buộc nhập tên !</span>}
                         </div>
@@ -189,12 +189,12 @@ const Contact = () => {
                                 className="block text-gray-700 text-sm font-bold mb-2"
                                 htmlFor="phonenumber"
                             >
-                                phone
+                               Số điện thoại
                             </label>
                             <div className="relative">
             <input onChange={(e) => setFormData({ ...formData, phonenumber: e.target.value })} 
             value={formData.phonenumber}
-             type="text" id="phonenumber" name="phonenumber"  className="shadow appearance-none border rounded w-[500px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Số Điện Thoại" />
+             type="text" id="phonenumber" name="phonenumber"  className="shadow appearance-none border rounded w-[500px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="0123456789" />
           </div>
                             {errors.phonenumber && <span style={{ color: 'red' }}>Bắt buộc thêm ảnh !</span>}
                         </div>

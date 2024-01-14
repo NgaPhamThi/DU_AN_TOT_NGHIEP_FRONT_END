@@ -74,7 +74,8 @@ export const ShoppingContextProvider = ({ children }: ShoppingContextProviderPro
                 setCartItem(newItems);
                 
             } else {
-                toast.error("Kho hàng không đủ!", { autoClose: 2000 });
+                // toast.error("Kho hàng không đủ!", { autoClose: 2000 });
+                toast.error(`Sản phẩm này chỉ còn ${warehouseQuantity} sản phẩm`, { autoClose: 2000 });
             }
         }
     };

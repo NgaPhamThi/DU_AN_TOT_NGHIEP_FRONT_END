@@ -216,9 +216,11 @@ const PayPage = () => {
               <img className="m-2 h-[103px] w-28 rounded-md border object-cover object-center" src={item.img[0]} alt="" />
               <div className="flex w-full flex-col px-4 py-4">
                 <span className="font-semibold">{item.name}</span>
+                <p className="font-semibold">{`Số lượng: ${item.quantity}`}</p>
                 <span className="float-right text-gray-400">{`Size: ${item.sizeId !== null ? getSizeNameById(String(item.sizeId)) : "N/A"}`}</span>
                 <p className="float-right text-gray-400">{`Color: ${item.colorId !== null ? getColorNameById(String(item.colorId)) : "N/A" }`}</p>
-                <p className="text-lg font-bold">{(item.price * item.quantity).toLocaleString()}đ</p>
+
+                <p className="text-lg font-bold text-red-500">{(item.price * item.quantity).toLocaleString()}đ</p>
               </div>
             </div>
             ))}
