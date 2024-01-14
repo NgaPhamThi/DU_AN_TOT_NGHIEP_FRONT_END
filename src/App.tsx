@@ -52,6 +52,8 @@ import UpdateSizes from "./Pages/Admin/Size/UpdateSizes";
 import { AnalyticPage } from './Pages/Admin/Analytics'
 import ListSizeAndColor from "./Pages/Admin/SizeAndColor/ListSizeAndColor";
 import UpdateSizeAndColor from "./Pages/Admin/SizeAndColor/UpdateSizeAndColor";
+import ForgotPassword from "./Pages/ForgotPasswordForm";
+import ResetPassword from "./Pages/ResetPassword";
 function App() {
   
   const onHandleAddBlog = async (blog: any) => {
@@ -91,6 +93,8 @@ function App() {
           <Route path="/categories/:categoryId" element={<ProductPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:blogId" element={<DetailBlogPage />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
 
           <Route path="/contact" element={<Contact />} />
           <Route path="/purchase" element={<OrderHistory />} />
