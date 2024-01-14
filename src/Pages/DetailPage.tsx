@@ -317,7 +317,7 @@ const DetailPage = () => {
                          
                              <div className="mb-8">
                              <div className="pb-6 mb-8 border-b border-gray-300 dark:border-gray-700">
-                <div className="mb-2 text-xl font-bold dark:text-gray-400">Size</div>
+                <div className="mb-2 text-xl font-bold dark:text-gray-400">Size :</div>
                 <div className="flex flex-wrap -mb-2">
                     {sizes.map((sizeItem, index) => (
                         <button
@@ -337,7 +337,7 @@ const DetailPage = () => {
             </div>
         <div className="pb-6 mb-8 border-b border-gray-300 dark:border-gray-700">     
             {selectedSize && (   
-        <div className="mb-2 text-xl font-bold dark:text-gray-400">Color</div>       
+        <div className="mb-2 text-xl font-bold dark:text-gray-400">Màu sắc :</div>       
          )}
 
             <div className="flex flex-wrap -mb-2">
@@ -358,7 +358,7 @@ const DetailPage = () => {
         ))}
         </div>
             </div>  
-            <div className="mb-2 text-xl font-bold dark:text-gray-400 ">Số lượng</div>
+            <div className="mb-2 text-xl font-bold dark:text-gray-400 ">Số lượng :</div>
                             <div className="flex flex-wrap items-center mr-10">
                                 <div className="mb-4 mr-4 lg:mb-0">
                                     <div className="w-28">
