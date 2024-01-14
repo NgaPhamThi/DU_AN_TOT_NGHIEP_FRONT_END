@@ -232,7 +232,7 @@ console.log(user);
                                         name="last_name"
                                         id="username"
                                         // className="input-full"
-                                        placeholder="Tên"
+                                        placeholder="Nguyễn Văn A"
                                         value={lastName}
                                         onChange={(e) => setLastName(e.target.value)}
                                       />
@@ -245,7 +245,7 @@ console.log(user);
                                           name="email"
                                           id="email"
                                           // className="input-full"
-                                          placeholder="Email"
+                                          placeholder="your.email@gmail.com"
                                           value={email}
                                           onChange={(e) => setEmail(e.target.value)}
                                         />
@@ -258,7 +258,7 @@ console.log(user);
                                           name="password"
                                           id="CreatePassword"
                                           // className="input-full"
-                                          placeholder="Mật khẩu"
+                                          placeholder="********"
                                           value={password}
                                           onChange={(e) => setPassword(e.target.value)}
                                           
@@ -271,7 +271,7 @@ console.log(user);
                                           name="confirmPassword"
                                           id="confirmPassword"
                                           // className="input-full"
-                                          placeholder="Mật khẩu"
+                                          placeholder="********"
                                           value={confirmPassword}
                                           onChange={(e) => setConfirmPassword(e.target.value)}
                                         />

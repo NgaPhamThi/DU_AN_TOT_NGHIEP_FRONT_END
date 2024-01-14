@@ -75,7 +75,8 @@ export const ShoppingContextProvider = ({ children }: ShoppingContextProviderPro
                 
             } else {
                 // toast.error("Kho hàng không đủ!", { autoClose: 2000 });
-                toast.error(`Sản phẩm này chỉ còn ${warehouseQuantity} sản phẩm`, { autoClose: 2000 });
+                toast.error("Số lượng bạn chọn đã đạt mức tối đa của sản phẩm này!", { autoClose: 2000 });
+
             }
         }
     };
@@ -136,10 +137,10 @@ export const ShoppingContextProvider = ({ children }: ShoppingContextProviderPro
  
                         // Kiểm tra số lượng tồn kho trước khi cập nhật giỏ hàng
                         if (newQuantity <= warehouseQuantity && product.quantity > 0) {
-                            toast.success('Thêm vào giỏ hàng thành công ', { autoClose: 2000 })
+                            toast.success(`Thêm ${product.quantity} sản phẩm vào giỏ hàng thành công `, { autoClose: 2000 })
                             return { ...item, quantity: newQuantity };
                         } else {
-                            toast.error("Kho hàng không đủ! Bạn đã thêm quá số lượng trong giỏ hàng", { autoClose: 2000 });
+                            toast.error(`Bạn đã có ${item.quantity} sản phẩm này trong giỏ hàng. Bạn chỉ có thể thêm ${warehouseQuantity-item.quantity} sản phẩm`, { autoClose: 2000 });
                             // console.log(error)
                             return {...item};
                         }
@@ -149,10 +150,10 @@ export const ShoppingContextProvider = ({ children }: ShoppingContextProviderPro
                 });
                 setCartItem(newItems);
             } else {
-                // Kiểm tra số lượng tồn kho trước khi thêm mới vào giỏ hàng
                 if (product.quantity <= warehouseQuantity) {
                     const newItem = { ...product };
                     setCartItem([...cartItem, newItem]);
+                    toast.success(`Thêm ${product.quantity} sản phẩm vào giỏ hàng thành công `, { autoClose: 2000 });
                 } else {
                     toast.error("Kho hàng không đủ!", { autoClose: 2000 });
                 }
