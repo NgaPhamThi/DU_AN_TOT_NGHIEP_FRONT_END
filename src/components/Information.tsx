@@ -159,19 +159,20 @@ const Information = (props: Props) => {
                             </div>
                         </div>
                         <div className="flex pt-6 flex-wrap -m-1.5">
-                            <div className="w-full md:w-auto p-1.5">
-                            <Link to={`/`}
-                                    className="flex flex-wrap justify-center w-full px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-md dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-800 dark:border-gray-700 hover:border-gray-300 ">
-                                    <p>Trở Lại</p>
-                            </Link>
-                            </div>
-                            <div className="w-full md:w-auto p-1.5">
+                        <div className="w-full md:w-auto p-1.5">
                                 <button
                                 type='submit'
                                     className="flex flex-wrap justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-blue-500 rounded-md hover:bg-blue-600 ">
                                     <p>Lưu</p>
                                 </button>
                             </div>
+                            <div className="w-full md:w-auto p-1.5">
+                            <Link to={`/ChangePassword/${data._id}`}
+                                    className="flex flex-wrap justify-center w-full px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-md dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-800 dark:border-gray-700 hover:border-gray-300 ">
+                                    <p>Đổi mật khẩu</p>
+                            </Link>
+                            </div>
+                          
                         </div>
 
                     </form>
