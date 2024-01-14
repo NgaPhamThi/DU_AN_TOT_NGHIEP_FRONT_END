@@ -4,6 +4,7 @@ import { CardInfo } from './components/dashboard/card-info'
 import { CartIcon2 } from '../../components'
 import { IAnalyticStatusYear } from '../../interfaces'
 import { LineChartOrderStatus } from './components/dashboard/line-chart'
+import { TopProduct } from './Analytics/top-product'
 import { getOrderStatusYear } from './components/dashboard/hooks/get-order-status'
 import { message } from 'antd'
 
@@ -30,7 +31,7 @@ const Dashboard = () => {
             <CardInfo
               key={item._id}
               title={`Đơn hàng ${item._id}`}
-              number={parseFloat(item.totalAmount.toLocaleString())}
+              number={item.totalAmount}
               icon={<CartIcon2 />}
               price={true}
             />
@@ -40,6 +41,9 @@ const Dashboard = () => {
 
       <div className='mx-auto p-4 md:p-6 xl:p-10'>
         <LineChartOrderStatus />
+      </div>
+      <div className='mx-auto p-4 md:p-6 xl:p-10'>
+        <TopProduct />
       </div>
     </main>
   )
