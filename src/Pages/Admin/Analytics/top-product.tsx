@@ -27,24 +27,36 @@ export const TopProduct = () => {
       key: 'name'
     },
     {
+      title: 'Ảnh',
+      dataIndex: 'image',
+      key: 'image',
+      render: (text: string) => <img src={text} alt="product" style={{ width: '50px', height: '50px' }} /> 
+    },
+    {
       title: 'Số lượng',
       dataIndex: 'totalQuantity',
       key: 'totalQuantity'
     }
   ]
-
+// console.log(product,"31321")
   const dataCompleted = topProduct.completed
     .map((product) => ({
       key: product._id,
       name: product.name,
+      // image:product.img,
+      image: product.img.length > 0 ? product.img[0] : null,
       totalQuantity: product.totalQuantity
     }))
+ 
     .sort((a, b) => b.totalQuantity - a.totalQuantity)
 
   const dataCancelled = topProduct.cancelled
     .map((product) => ({
       key: product._id,
       name: product.name,
+      // image:product.img,
+      image: product.img.length > 0 ? product.img[0] : null,
+
       totalQuantity: product.totalQuantity
     }))
     .sort((a, b) => b.totalQuantity - a.totalQuantity)

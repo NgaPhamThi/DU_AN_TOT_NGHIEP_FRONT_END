@@ -57,6 +57,7 @@ export interface ICountNumber {
 export interface ITopProduct {
   _id: string
   name: string
+  img: string[]
   totalQuantity: number
 }
 
