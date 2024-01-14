@@ -6,4 +6,5 @@ export interface IUser {
     confirmPassword?: string;
     role:string;
     status:string;
+    confirmationCode:string;
 }
