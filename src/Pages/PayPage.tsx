@@ -139,7 +139,7 @@ const PayPage = () => {
           orderDetails: cartItems.map((item) => ({
             productId: item._id,
             name: item.name,
-          img:item.img,
+          img:item.img[0],
             quantity: item.quantity,
             price: item.price,
             sizeId: item.sizeId,
@@ -172,7 +172,7 @@ const PayPage = () => {
         orderTotal: totalPrice - discount,
         orderDetails: cartItems.map((item) => ({
           name: item.name,
-          img:item.img,
+          img:item.img[0],
           productId: item._id,
           quantity: item.quantity,
           price: item.price,
