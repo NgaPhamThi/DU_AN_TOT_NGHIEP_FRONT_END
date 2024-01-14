@@ -62,7 +62,10 @@ useEffect(() => {
                         <img className="w-full h-36" src={img.length > 0 ? img[0] : ''}/>
                     </div>
                     <div className="flex flex-col gap-1">
-                        <p className="text-lg text-gray-800 font-semibold  overflow-hidden overflow-ellipsis max-w-[350px] whitespace-nowrap break-words">{name}</p>
+                        <p className="text-lg text-gray-800 font-semibold  overflow-hidden overflow-ellipsis max-w-[350px] whitespace-nowrap break-words">
+                            {/* {name} */}
+                            {name.length > 25 ? `${name.substring(0, 25)}...` : name}
+                            </p>
                         <p className="text-xs text-gray-600 font-semibold">Color: <span className="font-normal">{color}</span></p>
                         <p className="text-xs text-gray-600 font-semibold">Size: <span className="font-normal">{size}</span></p>
 
@@ -73,9 +76,10 @@ useEffect(() => {
                     <p className="text-gray-600 font-normal text-sm line-through">
                         <span className="text-emerald-500 ml-2"></span>
                     </p>
-                    <p className="text-gray-800 font-normal text-xl">{price.toLocaleString()}đ</p>
+                    <p className="text-gray-800 font-normal text-xl text-red-500">{(price *quantity).toLocaleString()}đ</p>
+                    {/* (item.price * item.quantity).toLocaleString() */}
                 </div>
-               
+
                 <div className="self-center">
                     <button className="" onClick={() => removeCartItem(_id as string ,sizeId, colorId)}>
                         <svg className="" height="24px" width="24px" id="Layer_1" version="1.1" viewBox="0 0 512 512"  xmlSpace='preserve' xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">

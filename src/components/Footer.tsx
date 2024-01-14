@@ -28,7 +28,7 @@ const Footer = () => {
                             Thương hiệu thời trang TND - CÔNG TY CỔ PHẦN SẢN XUẤT THƯƠNG MẠI NÉT VIỆT
                         </p>
                         <p className="pt-2">
-                            Địa chỉ: 96 - 98 Đường số 20, Khu Đô Thị Mới Him Lam, Phường Tân Hưng, Quận 7, Tp. HCM
+                            Địa chỉ: 180 P. Đông Các, Chợ Dừa, Đống Đa, Hà Nội
                         </p>
                     </div>
                     <div className="pt-9">
@@ -73,12 +73,12 @@ const Footer = () => {
                     <h3 className="text-[22px] font-medium">Liên lạc</h3>
                     <div className="text-[15px] pt-3">
                         <p>Đặt hàng trực tuyến (8h-21h)</p>
-                        <a className="text-[#0000ff] font-bold" href="">1900 636942</a>
+                        <a className="text-[#0000ff] font-bold" href="">0335 830 256</a>
                         <p className="pt-5">Chăm sóc khách hàng</p>
-                        <a className="text-[#0000ff] font-bold" href="">1900 636940</a>
+                        <a className="text-[#0000ff] font-bold" href="">0335 830 256</a>
                     </div>
                     <div className="text-[15px] pt-7">
-                        <a className="text-[#0097ba]" href=""><span>shoptnd@gmail.com</span></a>
+                        <a className="text-[#0097ba]" href=""><span>shopthoitrangnamTND@gmail.com</span></a>
                     </div>
 
                 </div>
