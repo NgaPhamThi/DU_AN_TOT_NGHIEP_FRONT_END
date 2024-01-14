@@ -44,7 +44,7 @@ const OrderDetails = (props: Props) => {
                 setOrderInfo(data)
                 console.log(data);
                 const total = data.orderDetails.reduce((acc: any, orderDetail: any) => {
-                    const productTotal = orderDetail.productInfo.price * orderDetail.quantity;
+                    const productTotal = orderDetail.price * orderDetail.quantity;
                     return acc + productTotal;
                 }, 0);
                 setSubtotal(total);
@@ -245,11 +245,11 @@ const OrderDetails = (props: Props) => {
                                         </div>
                                     </div>
                                     <div className="flex items-start justify-between w-full space-x-8">
-                                        <p className="text-base leading-6 dark:text-gray-400 xl:text-lg">{orderDetail.productInfo.price.toLocaleString()}đ <span
+                                        <p className="text-base leading-6 dark:text-gray-400 xl:text-lg">{orderDetail.price.toLocaleString()}đ <span
                                             className="text-blue-300 line-through hidden"> $45.00</span></p>
                                         <p className="text-base leading-6 text-gray-800 dark:text-gray-400 xl:text-lg">{orderDetail.quantity}</p>
                                         <p className="text-base font-semibold leading-6 text-gray-800 dark:text-gray-400 xl:text-lg">
-                                        {(orderDetail.productInfo.price * orderDetail.quantity).toLocaleString()}đ</p>
+                                        {(orderDetail.price * orderDetail.quantity).toLocaleString()}đ</p>
                                     </div>
                                 </div>
                         </div>
