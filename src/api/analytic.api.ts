@@ -1,4 +1,13 @@
-import { IAnalyticStatusYear, IAnalyticYear, ICountNumber, IData, IFilter, IFilterOrder } from '../interfaces'
+import {
+  IAnalyticStatusYear,
+  IAnalyticYear,
+  ICountNumber,
+  IData,
+  IFilter,
+  IFilterOrder,
+  IProductTop,
+  ITopProduct
+} from '../interfaces'
 
 import instance from './instance'
 
@@ -44,5 +53,10 @@ export const analyticApi = {
   /* get count */
   getCounts: async () => {
     return instance.get<ICountNumber[]>('/analytic-numbes')
+  },
+
+  /* top 10 product */
+  top10Product: async () => {
+    return instance.get<IProductTop>('/top-product')
   }
 }

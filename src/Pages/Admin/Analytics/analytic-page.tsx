@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { CardInfo } from '../components/dashboard/card-info'
 import { CartIcon2 } from '../../../components'
 import { LineChartOrderStatus } from '../components/dashboard/line-chart'
+import { TopProduct } from './top-product'
 import { analyticApi } from '../../../api/analytic.api'
 import { getOrderStatusYear } from '../components/dashboard/hooks/get-order-status'
 import { message } from 'antd'
@@ -95,6 +96,9 @@ const AnalyticPage = () => {
 
         <div className='mx-auto p-4 md:p-6 xl:p-10'>
           <LineChartOrderStatus />
+        </div>
+        <div className='mx-auto p-4 md:p-6 xl:p-10'>
+          <TopProduct />
         </div>
       </main>
       <AnalyticOrderPending
