@@ -55,7 +55,7 @@ export const TopProduct = () => {
       key: product._id,
       name: product.name,
       // image:product.img,
-      image: product.img.length > 0 ? product.img[0] : null,
+      // image: product.img.length > 0 ? product.img[0] : null,
 
       totalQuantity: product.totalQuantity
     }))
