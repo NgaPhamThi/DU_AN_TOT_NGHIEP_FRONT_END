@@ -53,3 +53,14 @@ export interface ICountNumber {
   title: string
   value: number
 }
+
+export interface ITopProduct {
+  _id: string
+  name: string
+  totalQuantity: number
+}
+
+export interface IProductTop {
+  completed: ITopProduct[]
+  cancelled: ITopProduct[]
+}
