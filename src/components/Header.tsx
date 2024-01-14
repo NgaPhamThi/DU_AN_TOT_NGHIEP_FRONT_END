@@ -155,7 +155,7 @@ const [sizes, setSizes] = useState<ISize[]>([]);
     animation: 'marquee 15s linear infinite',
     // display: 'inline-block',
     whiteSpace: 'nowrap',
-  }}>Miễn Phí Đổi Hàng 30 Ngày</p>
+  }}>Shop Thời Trang Quần Áo Nam TND</p>
 </div>
       <div className="max-w-screen-xl mx-auto p-4 flex justify-between items-center">
         <div className="text-2xl font-semibold text-gray-800">

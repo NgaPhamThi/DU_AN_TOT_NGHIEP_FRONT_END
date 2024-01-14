@@ -215,7 +215,7 @@ const DetailPage = () => {
             if (selectedQuantityItem && quantity < selectedQuantityItem.quantity) {
                 setQuantity(quantity + 1);
             } else {
-                toast.error("Kho hàng không đủ", { autoClose: 2000 });
+                toast.error("Số lượng bạn chọn đã đạt mức tối đa của sản phẩm này!", { autoClose: 2000 });
             }
         } else {
             if (quantity === 1) return;
@@ -240,16 +240,11 @@ const DetailPage = () => {
                     setQuantity(1);
     console.log(type,"hfjkdhfdsik")
                     // Chuyển hướng đến trang giỏ hàng
-                    if (type === 'TO_CART') {    
-                                                     
-                                navigate('/cart'); 
-                                
-                    }
                     if (type === 'ADD_CART') {
                                   
                     }
                 } else {
-                      toast.error(`Kho hàng không đủ!`, { autoClose: 2000 });
+                    //   toast.error(`Sản phẩm chỉ có ${selectedQuantityItem.quantity} sản phẩm!`, { autoClose: 2000 });
                 } 
             }
         } catch (error) {
@@ -304,56 +299,32 @@ const DetailPage = () => {
                     <div className="w-full px-4 md:w-1/2 ">
                         <div className="lg:pl-20">
                             <div className="pb-6 mb-8 border-b border-gray-200 dark:border-gray-700">
-                                <span className="text-lg font-medium text-rose-500 dark:text-rose-200">Mã SP : <span className="text-black text-base">{product._id}</span></span>
+                                <span className="text-lg font-medium ">Mã SP : <span className="text-black text-base">{product._id}</span></span>
                                 <h2 className="max-w-xl mt-2 mb-6 text-xl font-bold dark:text-gray-300 md:text-4xl">
                                     {product.name}
                                 </h2>
 
                                 <br />
-                                <span className="text-lg font-medium text-rose-500 dark:text-rose-200">Loại : <span className="text-black text-base">{getCategoryName(product.categoryId)}</span></span>
+                                <span className="text-lg font-medium">Loại : <span className="text-black text-base">{getCategoryName(product.categoryId)}</span></span>
 
 
                                 < br />
                                 <div className="mb-8 mt-3 border-b border-gray-200 dark:border-gray-700"></div>
                                 <p className="inline-block text-2xl font-semibold text-gray-700 dark:text-gray-400 ">
-                                    <span> {product.price ? product.price.toLocaleString() + 'đ' : ''}</span>
+                                    Giá :<span className="text-rose-500 dark:text-rose-200"> {product.price ? product.price.toLocaleString() + 'đ' : ''}</span>
                                 </p>
                             </div>
-                            {/* <div className="mb-8">
-                                <h2 className="mb-2 text-xl font-bold dark:text-gray-400">
-                                    Color</h2>
-                                <div className="flex flex-wrap gap-4 -mb-2">
-                                    {colors.map((colorItem, index) => (
-                                        <div className="p-1 mb-2 mr-2    hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400  " >
-                                            <span key={index} onClick={() => setColor(colorItem._id as string)} className={`${color == colorItem._id ? 'border-orange-500' : ''} px-[30px] py-[7px] w-10 h-10 bg-red-600 rounded-xl border`} style={{ background: colorItem.name }}></span>
-                                        </div>
-                                    ))}
-
-
-
-                                </div>
-                            </div> */}
-                            {/* <div className="pb-6 mb-8 border-b border-gray-300 dark:border-gray-700">
-                                <h2 className="mb-2 text-xl font-bold dark:text-gray-400">
-                                    Size</h2>
-                                <div className="flex flex-wrap -mb-2">
-                                    {sizes.map((sizeItem, index) => (
-                                        <button onClick={() => setSize(sizeItem._id as string)} key={index}
-                                            className={`${size === sizeItem._id ? 'border-blue-500' : ''}py-1 mb-2 mr-1 border w-11 hover:border-blue-400 hover:text-blue-600 dark:border-gray-400 dark:hover:border-gray-300 dark:text-gray-400`}>{sizeItem.name}
-                                        </button>
-                                    ))}
-
-
-
-                                </div>
-                            </div> */}
+                         
                              <div className="mb-8">
                              <div className="pb-6 mb-8 border-b border-gray-300 dark:border-gray-700">
                 <div className="mb-2 text-xl font-bold dark:text-gray-400">Size</div>
                 <div className="flex flex-wrap -mb-2">
                     {sizes.map((sizeItem, index) => (
                         <button
-                            onClick={() => setSelectedSize(sizeItem._id)}
+                        onClick={() => {
+                            setSelectedSize(sizeItem._id);
+                            setQuantity(1); // Đặt lại giá trị số lượng khi chọn size mới
+                        }}
                             key={index}
                             className={`${
                                 selectedSize === sizeItem._id ? 'border-blue-500' : ''
@@ -364,39 +335,31 @@ const DetailPage = () => {
                     ))}
                 </div>
             </div>
-            {selectedSize && (
-        <div className="mb-2 text-xl font-bold dark:text-gray-400">Color</div>
-    )}
-            <div className="flex flex-wrap gap-4 -mb-2">
+        <div className="pb-6 mb-8 border-b border-gray-300 dark:border-gray-700">     
+            {selectedSize && (   
+        <div className="mb-2 text-xl font-bold dark:text-gray-400">Color</div>       
+         )}
+
+            <div className="flex flex-wrap -mb-2">
             {colors.map((colorItem, index) => (
             <div
                 className={`p-1 mb-2 mr-2 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 ${!colorItem.available ? 'opacity-50 cursor-not-allowed' : ''}`}
                 key={index}
             >
                 <span
+                
                     onClick={() => colorItem.available && setSelectedColor(colorItem._id)}
                     className={`${selectedColor === colorItem._id ? 'border-orange-500' : ''} px-[30px] py-[7px] w-10 h-10 bg-red-600 rounded-xl border`}
                     style={{ background: colorItem.name }}
+                    
                 ></span>
-                {selectedColor === colorItem._id && (
-                    <div className="mt-2">
-                        {/* Hiển thị danh sách quantity */}
-                           
-                    </div>
-                )}
+                
             </div>
         ))}
-            </div>
-            {product.sizeAndcolor && product.sizeAndcolor.map((quantityItem, index) => (
-                                <div key={index}>
-                                    {quantityItem.sizeId === selectedSize &&
-                                        quantityItem.colorId === selectedColor && (
-                                            <p>{`kho còn: ${quantityItem.quantity}`}</p>
-                                        )}
-                                </div>
-                            ))}
         </div>
-                            <div className="flex flex-wrap items-center ">
+            </div>  
+            <div className="mb-2 text-xl font-bold dark:text-gray-400 ">Số lượng</div>
+                            <div className="flex flex-wrap items-center mr-10">
                                 <div className="mb-4 mr-4 lg:mb-0">
                                     <div className="w-28">
                                         <div className="relative flex flex-row w-full h-10 bg-transparent rounded-lg">
@@ -404,10 +367,14 @@ const DetailPage = () => {
                                                 className="w-20 h-full text-gray-600 bg-gray-100 border-r rounded-l outline-none cursor-pointer dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-300">
                                                 <span className="m-auto text-2xl font-thin">-</span>
                                             </button>
-                                            <input type="number"
+                                            <input
+                                            
+                                            //  type="number"
                                                 className="flex items-center w-full font-semibold text-center text-gray-700 placeholder-gray-700 bg-gray-100 outline-none dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black"
                                                 placeholder="1"
-                                                value={quantity} />
+                                                value={quantity}
+                                                 />
+                                                
                                             <button onClick={addQuantity.bind(this, 'plus')}
                                                 className="w-20 h-full text-gray-600 bg-gray-100 border-l rounded-r outline-none cursor-pointer dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-400 dark:bg-gray-900 hover:text-gray-700 hover:bg-gray-300">
                                                 <span className="m-auto text-2xl font-thin">+</span>
@@ -415,32 +382,33 @@ const DetailPage = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="mb-4 mr-4 lg:mb-0">
-                                    <button onClick={() => addCart(product, 'TO_CART')}
-                                        className="w-full h-10 p-2 mr-4 bg-blue-500 dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500">
-                                        Mua Ngay</button>
+                                {product.sizeAndcolor && product.sizeAndcolor.map((quantityItem, index) => (
+                                <div key={index}>
+                                    {quantityItem.sizeId === selectedSize &&
+                                        quantityItem.colorId === selectedColor && (
+                                            <p>{`${quantityItem.quantity} sản phẩm có sẵn`}</p>
+                                        )}
                                 </div>
-                                <div className="mb-4 mr-4 lg:mb-0">
-                                    <button onClick={() => addCart(product, 'ADD_CART')}
-                                        className="flex items-center justify-center w-full h-10 p-2 text-gray-700 border border-gray-300 lg:w-11 hover:text-gray-50 dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 dark:hover:border-blue-500 dark:hover:text-gray-300">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                            className="bi bi-cart" viewBox="0 0 16 16">
-                                            <path
-                                                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div className="mb-4 lg:mb-0">
-                                    <button
-                                        className="flex items-center justify-center w-full h-10 p-2 text-gray-700 border border-gray-300 lg:w-11 hover:text-gray-50 dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 dark:hover:border-blue-500 dark:hover:text-gray-300">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                            className=" bi bi-heart" viewBox="0 0 16 16">
-                                            <path
-                                                d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
-                                        </svg>
-                                    </button>
-                                </div>
+                            ))}
+        </div>
+                               
                             </div>
+                            <div className="mb-4 mr-4 lg:mb-0">
+                                
+    <button onClick={() => addCart(product, 'ADD_CART')}
+        className="w-30 h-10 p-2 bg-blue-500 dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 flex items-center">
+        <span className="mr-2">Thêm vào giỏ hàng</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            className="bi bi-cart" viewBox="0 0 16 16">
+            <path
+                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        </svg>
+    </button>
+    
+</div>
+
+
+                               
                         </div>
                     </div>
                 </div>

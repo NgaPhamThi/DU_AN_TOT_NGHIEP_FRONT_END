@@ -117,6 +117,17 @@ const PayPage = () => {
       toast.error("Tài khoản của bạn đã bị chặn và không thể đặt hàng.", { autoClose: 2000 });
       return;
     }
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    if (!formData.email.match(emailRegex)) {
+      toast.error('Định dạng email không hợp lệ', { autoClose: 2000 });
+      return;
+    }
+
+    const phoneRegex = /^0\d{9}$/;
+    if (!formData.phonenumber.match(phoneRegex)) {
+      toast.error('Số điện thoại không hợp lệ', { autoClose: 2000 });
+      return;
+    }
       if (!userId) {
         const dataFormNoId = {
           fullname: formData.fullname,
@@ -179,7 +190,7 @@ const PayPage = () => {
           navigate("/purchase");
         }, 3000);
         toast.success("Đặt hàng thành công", { autoClose: 2000 });
-
+        
       } else if (paymentMethod === "vnpay") {
         const vnPay = await axios.post(
           "http://localhost:8080/api/createVnpay",
@@ -284,7 +295,7 @@ const PayPage = () => {
           <div className="relative">
             <input onChange={(e) => setFormData({ ...formData, phonenumber: e.target.value })} 
             value={formData.phonenumber}
-             type="text" id="phonenumber" name="phonenumber" className="w-full rounded-md border border-gray-200 px-4 py-3 pl-3 text-sm uppercase shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Số Điện Thoại" />
+             type="text" id="phonenumber" name="phonenumber" className="w-full rounded-md border border-gray-200 px-4 py-3 pl-3 text-sm uppercase shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="0123456789" />
           </div>
           <label htmlFor="Address" className="mt-4 mb-2 block text-sm font-medium">Địa chỉ</label>
           <div className="flex">

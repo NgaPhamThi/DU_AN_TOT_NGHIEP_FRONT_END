@@ -64,7 +64,7 @@ useEffect(() => {
                     <div className="flex flex-col gap-1">
                         <p className="text-lg text-gray-800 font-semibold  overflow-hidden overflow-ellipsis max-w-[350px] whitespace-nowrap break-words">
                             {/* {name} */}
-                            {name.length > 25 ? `${name.substring(0, 25)}...` : name}
+                            {name.length > 35 ? `${name.substring(0, 25)}...` : name}
                             </p>
                         <p className="text-xs text-gray-600 font-semibold">Color: <span className="font-normal">{color}</span></p>
                         <p className="text-xs text-gray-600 font-semibold">Size: <span className="font-normal">{size}</span></p>

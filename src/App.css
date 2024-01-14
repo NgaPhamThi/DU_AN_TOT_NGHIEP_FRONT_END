@@ -1,4 +1,4 @@
-.login-container {
+/* .login-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 2rem;
@@ -59,7 +59,7 @@
   
   .form-label {
     font-weight: bold;
-  }
+  } */
   
   @keyframes marquee {
     0% {
