@@ -97,9 +97,6 @@ const AnalyticPage = () => {
         <div className='mx-auto p-4 md:p-6 xl:p-10'>
           <LineChartOrderStatus />
         </div>
-        <div className='mx-auto p-4 md:p-6 xl:p-10'>
-          <TopProduct />
-        </div>
       </main>
       <AnalyticOrderPending
         onClose={() => setIsOpen({ ...isOpen, orderPending: !isOpen.orderPending })}

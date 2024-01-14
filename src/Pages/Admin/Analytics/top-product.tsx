@@ -33,17 +33,21 @@ export const TopProduct = () => {
     }
   ]
 
-  const dataCompleted = topProduct.completed.map((product) => ({
-    key: product._id,
-    name: product.name,
-    totalQuantity: product.totalQuantity
-  }))
+  const dataCompleted = topProduct.completed
+    .map((product) => ({
+      key: product._id,
+      name: product.name,
+      totalQuantity: product.totalQuantity
+    }))
+    .sort((a, b) => b.totalQuantity - a.totalQuantity)
 
-  const dataCancelled = topProduct.cancelled.map((product) => ({
-    key: product._id,
-    name: product.name,
-    totalQuantity: product.totalQuantity
-  }))
+  const dataCancelled = topProduct.cancelled
+    .map((product) => ({
+      key: product._id,
+      name: product.name,
+      totalQuantity: product.totalQuantity
+    }))
+    .sort((a, b) => b.totalQuantity - a.totalQuantity)
 
   return (
     <div className='grid grid-cols-2 gap-10'>
