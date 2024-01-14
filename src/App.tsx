@@ -54,6 +54,7 @@ import ListSizeAndColor from "./Pages/Admin/SizeAndColor/ListSizeAndColor";
 import UpdateSizeAndColor from "./Pages/Admin/SizeAndColor/UpdateSizeAndColor";
 import ForgotPassword from "./Pages/ForgotPasswordForm";
 import ResetPassword from "./Pages/ResetPassword";
+import ChangePassword from "./components/ChangePassword";
 function App() {
   
   const onHandleAddBlog = async (blog: any) => {
@@ -106,6 +107,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/successful" element={<Successful />} />
           <Route path="/information/:id" element={<Information />} />
+          <Route path="/ChangePassword/:id" element={<ChangePassword />} />
         </Route>
         <Route path="/admin" element={<Admin />}>
           <Route index element={<Dashboard />} />
