@@ -88,7 +88,7 @@ const ListCategories = () => {
                       Edit
                     </button>
                    </Link>
-                    <Popconfirm
+                    {/* <Popconfirm
                       title="Bạn có chắc chắn muốn xóa bình luận này?"
                       onConfirm={() => handleDeleteComment(record._id)}
                       okText={<button className="text-red-500 hover:text-black">Xóa</button>}
@@ -114,7 +114,7 @@ const ListCategories = () => {
                         </svg>
                         Delete
                       </button>
-                    </Popconfirm>
+                    </Popconfirm> */}
                   </div>
       )
     },

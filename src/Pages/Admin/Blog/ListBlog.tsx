@@ -94,7 +94,7 @@ const [searchKeyword, setSearchKeyword] = useState('');
                         Edit
                       </button>
                      </Link>
-                      <Popconfirm
+                      {/* <Popconfirm
                         title="Bạn có chắc chắn muốn xóa sản phẩm này?"
                         onConfirm={() => handleDeleteBlog(record._id)}
                         okText={<button className="text-red-500 hover:text-black">Xóa</button>}
@@ -120,7 +120,7 @@ const [searchKeyword, setSearchKeyword] = useState('');
                           </svg>
                           Delete
                         </button>
-                      </Popconfirm>
+                      </Popconfirm> */}
                     </div>
         )
       },

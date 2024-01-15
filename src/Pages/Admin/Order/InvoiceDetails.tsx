@@ -263,7 +263,11 @@ const handleStatusChange = async (newStatus: string) => {
                         <p className="text-base dark:text-white font-semibold leading-4 text-gray-800">Email</p>
                         <p className="text-sm leading-5 dark:text-gray-300 text-gray-600">{orderInfo.email}</p>
                     </div>
-                    
+                    <div className="flex jusitfy-start items-start flex-col space-y-2">
+                        <p className="text-base dark:text-white font-semibold leading-4 text-gray-800">Thanh Toán</p>
+                        <p className="text-sm leading-5 dark:text-gray-300 text-gray-600"> {orderInfo?.isPaid}</p>
+                    </div>
+                  
                 </div>
                 <div className="flex flex-col w-full space-y-4 w-full">
                     <div className="flex justify-center items-center w-full space-y-4 flex-col border-gray-200 border-b pb-4">
