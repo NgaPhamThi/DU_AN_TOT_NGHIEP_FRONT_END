@@ -169,6 +169,7 @@ const PayPage = () => {
         email: formData.email,
         address: formData.address,
         Discount: discount,
+        isPaid: paymentMethod === "vnpay" ? true : false,
         orderTotal: totalPrice - discount,
         orderDetails: cartItems.map((item) => ({
           name: item.name,

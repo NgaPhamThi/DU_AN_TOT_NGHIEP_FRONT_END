@@ -9,7 +9,7 @@ const Successful = (props: Props) => {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const [cartItems, setCartItems] = useState<CartItem[]>([])
-  const  voucherId = localStorage.getItem("id");
+  const voucherId = localStorage.getItem("id");
 
   useEffect(() => {
     if (!searchParams.get('encode') && !searchParams.get('userId')) {
@@ -32,10 +32,11 @@ const Successful = (props: Props) => {
             email: searchParams.get('email'),
             address: searchParams.get('address'),
             orderTotal: searchParams.get('total'),
-            Discount:searchParams.get('discount'),
+            Discount: searchParams.get('discount'),
+            isPaid: searchParams.get('isPaid'),
             orderDetails: cartItems?.map((item) => ({
               name: item.name,
-            img: item.img[0],
+              img: item.img[0],
               productId: item._id,
               quantity: item.quantity,
               price: item.price,
@@ -67,7 +68,7 @@ const Successful = (props: Props) => {
       const parsedCart: CartItem[] = JSON.parse(storedCart)
       setCartItems(parsedCart)
     }
-  },[])
+  }, [])
   return (
     <div className="flex items-center justify-center h-screen">
       <div>
@@ -78,19 +79,19 @@ const Successful = (props: Props) => {
           <h1 className="text-4xl font-bold">Thành Công !</h1>
           <p>Cảm ơn quý khách đã tin tưởng TND Shop</p>
           <div className='flex justify-between item-center gap-10'>
-          <a href='/'
-            className="inline-flex items-center px-4 py-2 text-white bg-indigo-600 border border-indigo-600 rounded rounded-full hover:bg-indigo-700 focus:outline-none focus:ring">
-            
-            <span className="text-sm font-medium">
-              Trang Chủ
-            </span>
-          </a>
-          <a href='/purchase'
-            className="inline-flex items-center px-4 py-2 text-white bg-indigo-600 border border-indigo-600 rounded rounded-full hover:bg-indigo-700 focus:outline-none focus:ring">
-            <span className="text-sm font-medium">
-              Đơn mua
-            </span>
-          </a>
+            <a href='/'
+              className="inline-flex items-center px-4 py-2 text-white bg-indigo-600 border border-indigo-600 rounded rounded-full hover:bg-indigo-700 focus:outline-none focus:ring">
+
+              <span className="text-sm font-medium">
+                Trang Chủ
+              </span>
+            </a>
+            <a href='/purchase'
+              className="inline-flex items-center px-4 py-2 text-white bg-indigo-600 border border-indigo-600 rounded rounded-full hover:bg-indigo-700 focus:outline-none focus:ring">
+              <span className="text-sm font-medium">
+                Đơn mua
+              </span>
+            </a>
           </div>
         </div>
       </div>
