@@ -311,7 +311,7 @@ const OrderDetails = (props: Props) => {
                             Tiếp tục mua sắm
                         </button>
                         </a>
-                        { orderInfo?.status === 'PENDING' ? 
+                        { orderInfo?.status === 'PENDING' && orderInfo?.isPaid === 'Chưa thanh toán' ? 
                         <button onClick={toggleCancelModal} className="w-full px-4 py-2 bg-blue-500 rounded-md text-gray-50 md:w-auto dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-gray-700 dark:bg-gray-800">
                             Hủy đơn hàng
                         </button> : <div></div>}

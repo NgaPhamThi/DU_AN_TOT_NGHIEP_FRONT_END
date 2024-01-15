@@ -98,7 +98,7 @@ const User = (props: Props) => {
                       Edit
                     </button>
                    </Link>
-                    <Popconfirm
+                    {/* <Popconfirm
                       title="Bạn có chắc chắn muốn xóa sản phẩm này?"
                       onConfirm={() => handleDeleteUser(record._id)}
                       okText={<button className="text-red-500 hover:text-black">Xóa</button>}
@@ -124,7 +124,7 @@ const User = (props: Props) => {
                         </svg>
                         Delete
                       </button>
-                    </Popconfirm>
+                    </Popconfirm> */}
                   </div>
       )
     },

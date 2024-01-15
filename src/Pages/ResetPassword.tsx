@@ -51,7 +51,7 @@ const ResetPassword = () => {
                     </span>
                   </div>
                   <h2 className="mb-3 text-2xl font-bold text-center text-gray-800 dark:text-gray-400">
-                    Bạn Quên Mật Khẩu</h2>
+                   Thay Mật Khẩu Mới</h2>
                   <p className="text-base text-center text-gray-500 mb-7 dark:text-gray-400">
                     Vui lòng điền đầy đủ thông tin yêu cầu</p>
                   <form acceptCharset="UTF-8" className="p-0 m-0" id="forgot_password_form" onSubmit={handleResetPassword}>
@@ -71,7 +71,7 @@ const ResetPassword = () => {
           type="text"
           name="confirmationCode"
           id="confirmationCode"
-          placeholder="Nhập mã xác nhận"
+          placeholder="123456"
           value={confirmationCode}
           onChange={(e) => setConfirmationCode(e.target.value)}
         />
@@ -81,17 +81,19 @@ const ResetPassword = () => {
           type="password"
           name="newPassword"
           id="newPassword"
-          placeholder="Nhập mật khẩu mới"
+          placeholder="******"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
         />
         <div className="mb-4 text-right ">
-                                
+        <a href="/forgotpassword"
+                                        className="text-sm font-semibold text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 hover:underline">
+                                        forgot password?</a>
                                 </div>
                     <input
                       type="submit"
                       className="w-full py-4 mb-4 font-semibold text-gray-200 bg-green-600 rounded-lg px-7 dark:text-gray-300 dark:bg-green-600 hover:text-blue-200"
-                      value="Gửi Mã Xác Nhận"
+                      value="Thay Mật Khẩu Mới"
                     />
                     <p className="text-sm text-gray-700 dark:text-gray-400">Đã có tài khoản?
                       <a href="/signup" className="text-sm font-semibold text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500">

@@ -112,7 +112,7 @@ const ListContact = () => {
                             Edit
                         </button>
                     </Link>
-                    <Popconfirm
+                    {/* <Popconfirm
                         title="Bạn có chắc chắn muốn xóa sản phẩm này?"
                         onConfirm={() => handleDeleteContact(record._id)}
                         okText={<button className="text-red-500 hover:text-black">Xóa</button>}
@@ -138,7 +138,7 @@ const ListContact = () => {
                             </svg>
                             Delete
                         </button>
-                    </Popconfirm>
+                    </Popconfirm> */}
                 </div>
             )
         },
