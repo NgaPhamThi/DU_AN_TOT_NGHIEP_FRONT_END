@@ -1,3 +1,4 @@
+import { PathString } from 'react-hook-form'
 import { IOrderDetail } from './orderDetail'
 
 export interface IOrders {
@@ -5,6 +6,7 @@ export interface IOrders {
   userId: string
   fullname: string
   email: string
+  isPaid?:string
   status?: string
   phonenumber: string
   address: string
