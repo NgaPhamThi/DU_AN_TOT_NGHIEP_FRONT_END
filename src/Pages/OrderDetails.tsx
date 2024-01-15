@@ -210,10 +210,10 @@ const OrderDetails = (props: Props) => {
                                 {formattedCurrentDateTime}</p>
                         </div>
                         <div className="w-full px-4 mb-4 md:w-1/4">
-                            <p className="mb-2 text-sm font-medium leading-5 text-gray-800 dark:text-gray-400 ">
-                                Tổng: </p>
+                            <p className="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400">
+                                Thanh toán: </p>
                             <p className="text-base font-semibold leading-4 text-blue-600 dark:text-gray-400">
-                            {orderInfo?.orderTotal.toLocaleString()}đ</p>
+                            {orderInfo?.isPaid}</p>
                         </div>
                         <div className="w-full px-4 mb-4 md:w-1/4">
                             <p className="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">

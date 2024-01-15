@@ -32,7 +32,10 @@ const Successful = (props: Props) => {
             email: searchParams.get('email'),
             address: searchParams.get('address'),
             orderTotal: searchParams.get('total'),
+            Discount:searchParams.get('discount'),
             orderDetails: cartItems?.map((item) => ({
+              name: item.name,
+            img: item.img[0],
               productId: item._id,
               quantity: item.quantity,
               price: item.price,
