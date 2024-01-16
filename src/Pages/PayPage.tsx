@@ -184,7 +184,7 @@ const PayPage = () => {
       };
       if (paymentMethod === "cashOnDelivery") {
         const createOrder = await axios.post(
-          "http://localhost:8080/api/order",
+          "http://localhost:8080/api/orderVnpay",
           dataForm
         )
         localStorage.removeItem('Discount_Type')

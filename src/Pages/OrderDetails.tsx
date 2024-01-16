@@ -212,8 +212,9 @@ const OrderDetails = (props: Props) => {
                         <div className="w-full px-4 mb-4 md:w-1/4">
                             <p className="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400">
                                 Thanh toán: </p>
-                            <p className="text-base font-semibold leading-4 text-blue-600 dark:text-gray-400">
-                            {orderInfo?.isPaid}</p>
+                                <p className={`text-base font-semibold leading-4 ${orderInfo?.isPaid ? 'text-green-600' : 'text-red-600'} dark:text-gray-400`}>
+        {orderInfo?.isPaid ? 'Đã thanh toán' : 'Chưa thanh toán'}
+    </p>
                         </div>
                         <div className="w-full px-4 mb-4 md:w-1/4">
                             <p className="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">

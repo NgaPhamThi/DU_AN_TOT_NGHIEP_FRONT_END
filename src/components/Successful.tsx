@@ -47,7 +47,7 @@ const Successful = (props: Props) => {
           }
 
           axios
-            .post('http://localhost:8080/api/order', orderVnpay)
+            .post('http://localhost:8080/api/orderVnpay', orderVnpay)
             .then(() => {
               toast.success('Đặt hàng thành công')
             })

@@ -73,10 +73,10 @@ useEffect(() => {
                 </div>
            
                 <div className="self-center text-center">
-                    <p className="text-gray-600 font-normal text-sm line-through">
-                        <span className="text-emerald-500 ml-2"></span>
+                    <p className="text-gray-600 font-normal text-sm ">{price.toLocaleString()}đ
+                        <span className="font-normal text-xl text-red-500 ml-20">{(price *quantity).toLocaleString()}đ</span>
                     </p>
-                    <p className="text-gray-800 font-normal text-xl text-red-500">{(price *quantity).toLocaleString()}đ</p>
+                    <p className="  "></p>
                     {/* (item.price * item.quantity).toLocaleString() */}
                 </div>
 
