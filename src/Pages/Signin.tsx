@@ -214,7 +214,7 @@ const Signin = () => {
 <div className="mb-4 text-right ">
                                     <a href="/forgotpassword"
                                         className="text-sm font-semibold text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 hover:underline">
-                                        forgot password?</a>
+                                        Quên mật khẩu?</a>
                                 </div>
                           
                                  <input
