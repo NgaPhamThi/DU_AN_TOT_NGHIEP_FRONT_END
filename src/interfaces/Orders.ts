@@ -6,7 +6,7 @@ export interface IOrders {
   userId: string
   fullname: string
   email: string
-  isPaid?:string
+  isPaid?:boolean
   status?: string
   phonenumber: string
   address: string
