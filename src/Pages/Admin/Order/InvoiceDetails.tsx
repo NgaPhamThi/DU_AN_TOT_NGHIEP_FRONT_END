@@ -71,6 +71,12 @@ const handleStatusChange = async (newStatus: string) => {
         ...prevOrderInfo,
         status: newStatus,
       }));
+      if (newStatus === 'COMPLETED') {
+        setOrderInfo((prevOrderInfo) => ({
+            ...prevOrderInfo,
+            isPaid: true,
+        }));
+    }
     } catch (error) {
       console.error('Error updating order status:', error);
     }
