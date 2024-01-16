@@ -11,7 +11,8 @@ const statusOptions = [
     { value: 'PROCESSING', label: 'lấy hàng' },
     { value: 'ONDELIVERY', label: 'đang giao' },
     { value: 'COMPLETED', label: 'giao hàng thành công' },
-    { value: 'CANCELLED', label: 'Hủy đơn hàng' }
+    { value: 'CANCELLED', label: 'Hủy đơn hàng' },
+    { value: 'ID', label: 'ID' },
   ];
 const ListOrders = (props: Props) => {
     const [Orders, setOrders] = useState<IOrders[]>([])
@@ -129,10 +130,10 @@ const ListOrders = (props: Props) => {
         },
     ];
     const filteredOrders = useMemo(() => {
-        return sorte.filter((order) =>
-          order.email.toLowerCase().includes(searchKeyword.toLowerCase())
-        );
-      }, [sorte, searchKeyword]);
+      return sorte.filter((order) =>
+        order._id.toLowerCase().includes(searchKeyword.toLowerCase())
+      );
+    }, [sorte, searchKeyword]);
     
       return (
         <div className="ml-4 mr-4 mt-4">
@@ -143,7 +144,7 @@ const ListOrders = (props: Props) => {
         </div>
           <div>
             <Search
-              placeholder="Tìm kiếm theo email"
+              placeholder="Tìm kiếm theo id"
               allowClear
               onSearch={handleSearch}
               style={{ width: 200, marginBottom: 16 }}
