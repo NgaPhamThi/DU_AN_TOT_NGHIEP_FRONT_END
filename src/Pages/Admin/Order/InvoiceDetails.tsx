@@ -265,7 +265,7 @@ const handleStatusChange = async (newStatus: string) => {
                     </div>
                     <div className="flex jusitfy-start items-start flex-col space-y-2">
                         <p className="text-base dark:text-white font-semibold leading-4 text-gray-800">Thanh Toán</p>
-                        <p className="text-sm leading-5 dark:text-gray-300 text-gray-600"> {orderInfo?.isPaid}</p>
+                        <p className="text-sm leading-5 dark:text-gray-300 text-gray-600"> {orderInfo?.isPaid ? 'Đã thanh toán' : 'Chưa thanh toán'}</p>
                     </div>
                   
                 </div>
