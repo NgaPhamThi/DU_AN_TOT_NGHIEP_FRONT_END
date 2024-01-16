@@ -223,9 +223,13 @@ const OrderDetails = (props: Props) => {
                             {orderInfo?.address} </p>
                         </div>
                     </div>
+                    <div className='border-b '>
+                        <p className=' text-base leading-5 text-gray-600 dark:text-gray-400'>Mã HĐ: {orderInfo?._id}</p>
+                    </div>
                     {orderDetails.map((orderDetail)=>(
+                        
                         <div
-                        className="flex flex-col items-start justify-start w-full mt-4 mb-4 border-b border-gray-200 dark:border-gray-700 md:mt-6 md:flex-row md:items-center md:space-x-6 xl:space-x-8">
+                        className="flex flex-col items-start justify-start w-full mt-4 mb-4 border-b  border-gray-200 dark:border-gray-700 md:mt-6 md:flex-row md:items-center md:space-x-6 xl:space-x-8">
                         <div className="w-full pb-4 md:pb-6 md:w-40">
                             <img className="hidden w-full h-[150px] object-cover md:block"
                                 src={orderDetail.productInfo.img[0]} alt="dress"/>
@@ -272,7 +276,7 @@ const OrderDetails = (props: Props) => {
                                         <p className="text-base leading-4 text-gray-600 dark:text-gray-400">{subtotal.toLocaleString()}đ</p>
                                     </div>
                                     <div className="flex items-center justify-between w-full">
-                                        <p className="text-base leading-4 text-gray-800 dark:text-gray-400">Discount
+                                        <p className="text-base leading-4 text-gray-800 dark:text-gray-400">Giảm giá
                                         </p>
                                         <p className="text-base leading-4 text-gray-600 dark:text-gray-400">{voucherName ? parseFloat(voucherName).toLocaleString() + 'đ' : ''}</p>
                                     </div>
