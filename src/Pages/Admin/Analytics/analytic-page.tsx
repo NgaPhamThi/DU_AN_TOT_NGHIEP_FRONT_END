@@ -12,8 +12,8 @@ import { useEffect, useState } from 'react'
 import { CardInfo } from '../components/dashboard/card-info'
 import { CartIcon2 } from '../../../components'
 import { LineChartOrderStatus } from '../components/dashboard/line-chart'
-import { TopProduct } from './top-product'
 import { analyticApi } from '../../../api/analytic.api'
+import { convertMoneyOrder } from '../components/dashboard/utils/conver-money'
 import { getOrderStatusYear } from '../components/dashboard/hooks/get-order-status'
 import { message } from 'antd'
 
@@ -73,9 +73,8 @@ const AnalyticPage = () => {
               <CardInfo
                 key={item._id}
                 title={`Đơn hàng ${item._id}`}
-                number={item.totalAmount}
+                number={convertMoneyOrder(item.totalAmount)}
                 icon={<CartIcon2 />}
-                price={true}
                 onClick={() => handleOpenModal(item._id)}
               />
             ))}

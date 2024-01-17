@@ -2,12 +2,12 @@ import { Bar, CartesianGrid, ComposedChart, Legend, Line, Tooltip, XAxis, YAxis 
 import { DatePicker, Drawer, Space, message } from 'antd'
 import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker'
 import { IData, IFilterOrder } from '../../../../interfaces'
+import { convertMoney, convertMoneyOrder } from './utils/conver-money'
 import { useEffect, useState } from 'react'
 
 import { CardInfo } from './card-info'
 import { CartIcon2 } from '../../../../components'
 import { analyticApi } from '../../../../api/analytic.api'
-import { convertMoney } from './utils/conver-money'
 import { filterOrder } from './hooks/get-order-status'
 
 interface AnalyticStatusCompleteProps {
@@ -19,7 +19,9 @@ const { RangePicker } = DatePicker
 
 export const AnalyticStatusComplete = ({ isOpen, onClose }: AnalyticStatusCompleteProps) => {
   const [orderFilterDate, setOrderFilterDate] = useState<number | null>(null)
+  console.log('🚀 ~ AnalyticStatusComplete ~ orderFilterDate:', orderFilterDate)
   const [data, setData] = useState<IData | null>(null)
+  const [countOrders, setCountOrders] = useState<number>(0)
 
   const onChange = async (
     _: DatePickerProps['value'] | RangePickerProps['value'],
@@ -39,8 +41,9 @@ export const AnalyticStatusComplete = ({ isOpen, onClose }: AnalyticStatusComple
     /* lấy dữ liệu */
     const data = await filterOrder(values)
     if (data) {
-      const totalMoney = convertMoney(data, 'COMPLETED')
-      setOrderFilterDate(totalMoney)
+      const resultOrder = convertMoney(data, 'COMPLETED')
+      setOrderFilterDate(resultOrder.totalMoney)
+      setCountOrders(resultOrder.countOrders)
     }
   }
 
@@ -78,6 +81,8 @@ export const AnalyticStatusComplete = ({ isOpen, onClose }: AnalyticStatusComple
       'Số lượng đơn': data?.year[0]?.count
     }
   ]
+
+  if (!data) return null
   return (
     <Drawer
       title='Thông kê đơn hàng đặt thành công'
@@ -93,17 +98,26 @@ export const AnalyticStatusComplete = ({ isOpen, onClose }: AnalyticStatusComple
     >
       {orderFilterDate && (
         <div className='grid grid-cols-4 gap-4 mb-4'>
-          <CardInfo title='Doanh thu tìm kiếm' number={orderFilterDate} price={true} icon={<CartIcon2 />} />
+          <CardInfo
+            title='Doanh thu tìm kiếm'
+            number={orderFilterDate > 0 ? convertMoneyOrder(orderFilterDate) : 0}
+            icon={<CartIcon2 />}
+          />
+          <CardInfo title='Số lượng đơn hàng' number={countOrders} icon={<CartIcon2 />} />
         </div>
       )}
       <div className='grid grid-cols-4 gap-4'>
-        <CardInfo title='Doanh thu ngày' number={data?.day[0]?.totalAmount} price={true} icon={<CartIcon2 />} />
+        <CardInfo title='Doanh thu ngày' number={convertMoneyOrder(data?.day[0]?.totalAmount)} icon={<CartIcon2 />} />
         <CardInfo title='Số lượng đơn theo ngày' number={data?.day[0]?.count} icon={<CartIcon2 />} />
-        <CardInfo title='Doanh thu tuần' number={data?.week[0]?.totalAmount} price={true} icon={<CartIcon2 />} />
+        <CardInfo title='Doanh thu tuần' number={convertMoneyOrder(data?.week[0]?.totalAmount)} icon={<CartIcon2 />} />
         <CardInfo title='Số lượng đơn theo tuần' number={data?.week[0]?.count} icon={<CartIcon2 />} />
-        <CardInfo title='Doanh thu tháng' number={data?.month[0]?.totalAmount} price={true} icon={<CartIcon2 />} />
+        <CardInfo
+          title='Doanh thu tháng'
+          number={convertMoneyOrder(data?.month[0]?.totalAmount)}
+          icon={<CartIcon2 />}
+        />
         <CardInfo title='Số lượng đơn theo tháng' number={data?.month[0]?.count} icon={<CartIcon2 />} />
-        <CardInfo title='Doanh thu năm' number={data?.year[0]?.totalAmount} price={true} icon={<CartIcon2 />} />
+        <CardInfo title='Doanh thu năm' number={convertMoneyOrder(data?.year[0]?.totalAmount)} icon={<CartIcon2 />} />
         <CardInfo title='Số lượng đơn theo năm' number={data?.year[0]?.count} icon={<CartIcon2 />} />
       </div>
       <div className='mt-10'>
