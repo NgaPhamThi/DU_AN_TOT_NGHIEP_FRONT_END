@@ -474,9 +474,9 @@ const DetailPage = () => {
                         </div>
 
                         {getUser ? (
-                            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                                <div className="p-6 mb-6 bg-gray-50 dark:bg-gray-900">
-                                    <h2 className="mb-6 text-xl font-semibold text-left font-gray-600 dark:text-gray-400">
+                            <div className="grid grid-cols-1 gap-6 md:grid-cols-1">
+                                {/* <div className="p-6 mb-6 bg-gray-50 dark:bg-gray-900"> */}
+                                    {/* <h2 className="mb-6 text-xl font-semibold text-left font-gray-600 dark:text-gray-400">
                                         Đánh giá</h2>
                                     <div className="flex justify-start ">
                                         <div
@@ -548,9 +548,9 @@ const DetailPage = () => {
                                             </div>
 
                                         </div>
-                                    </div>
-                                    <div className="mb-6 text-xs dark:text-gray-400">16 customer reviews</div>
-                                    <div className="pb-1 mb-6">
+                                    </div> */}
+                                    {/* <div className="mb-6 text-xs dark:text-gray-400">16 customer reviews</div> */}
+                                    {/* <div className="pb-1 mb-6">
                                         <div className="flex items-center mb-3">
                                             <div className="flex mr-2 text-xs text-black dark:text-gray-400">
                                                 <span className="mr-1">4</span> <svg xmlns="http://www.w3.org/2000/svg" width="16"
@@ -615,12 +615,12 @@ const DetailPage = () => {
                                             </div>
                                             <div className="flex justify-end text-xs font-medium dark:text-gray-400">14% </div>
                                         </div>
-                                    </div>
-                                    <div className="items-center ">
+                                    </div> */}
+                                    {/* <div className="items-center ">
                                         <a href="#" className="px-4 py-2 text-xs text-gray-100 bg-blue-500 hover:bg-blue-600 ">
                                             View all reviews</a>
-                                    </div>
-                                </div>
+                                    </div> */}
+                                {/* </div> */}
                                 <div className="p-6 mb-6 bg-white dark:bg-gray-900">
                                     <h2 className="mb-6 text-xl font-semibold text-left font-gray-600 dark:text-gray-400">
                                         Thêm bình luận</h2>
