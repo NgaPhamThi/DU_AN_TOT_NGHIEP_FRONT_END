@@ -283,8 +283,8 @@ const handleStatusChange = async (newStatus: string) => {
                         </div>
                         <div className="flex justify-between w-full">
                             <p className="text-base leading-4 dark:text-white text-gray-800">
-                                Discount
-                                <span className="bg-gray-200  p-1 text-xs font-medium leading-3 text-gray-800">Voucher</span>
+                            Giảm giá
+                               
                             </p>
                             <p className="text-base dark:text-gray-300 leading-4 text-gray-600"> {voucherName ? parseFloat(voucherName).toLocaleString() + 'đ' : ''}</p>
                         </div>

@@ -16,6 +16,7 @@ import { analyticApi } from '../../../api/analytic.api'
 import { convertMoneyOrder } from '../components/dashboard/utils/conver-money'
 import { getOrderStatusYear } from '../components/dashboard/hooks/get-order-status'
 import { message } from 'antd'
+import { TopProduct } from './top-product'
 
 const AnalyticPage = () => {
   const [isOpen, setIsOpen] = useState({
@@ -66,6 +67,7 @@ const AnalyticPage = () => {
   }
   return (
     <>
+
       <main className='overflow-hidden'>
         <div className='mx-auto p-4 md:p-6'>
           <div className='grid grid-cols-5 gap-4'>
@@ -96,7 +98,11 @@ const AnalyticPage = () => {
         <div className='mx-auto p-4 md:p-6 xl:p-10'>
           <LineChartOrderStatus />
         </div>
+        <div className='mx-auto p-4 md:p-6 xl:p-10'>
+        <TopProduct />
+      </div>
       </main>
+
       <AnalyticOrderPending
         onClose={() => setIsOpen({ ...isOpen, orderPending: !isOpen.orderPending })}
         isOpen={isOpen.orderPending}
@@ -118,6 +124,7 @@ const AnalyticPage = () => {
         isOpen={isOpen.orderComplete}
       />
     </>
+    
   )
 }
 
