@@ -99,13 +99,13 @@ export const AnalyticStatusProccessing = ({ isOpen, onClose }: AnalyticStatusPro
         </div>
       )}
       <div className='grid grid-cols-4 gap-4'>
-        <CardInfo title='Doanh thu ngày' number={data?.day[0]?.totalAmount} price={true} icon={<CartIcon2 />} />
+        <CardInfo title='Doanh thu ngày' number={(data?.day[0]?.totalAmount)?.toLocaleString()} price={true} icon={<CartIcon2 />} />
         <CardInfo title='Số lượng đơn theo ngày' number={data?.day[0]?.count} icon={<CartIcon2 />} />
-        <CardInfo title='Doanh thu tuần' number={data?.week[0]?.totalAmount} price={true} icon={<CartIcon2 />} />
+        <CardInfo title='Doanh thu tuần' number={(data?.week[0]?.totalAmount)?.toLocaleString()} price={true} icon={<CartIcon2 />} />
         <CardInfo title='Số lượng đơn theo tuần' number={data?.week[0]?.count} icon={<CartIcon2 />} />
-        <CardInfo title='Doanh thu tháng' number={data?.month[0]?.totalAmount} price={true} icon={<CartIcon2 />} />
+        <CardInfo title='Doanh thu tháng' number={(data?.month[0]?.totalAmount)?.toLocaleString()} price={true} icon={<CartIcon2 />} />
         <CardInfo title='Số lượng đơn theo tháng' number={data?.month[0]?.count} icon={<CartIcon2 />} />
-        <CardInfo title='Doanh thu năm' number={data?.year[0]?.totalAmount} price={true} icon={<CartIcon2 />} />
+        <CardInfo title='Doanh thu năm' number={(data?.year[0]?.totalAmount)?.toLocaleString()} price={true} icon={<CartIcon2 />} />
         <CardInfo title='Số lượng đơn theo năm' number={data?.year[0]?.count} icon={<CartIcon2 />} />
       </div>
       <div className='mt-10'>
