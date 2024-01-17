@@ -101,20 +101,20 @@ export const AnalyticStatusCancelled = ({ isOpen, onClose }: AnalyticStatusCance
         </div>
       )}
       <div className='grid grid-cols-4 gap-4'>
-        <CardInfo title='Doanh thu ngày' number={data?.day[0]?.totalAmount} icon={<CartIcon2 />} />
+        <CardInfo title='Doanh thu ngày' number={(data?.day[0]?.totalAmount)?.toLocaleString()} icon={<CartIcon2 />} />
         <CardInfo title='Số lượng đơn theo ngày' number={data?.day[0]?.count} icon={<CartIcon2 />} />
-        <CardInfo title='Doanh thu tuần' number={data?.week[0]?.totalAmount as number} icon={<CartIcon2 />} />
+        <CardInfo title='Doanh thu tuần' number={(data?.week[0]?.totalAmount as number)?.toLocaleString()} icon={<CartIcon2 />} />
         <CardInfo title='Số lượng đơn theo tuần' number={data?.week[0]?.count} icon={<CartIcon2 />} />
         <CardInfo
           title='Doanh thu tháng'
-          number={data?.month[0]?.totalAmount as number}
+          number={(data?.month[0]?.totalAmount as number)?.toLocaleString()}
           price={true}
           icon={<CartIcon2 />}
         />
         <CardInfo title='Số lượng đơn theo tháng' number={data?.month[0]?.count} icon={<CartIcon2 />} />
         <CardInfo
           title='Doanh thu năm'
-          number={data?.year[0]?.totalAmount as number}
+          number={(data?.year[0]?.totalAmount as number)?.toLocaleString()}
           price={true}
           icon={<CartIcon2 />}
         />

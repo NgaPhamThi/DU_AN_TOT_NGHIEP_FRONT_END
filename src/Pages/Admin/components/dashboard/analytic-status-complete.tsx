@@ -107,7 +107,7 @@ export const AnalyticStatusComplete = ({ isOpen, onClose }: AnalyticStatusComple
         </div>
       )}
       <div className='grid grid-cols-4 gap-4'>
-        <CardInfo title='Doanh thu ngày' number={convertMoneyOrder(data?.day[0]?.totalAmount)} icon={<CartIcon2 />} />
+        <CardInfo title='Doanh thu ngày' number={(data?.day[0]?.totalAmount.toLocaleString())} icon={<CartIcon2 />} />
         <CardInfo title='Số lượng đơn theo ngày' number={data?.day[0]?.count} icon={<CartIcon2 />} />
         <CardInfo title='Doanh thu tuần' number={convertMoneyOrder(data?.week[0]?.totalAmount)} icon={<CartIcon2 />} />
         <CardInfo title='Số lượng đơn theo tuần' number={data?.week[0]?.count} icon={<CartIcon2 />} />
