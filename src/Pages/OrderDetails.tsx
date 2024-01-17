@@ -10,6 +10,7 @@ import { getSize } from '../api/size'
 import { getColor } from '../api/color'
 import { getVoucher, getVoucherById } from '../api/vouchers'
 import { getUserById } from '../api/auth'
+
 type Props = {}
 const statusOptions = [
     { value: 'PENDING', label: 'chờ duyệt' },
@@ -56,36 +57,60 @@ const OrderDetails = (props: Props) => {
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
     }, [orderId])
+   
     const CancelModal = () => (
-        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-8 shadow-2xl">
-        <h2 className="text-lg font-bold mb-2">Bạn chắc chắn muốn hủy đơn hàng?</h2>
-
-        {/* <p className="text-sm text-gray-500 mb-4">
-            Doing that could cause some issues elsewhere. Are you 100% sure it's OK?
-        </p> */}
-
-        <div className="flex justify-between gap-2">
-            <button
-            onClick={handleCancelYes}
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <div className="bg-white w-300 h-100 rounded-lg p-8 shadow-lg">
+            <h2 className="text-base font-semibold mb-4 text-white-500">
+              Bạn chắc chắn muốn hủy đơn hàng?
+            </h2>
+            <div className="flex justify-center gap-4"> {/* Đã thay đổi thành justify-center */}
+              <button
+                onClick={handleCancelYes}
                 type="button"
-                className="rounded bg-green-50 px-4 py-2 text-sm font-medium text-green-600"
-            >
-               Có
-            </button>
-
-            <button
+                className="rounded bg-red-500 px-4 py-2 text-sm font-medium text-white-600"
+              >
+                Có
+              </button>
+      
+              <button
                 onClick={toggleCancelModal}
                 type="button"
                 className="rounded bg-gray-50 px-4 py-2 text-sm font-medium text-gray-600"
-            >
+              >
                 Không
-            </button>
+              </button>
+            </div>
+          </div>
         </div>
-    </div>
-    );
+      );
+      
+      const CancelModal1 = () => (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <div className="bg-white w-300 h-100 rounded-lg p-8 shadow-lg">
+          <h2 className="text-base font-semibold mb-4 text-white-500">
+
+              Đơn hàng đang ở trạng thái "<span className="text-red-500">{getStatusLabel(orderInfo?.status)}</span>" không thể hủy đơn hàng
+            </h2>
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={toggleCancelModal}
+                type="button"
+                className="rounded bg-gray-50 px-4 py-2 text-sm font-medium text-gray-600"
+              >
+                Trở Lại
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+      
+      
+      
 
     // Step 3: Toggle pop-up visibility
     const toggleCancelModal = () => {
+        fetchOrderDetail()
         setCancelModalVisible(!isCancelModalVisible);
     };
     const handleCancelYes = async () => {
@@ -320,7 +345,8 @@ const OrderDetails = (props: Props) => {
                         <button onClick={toggleCancelModal} className="w-full px-4 py-2 bg-blue-500 rounded-md text-gray-50 md:w-auto dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-gray-700 dark:bg-gray-800">
                             Hủy đơn hàng
                         </button> : <div></div>}
-                        {isCancelModalVisible && <CancelModal />}
+                        {isCancelModalVisible &&  orderInfo?.status === 'PENDING' && <CancelModal />}
+                        {isCancelModalVisible &&  orderInfo?.status !== 'PENDING' && <CancelModal1 />}
                     </div>
                     
                 </div>

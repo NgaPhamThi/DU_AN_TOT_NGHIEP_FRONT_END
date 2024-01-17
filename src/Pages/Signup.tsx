@@ -30,17 +30,19 @@ console.log(user);
     e.preventDefault();
     
     if (!lastName || !email || !confirmPassword || !password) {
-      setError('Vui lòng nhập đầy đủ thông tin');
+      // setError('Vui lòng nhập đầy đủ thông tin');
+      toast.error('Vui lòng nhập đầy đủ thông tin ', { autoClose: 2000 })
       return;
     }
     if(password.length<6){
-      toast.success('Mật khẩu ít nhất 6 ký tự', { autoClose: 2000 })
+      toast.error('Mật khẩu ít nhất 6 ký tự', { autoClose: 2000 })
       return;
     }
     
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     if (!email.match(emailRegex)) {
-      setError('Định dạng email không hợp lệ');
+      toast.error('Định dạng email không hợp lệ', { autoClose: 2000 });
+
       return;
     }
    

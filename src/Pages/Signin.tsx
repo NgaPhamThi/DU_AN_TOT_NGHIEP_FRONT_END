@@ -16,7 +16,8 @@ const Signin = () => {
 
 
     if (!email || !password) {
-      alert('Vui lòng điền đầy đủ email và mật khẩu');
+      // alert('Vui lòng điền đầy đủ email và mật khẩu');
+      toast.error('Vui lòng điền đầy đủ email và mật khẩu ', { autoClose: 2000 })
       return;
     }
     const data={
