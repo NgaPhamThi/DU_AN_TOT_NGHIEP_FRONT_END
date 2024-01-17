@@ -202,9 +202,10 @@ const OrderDetails = (props: Props) => {
     return (
         <div>
             <section className="flex items-center py-16 -mt-[79px]  md:py-20 font-poppins dark:bg-gray-800 ">
+            
             <div className="justify-center flex-1 max-w-full px-4 py-4 mx-auto bg-white border rounded-md dark:border-gray-900 dark:bg-gray-900 md:py-10 md:px-10">
                 <div>
-                    
+                <h1 className="text-4xl font-bold text-center mb-5 text-gray-800">Chi Tiết Đơn Hàng</h1>
                     <div className="flex border-b border-gray-200 dark:border-gray-700  items-stretch justify-start w-full h-full px-4 mb-8 md:flex-row xl:flex-col md:space-x-6 lg:space-x-8 xl:space-x-0">
                         <div className="flex items-start justify-start flex-shrink-0">
                             <div className="flex items-center justify-center w-full pb-6 space-x-4 md:justify-start">
