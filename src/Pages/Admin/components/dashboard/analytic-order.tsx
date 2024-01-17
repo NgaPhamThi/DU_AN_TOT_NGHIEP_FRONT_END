@@ -2,13 +2,13 @@ import { Bar, CartesianGrid, ComposedChart, Legend, Line, Tooltip, XAxis, YAxis 
 import { DatePicker, Drawer, Space, message } from 'antd'
 import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker'
 import { IAnalyticYear, IData } from '../../../../interfaces'
+import { convertMoney, convertMoneyOrder } from './utils/conver-money'
 import { filterOrder, getOrderStatus } from './hooks/get-order-status'
 import { useEffect, useState } from 'react'
 
 import { CardInfo } from './card-info'
 import { CartIcon2 } from '../../../../components'
 import { analyticApi } from '../../../../api/analytic.api'
-import { convertMoney } from './utils/conver-money'
 
 const { RangePicker } = DatePicker
 
@@ -20,6 +20,7 @@ interface IAnalyticOrderProps {
 export const AnalyticOrderPending = ({ isOpen, onClose }: IAnalyticOrderProps) => {
   const [orderStatus, setOrderStatus] = useState<IAnalyticYear[]>([])
   const [orderFilterDate, setOrderFilterDate] = useState<number | null>(null)
+  const [countOrders, setCountOrders] = useState<number>(0)
   const [data, setData] = useState<IData | null>(null)
 
   const onChange = async (
@@ -41,8 +42,9 @@ export const AnalyticOrderPending = ({ isOpen, onClose }: IAnalyticOrderProps) =
       /* lấy dữ liệu */
       const data = await filterOrder(values)
       if (data) {
-        const totalMoney = convertMoney(data, 'PENDING')
-        setOrderFilterDate(totalMoney)
+        const resultOrder = convertMoney(data, 'PENDING')
+        setOrderFilterDate(resultOrder.totalMoney)
+        setCountOrders(resultOrder.countOrders)
       }
     } catch (error) {
       message.error('Lỗi lấy dữ liệu')
@@ -101,7 +103,8 @@ export const AnalyticOrderPending = ({ isOpen, onClose }: IAnalyticOrderProps) =
     >
       {orderFilterDate && (
         <div className='grid grid-cols-4 gap-4 mb-4'>
-          <CardInfo title='Doanh thu tìm kiếm' number={orderFilterDate} price={true} icon={<CartIcon2 />} />
+          <CardInfo title='Doanh thu tìm kiếm' number={convertMoneyOrder(orderFilterDate)} icon={<CartIcon2 />} />
+          <CardInfo title='Số lượng đơn hàng' number={countOrders} icon={<CartIcon2 />} />
         </div>
       )}
       <div className='grid grid-cols-4 gap-4'>

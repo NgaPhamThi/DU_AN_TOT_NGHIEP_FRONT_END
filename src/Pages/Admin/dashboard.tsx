@@ -5,6 +5,7 @@ import { CartIcon2 } from '../../components'
 import { IAnalyticStatusYear } from '../../interfaces'
 import { LineChartOrderStatus } from './components/dashboard/line-chart'
 import { TopProduct } from './Analytics/top-product'
+import { convertMoneyOrder } from './components/dashboard/utils/conver-money'
 import { getOrderStatusYear } from './components/dashboard/hooks/get-order-status'
 import { message } from 'antd'
 
@@ -31,9 +32,8 @@ const Dashboard = () => {
             <CardInfo
               key={item._id}
               title={`Đơn hàng ${item._id}`}
-              number={item.totalAmount}
+              number={convertMoneyOrder(item.totalAmount)}
               icon={<CartIcon2 />}
-              price={true}
             />
           ))}
         </div>

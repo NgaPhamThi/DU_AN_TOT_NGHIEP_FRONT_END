@@ -2,12 +2,12 @@ import { Bar, CartesianGrid, ComposedChart, Legend, Line, Tooltip, XAxis, YAxis 
 import { DatePicker, Drawer, Space, message } from 'antd'
 import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker'
 import { IData, IFilterOrder } from '../../../../interfaces'
+import { convertMoney, convertMoneyOrder } from './utils/conver-money'
 import { useEffect, useState } from 'react'
 
 import { CardInfo } from './card-info'
 import { CartIcon2 } from '../../../../components'
 import { analyticApi } from '../../../../api/analytic.api'
-import { convertMoney } from './utils/conver-money'
 import { filterOrder } from './hooks/get-order-status'
 
 const { RangePicker } = DatePicker
@@ -20,6 +20,7 @@ interface AnalyticStatusDeliveryProps {
 export const AnalyticStatusDelivery = ({ isOpen, onClose }: AnalyticStatusDeliveryProps) => {
   const [orderFilterDate, setOrderFilterDate] = useState<number | null>(null)
   const [data, setData] = useState<IData | null>(null)
+  const [countOrders, setCountOrders] = useState<number>(0)
 
   const onChange = async (
     _: DatePickerProps['value'] | RangePickerProps['value'],
@@ -27,6 +28,7 @@ export const AnalyticStatusDelivery = ({ isOpen, onClose }: AnalyticStatusDelive
   ) => {
     const startDate = (dateString as [string, string])[0]
     const endDate = (dateString as [string, string])[1]
+
     const values = { startDate, endDate }
 
     /* kiểm tra xem enđate có lớn hơn startDate hay không */
@@ -39,8 +41,9 @@ export const AnalyticStatusDelivery = ({ isOpen, onClose }: AnalyticStatusDelive
     /* lấy dữ liệu */
     const data = await filterOrder(values)
     if (data) {
-      const totalMoney = convertMoney(data, 'ONDELIVERY')
-      setOrderFilterDate(totalMoney)
+      const resultOrder = convertMoney(data, 'ONDELIVERY')
+      setOrderFilterDate(resultOrder.totalMoney)
+      setCountOrders(resultOrder.countOrders)
     }
   }
 
@@ -93,7 +96,8 @@ export const AnalyticStatusDelivery = ({ isOpen, onClose }: AnalyticStatusDelive
     >
       {orderFilterDate && (
         <div className='grid grid-cols-4 gap-4 mb-4'>
-          <CardInfo title='Doanh thu tìm kiếm' number={orderFilterDate} price={true} icon={<CartIcon2 />} />
+          <CardInfo title='Doanh thu tìm kiếm' number={convertMoneyOrder(orderFilterDate)} icon={<CartIcon2 />} />
+          <CardInfo title='Số lượng đơn hàng' number={countOrders} icon={<CartIcon2 />} />
         </div>
       )}
       <div className='grid grid-cols-4 gap-4'>

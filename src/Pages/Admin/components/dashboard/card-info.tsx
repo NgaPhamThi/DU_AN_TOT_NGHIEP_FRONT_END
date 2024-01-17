@@ -2,7 +2,7 @@ interface CardInfoProps {
   icon: React.ReactNode
   title?: string
   onClick?: () => void
-  number?: number
+  number?: number | string
   price?: boolean
 }
 
