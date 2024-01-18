@@ -181,7 +181,7 @@ const AddProduct = () => {
         </div>
       
         {/* sizes */}
-        <div className="mb-4 hidden">
+        <div className="mb-4 ">
           <label
             htmlFor="size"
             className="block text-gray-700 text-sm font-bold mb-2"

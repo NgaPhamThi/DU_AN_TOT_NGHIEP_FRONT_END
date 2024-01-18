@@ -83,7 +83,7 @@ export const AnalyticStatusDelivery = ({ isOpen, onClose }: AnalyticStatusDelive
   ]
   return (
     <Drawer
-      title='Thông kê đơn hàng lên đơn'
+      title='Thông kê đơn hàng "đang giao"'
       placement='right'
       onClose={onClose}
       open={isOpen}

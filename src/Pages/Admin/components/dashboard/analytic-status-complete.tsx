@@ -85,7 +85,7 @@ export const AnalyticStatusComplete = ({ isOpen, onClose }: AnalyticStatusComple
   if (!data) return null
   return (
     <Drawer
-      title='Thông kê đơn hàng đặt thành công'
+      title='Thông kê đơn hàng "giao hàng thành công"'
       placement='right'
       onClose={onClose}
       open={isOpen}
