@@ -90,7 +90,7 @@ export const AnalyticOrderPending = ({ isOpen, onClose }: IAnalyticOrderProps) =
 
   return (
     <Drawer
-      title='Thông kê đơn hàng chờ xử lý'
+      title='Thông kê đơn hàng "chờ duyệt"'
       placement='right'
       onClose={onClose}
       open={isOpen}

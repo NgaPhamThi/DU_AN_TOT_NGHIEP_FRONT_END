@@ -83,7 +83,7 @@ export const AnalyticStatusCancelled = ({ isOpen, onClose }: AnalyticStatusCance
 
   return (
     <Drawer
-      title='Thông kê đơn hàng lên đơn'
+      title='Thông kê đơn hàng "hủy đơn hàng"'
       placement='right'
       onClose={onClose}
       open={isOpen}

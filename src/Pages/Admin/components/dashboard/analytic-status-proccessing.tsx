@@ -81,7 +81,7 @@ export const AnalyticStatusProccessing = ({ isOpen, onClose }: AnalyticStatusPro
 
   return (
     <Drawer
-      title='Thông kê đơn hàng lên đơn'
+      title='Thông kê đơn hàng "lấy hàng"'
       placement='right'
       onClose={onClose}
       open={isOpen}

@@ -64,11 +64,11 @@ export const TopProduct = () => {
   return (
     <div className='grid grid-cols-2 gap-10'>
       <div className='flex flex-col gap-2'>
-        <h2 className='text-xl font-medium'>Top sản phẩm giao hàng thành công</h2>
+        <h2 className='text-xl font-medium'>Top sản phẩm bán chạy</h2>
         <Table dataSource={dataCompleted} columns={columns} />
       </div>
       <div className='flex flex-col gap-2'>
-        <h2 className='text-xl font-medium'>Top sản phẩm giao hàng thất bại</h2>
+        <h2 className='text-xl font-medium'>đơn hàng giao thất bại</h2>
         <Table dataSource={dataCancelled} columns={columns} />
       </div>
     </div>
